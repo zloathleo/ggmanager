@@ -1,0 +1,317 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>辐射职业照射数据采集和统一管理</title>
+    <link type="text/css" rel="Stylesheet" href="../../Contents/Css/base.css" />
+    <link type="text/css" rel="Stylesheet" href="../../Contents/Css/platform.css" />
+    <link type="text/css" rel="Stylesheet" href="../../Scripts/jQEasyUI/themes/easyui.css" />
+    <link type="text/css" rel="Stylesheet" href="../../Scripts/jQEasyUI/themes/icon.css" />
+    <script type="text/javascript" src="../../Scripts/jquery.min.js"></script>
+    <script type="text/javascript" src="../../Scripts/jQEasyUI/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../../Scripts/jQEasyUI/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="../../Scripts/FunctionJS.js"></script>
+    <script type="text/javascript">
+        var __grid_tree;
+        var data = { "total": 35, "rows": [{ "SM_ID": 1, "SM_PARENTID": 0, "SM_NAME": "设施信息管理", "SM_ICON": "", "SM_URL": "", "SM_SORTID": 1, "CK": "<input id='ckb306|5' onclick='ckbValueObj(this.id)' checked='checked' style='vertical-align: middle;margin-bottom:5px;' type='checkbox' value='306|5' name='checkbox' />", "SM_BUTTONINFO": "" }, { "SM_ID": 2, "SM_PARENTID": 0, "SM_NAME": "人员信息管理", "SM_ICON": "", "SM_URL": "", "SM_SORTID": 1, "CK": "<input id='ckb306|5' onclick='ckbValueObj(this.id)' checked='checked' style='vertical-align: middle;margin-bottom:5px;' type='checkbox' value='306|5' name='checkbox' />", "SM_BUTTONINFO": "" }, { "SM_ID": 3, "SM_PARENTID": 0, "SM_NAME": "个人剂量管理", "SM_ICON": "", "SM_URL": "", "SM_SORTID": 1, "CK": "<input id='ckb306|5' onclick='ckbValueObj(this.id)' checked='checked' style='vertical-align: middle;margin-bottom:5px;' type='checkbox' value='306|5' name='checkbox' />", "SM_BUTTONINFO": "" }, { "SM_ID": 4, "SM_PARENTID": 0, "SM_NAME": "集体剂量管理", "SM_ICON": "", "SM_URL": "", "SM_SORTID": 1, "CK": "<input id='ckb306|6' onclick='ckbValueObj(this.id)' checked='checked' style='vertical-align: middle;margin-bottom:5px;' type='checkbox' value='306|5' name='checkbox' />", "SM_BUTTONINFO": "" }, { "SM_ID": 5, "SM_PARENTID": 0, "SM_NAME": "统计分析", "SM_ICON": "", "SM_URL": "", "SM_SORTID": 1, "CK": "<input id='ckb306|7' onclick='ckbValueObj(this.id)' checked='checked' style='vertical-align: middle;margin-bottom:5px;' type='checkbox' value='306|5' name='checkbox' />", "SM_BUTTONINFO": "" }, { "SM_ID": 11, "SM_PARENTID": 1, "SM_NAME": "设施信息管理", "SM_ICON": "", "SM_URL": "", "SM_SORTID": 1, "_parentId": 1, "CK": "<input id='ckb306|5' onclick='ckbValueObj(this.id)' checked='checked' style='vertical-align: middle;margin-bottom:5px;' type='checkbox' value='306|5' name='checkbox' />", "SM_BUTTONINFO": "<input id='ckb306|5' onclick='ckbValueObj(this.id)' checked='checked' style='vertical-align: middle;margin-bottom:5px;' type='checkbox' value='306|5' name='checkbox' />新增&nbsp;&nbsp;<input id='ckb306|5' onclick='ckbValueObj(this.id)' checked='checked' style='vertical-align: middle;margin-bottom:5px;' type='checkbox' value='306|5' name='checkbox' />编辑&nbsp;&nbsp;<input id='ckb306|5' onclick='ckbValueObj(this.id)' checked='checked' style='vertical-align: middle;margin-bottom:5px;' type='checkbox' value='306|5' name='checkbox' />删除&nbsp;&nbsp;<input id='ckb306|5' onclick='ckbValueObj(this.id)' checked='checked' style='vertical-align: middle;margin-bottom:5px;' type='checkbox' value='306|5' name='checkbox' />导入&nbsp;&nbsp;<input id='ckb306|5' onclick='ckbValueObj(this.id)' checked='checked' style='vertical-align: middle;margin-bottom:5px;' type='checkbox' value='306|5' name='checkbox' />导出&nbsp;&nbsp;" }, { "SM_ID": 24, "SM_PARENTID": 2, "SM_NAME": "人员信息维护", "SM_ICON": "", "SM_URL": "", "SM_SORTID": 3, "_parentId": 2, "CK": "<input id='ckb306|5' onclick='ckbValueObj(this.id)' checked='checked' style='vertical-align: middle;margin-bottom:5px;' type='checkbox' value='306|5' name='checkbox' />", "SM_BUTTONINFO": "<input id='ckb306|5' onclick='ckbValueObj(this.id)' checked='checked' style='vertical-align: middle;margin-bottom:5px;' type='checkbox' value='306|5' name='checkbox' />新增&nbsp;&nbsp;<input id='ckb306|5' onclick='ckbValueObj(this.id)' checked='checked' style='vertical-align: middle;margin-bottom:5px;' type='checkbox' value='306|5' name='checkbox' />编辑&nbsp;&nbsp;<input id='ckb306|5' onclick='ckbValueObj(this.id)' checked='checked' style='vertical-align: middle;margin-bottom:5px;' type='checkbox' value='306|5' name='checkbox' />删除&nbsp;&nbsp;<input id='ckb306|5' onclick='ckbValueObj(this.id)' checked='checked' style='vertical-align: middle;margin-bottom:5px;' type='checkbox' value='306|5' name='checkbox' />导入&nbsp;&nbsp;<input id='ckb306|5' onclick='ckbValueObj(this.id)' checked='checked' style='vertical-align: middle;margin-bottom:5px;' type='checkbox' value='306|5' name='checkbox' />导出&nbsp;&nbsp;" }, { "SM_ID": 31, "SM_PARENTID": 3, "SM_NAME": "常规/特殊监测个人剂量管理", "SM_ICON": "", "SM_URL": "", "SM_SORTID": 7, "_parentId": 3, "CK": "<input id='ckb306|5' onclick='ckbValueObj(this.id)' checked='checked' style='vertical-align: middle;margin-bottom:5px;' type='checkbox' value='306|5' name='checkbox' />", "SM_BUTTONINFO": "<input id='ckb306|5' onclick='ckbValueObj(this.id)' checked='checked' style='vertical-align: middle;margin-bottom:5px;' type='checkbox' value='306|5' name='checkbox' />新增&nbsp;&nbsp;<input id='ckb306|5' onclick='ckbValueObj(this.id)' checked='checked' style='vertical-align: middle;margin-bottom:5px;' type='checkbox' value='306|5' name='checkbox' />编辑&nbsp;&nbsp;<input id='ckb306|5' onclick='ckbValueObj(this.id)' checked='checked' style='vertical-align: middle;margin-bottom:5px;' type='checkbox' value='306|5' name='checkbox' />删除&nbsp;&nbsp;<input id='ckb306|5' onclick='ckbValueObj(this.id)' checked='checked' style='vertical-align: middle;margin-bottom:5px;' type='checkbox' value='306|5' name='checkbox' />导入&nbsp;&nbsp;<input id='ckb306|5' onclick='ckbValueObj(this.id)' checked='checked' style='vertical-align: middle;margin-bottom:5px;' type='checkbox' value='306|5' name='checkbox' />导出&nbsp;&nbsp;" }, { "SM_ID": 32, "SM_PARENTID": 3, "SM_NAME": "任务相关检测个人剂量管理", "SM_ICON": "", "SM_URL": "", "SM_SORTID": 7, "_parentId": 3, "CK": "<input id='ckb306|5' onclick='ckbValueObj(this.id)' checked='checked' style='vertical-align: middle;margin-bottom:5px;' type='checkbox' value='306|5' name='checkbox' />", "SM_BUTTONINFO": "<input id='ckb306|5' onclick='ckbValueObj(this.id)' checked='checked' style='vertical-align: middle;margin-bottom:5px;' type='checkbox' value='306|5' name='checkbox' />新增&nbsp;&nbsp;<input id='ckb306|5' onclick='ckbValueObj(this.id)' checked='checked' style='vertical-align: middle;margin-bottom:5px;' type='checkbox' value='306|5' name='checkbox' />编辑&nbsp;&nbsp;<input id='ckb306|5' onclick='ckbValueObj(this.id)' checked='checked' style='vertical-align: middle;margin-bottom:5px;' type='checkbox' value='306|5' name='checkbox' />删除&nbsp;&nbsp;<input id='ckb306|5' onclick='ckbValueObj(this.id)' checked='checked' style='vertical-align: middle;margin-bottom:5px;' type='checkbox' value='306|5' name='checkbox' />导入&nbsp;&nbsp;<input id='ckb306|5' onclick='ckbValueObj(this.id)' checked='checked' style='vertical-align: middle;margin-bottom:5px;' type='checkbox' value='306|5' name='checkbox' />导出&nbsp;&nbsp;" }, { "SM_ID": 41, "SM_PARENTID": 4, "SM_NAME": "常规/特殊监测集体剂量查询", "SM_ICON": "", "SM_URL": "", "SM_SORTID": 7, "_parentId": 4, "CK": "<input id='ckb306|6' onclick='ckbValueObj(this.id)' checked='checked' style='vertical-align: middle;margin-bottom:5px;' type='checkbox' value='306|5' name='checkbox' />", "SM_BUTTONINFO": "<input id='ckb306|5' onclick='ckbValueObj(this.id)' checked='checked' style='vertical-align: middle;margin-bottom:5px;' type='checkbox' value='306|5' name='checkbox' />导出&nbsp;&nbsp;" }, { "SM_ID": 42, "SM_PARENTID": 4, "SM_NAME": "任务相关检测集体剂量查询", "SM_ICON": "", "SM_URL": "", "SM_SORTID": 8, "_parentId": 4, "CK": "<input id='ckb306|6' onclick='ckbValueObj(this.id)' checked='checked' style='vertical-align: middle;margin-bottom:5px;' type='checkbox' value='306|5' name='checkbox' />", "SM_BUTTONINFO": "<input id='ckb306|6' onclick='ckbValueObj(this.id)' checked='checked' style='vertical-align: middle;margin-bottom:5px;' type='checkbox' value='306|5' name='checkbox' />导出&nbsp;&nbsp;"}] };
+        $(function () {
+            __grid_tree = $('#treeGrid').treegrid({
+                rownumbers: true, treeField: "SM_NAME",
+                idField: 'SM_ID', animate: true,
+                data: data,
+                columns:
+                [[
+                { field: 'SM_NAME', title: '菜单名称', width: 200 },
+                { field: 'CK', title: "&nbsp;<label id='checkAllOff' onclick='CheckAllLine()' title='全选'>&nbsp;</label>", width: 40, align: 'center' },
+                { field: 'SM_BUTTONINFO', title: '菜单按钮', width: 580 }
+                ]]
+            });
+        });
+        function CheckboxBValue() {
+            var reVal = '';
+            var reBVal = '';
+            $('input:checkbox[name=checkbox]:checked').each(function (i) {
+                if ($(this).val().indexOf("|") == -1) {
+                    reVal += $(this).val() + ",";
+                } else {
+                    reBVal += $(this).val() + ",";
+                }
+            });
+            reVal = reVal.substr(0, reVal.length - 1);
+            reBVal = reBVal.substr(0, reBVal.length - 1);
+            return reVal + "$" + reBVal;
+        }
+        function DialogSave() {
+            $.messager.confirm('提示信息', '注：您确认要保存此操作吗？', function (data) {
+                if (data) {
+                    var item = CheckboxBValue();
+
+                }
+            });
+        }
+    </script>
+</head>
+<body class="easyui-layout" fit="true">
+    <div data-options="region:'center',border:false">
+        <div class="easyui-tabs" fit="true">
+            <div title="菜单功能权限分配" data-options="closable:false" style="padding-bottom: 2px">
+                <div id="treeGrid" fit="true" border="false">
+                </div>
+            </div>
+            <div title="设施权限分配" data-options="closable:false" style="padding-bottom: 2px">
+                <div style="padding: 10px; width: 860px;">
+                    <div style="width: 100px; height: 28px; float: left">
+                        <input type="checkbox" checked="checked" name="PlantGroup" value="1" style="vertical-align: middle;
+                            cursor: pointer" /><label for="1" style="vertical-align: middle; cursor: pointer">设施名称1
+                            </label>
+                    </div>
+                    <div style="width: 100px; height: 28px; float: left">
+                        <input type="checkbox" checked="checked" name="PlantGroup" value="2" style="vertical-align: middle;
+                            cursor: pointer" /><label for="2" style="vertical-align: middle; cursor: pointer">设施名称2
+                            </label>
+                    </div>
+                    <div style="width: 100px; height: 28px; float: left">
+                        <input type="checkbox" checked="checked" name="PlantGroup" value="3" style="vertical-align: middle;
+                            cursor: pointer" /><label for="3" style="vertical-align: middle; cursor: pointer">设施名称3
+                            </label>
+                    </div>
+                    <div style="width: 100px; height: 28px; float: left">
+                        <input type="checkbox" checked="checked" name="PlantGroup" value="4" style="vertical-align: middle;
+                            cursor: pointer" /><label for="4" style="vertical-align: middle; cursor: pointer">设施名称4
+                            </label>
+                    </div>
+                    <div style="width: 100px; height: 28px; float: left">
+                        <input type="checkbox" checked="checked" name="PlantGroup" value="5" style="vertical-align: middle;
+                            cursor: pointer" /><label for="5" style="vertical-align: middle; cursor: pointer">设施名称5
+                            </label>
+                    </div>
+                    <div style="width: 100px; height: 28px; float: left">
+                        <input type="checkbox" checked="checked" name="PlantGroup" value="6" style="vertical-align: middle;
+                            cursor: pointer" /><label for="6" style="vertical-align: middle; cursor: pointer">设施名称6
+                            </label>
+                    </div>
+                    <div style="width: 100px; height: 28px; float: left">
+                        <input type="checkbox" checked="checked" name="PlantGroup" value="7" style="vertical-align: middle;
+                            cursor: pointer" /><label for="7" style="vertical-align: middle; cursor: pointer">设施名称7
+                            </label>
+                    </div>
+                    <div style="width: 100px; height: 28px; float: left">
+                        <input type="checkbox" checked="checked" name="PlantGroup" value="8" style="vertical-align: middle;
+                            cursor: pointer" /><label for="8" style="vertical-align: middle; cursor: pointer">设施名称8
+                            </label>
+                    </div>
+                    <div style="width: 100px; height: 28px; float: left">
+                        <input type="checkbox" checked="checked" name="PlantGroup" value="9" style="vertical-align: middle;
+                            cursor: pointer" /><label for="9" style="vertical-align: middle; cursor: pointer">设施名称9
+                            </label>
+                    </div>
+                    <div style="width: 100px; height: 28px; float: left">
+                        <input type="checkbox" checked="checked" name="PlantGroup" value="10" style="vertical-align: middle;
+                            cursor: pointer" /><label for="10" style="vertical-align: middle; cursor: pointer">设施名称10
+                            </label>
+                    </div>
+                    <div style="width: 100px; height: 28px; float: left">
+                        <input type="checkbox" checked="checked" name="PlantGroup" value="11" style="vertical-align: middle;
+                            cursor: pointer" /><label for="11" style="vertical-align: middle; cursor: pointer">设施名称11
+                            </label>
+                    </div>
+                    <div style="width: 100px; height: 28px; float: left">
+                        <input type="checkbox" checked="checked" name="PlantGroup" value="12" style="vertical-align: middle;
+                            cursor: pointer" /><label for="12" style="vertical-align: middle; cursor: pointer">设施名称12
+                            </label>
+                    </div>
+                    <div style="width: 100px; height: 28px; float: left">
+                        <input type="checkbox" checked="checked" name="PlantGroup" value="13" style="vertical-align: middle;
+                            cursor: pointer" /><label for="13" style="vertical-align: middle; cursor: pointer">设施名称13
+                            </label>
+                    </div>
+                    <div style="width: 100px; height: 28px; float: left">
+                        <input type="checkbox" checked="checked" name="PlantGroup" value="14" style="vertical-align: middle;
+                            cursor: pointer" /><label for="14" style="vertical-align: middle; cursor: pointer">设施名称14
+                            </label>
+                    </div>
+                    <div style="width: 100px; height: 28px; float: left">
+                        <input type="checkbox" checked="checked" name="PlantGroup" value="15" style="vertical-align: middle;
+                            cursor: pointer" /><label for="15" style="vertical-align: middle; cursor: pointer">设施名称15
+                            </label>
+                    </div>
+                    <div style="width: 100px; height: 28px; float: left">
+                        <input type="checkbox" checked="checked" name="PlantGroup" value="16" style="vertical-align: middle;
+                            cursor: pointer" /><label for="16" style="vertical-align: middle; cursor: pointer">设施名称16
+                            </label>
+                    </div>
+                    <div style="width: 100px; height: 28px; float: left">
+                        <input type="checkbox" checked="checked" name="PlantGroup" value="17" style="vertical-align: middle;
+                            cursor: pointer" /><label for="17" style="vertical-align: middle; cursor: pointer">设施名称17
+                            </label>
+                    </div>
+                    <div style="width: 100px; height: 28px; float: left">
+                        <input type="checkbox" checked="checked" name="PlantGroup" value="18" style="vertical-align: middle;
+                            cursor: pointer" /><label for="18" style="vertical-align: middle; cursor: pointer">设施名称18
+                            </label>
+                    </div>
+                    <div style="width: 100px; height: 28px; float: left">
+                        <input type="checkbox" checked="checked" name="PlantGroup" value="19" style="vertical-align: middle;
+                            cursor: pointer" /><label for="19" style="vertical-align: middle; cursor: pointer">设施名称19
+                            </label>
+                    </div>
+                    <div style="width: 100px; height: 28px; float: left">
+                        <input type="checkbox" checked="checked" name="PlantGroup" value="20" style="vertical-align: middle;
+                            cursor: pointer" /><label for="20" style="vertical-align: middle; cursor: pointer">设施名称20
+                            </label>
+                    </div>
+                    <div style="width: 100px; height: 28px; float: left">
+                        <input type="checkbox" checked="checked" name="PlantGroup" value="21" style="vertical-align: middle;
+                            cursor: pointer" /><label for="21" style="vertical-align: middle; cursor: pointer">设施名称21
+                            </label>
+                    </div>
+                    <div style="width: 100px; height: 28px; float: left">
+                        <input type="checkbox" checked="checked" name="PlantGroup" value="22" style="vertical-align: middle;
+                            cursor: pointer" /><label for="22" style="vertical-align: middle; cursor: pointer">设施名称22
+                            </label>
+                    </div>
+                    <div style="width: 100px; height: 28px; float: left">
+                        <input type="checkbox" checked="checked" name="PlantGroup" value="23" style="vertical-align: middle;
+                            cursor: pointer" /><label for="23" style="vertical-align: middle; cursor: pointer">设施名称23
+                            </label>
+                    </div>
+                    <div style="width: 100px; height: 28px; float: left">
+                        <input type="checkbox" checked="checked" name="PlantGroup" value="24" style="vertical-align: middle;
+                            cursor: pointer" /><label for="24" style="vertical-align: middle; cursor: pointer">设施名称24
+                            </label>
+                    </div>
+                    <div style="width: 100px; height: 28px; float: left">
+                        <input type="checkbox" checked="checked" name="PlantGroup" value="25" style="vertical-align: middle;
+                            cursor: pointer" /><label for="25" style="vertical-align: middle; cursor: pointer">设施名称25
+                            </label>
+                    </div>
+                    <div style="width: 100px; height: 28px; float: left">
+                        <input type="checkbox" checked="checked" name="PlantGroup" value="26" style="vertical-align: middle;
+                            cursor: pointer" /><label for="26" style="vertical-align: middle; cursor: pointer">设施名称26
+                            </label>
+                    </div>
+                    <div style="width: 100px; height: 28px; float: left">
+                        <input type="checkbox" checked="checked" name="PlantGroup" value="27" style="vertical-align: middle;
+                            cursor: pointer" /><label for="27" style="vertical-align: middle; cursor: pointer">设施名称27
+                            </label>
+                    </div>
+                    <div style="width: 100px; height: 28px; float: left">
+                        <input type="checkbox" checked="checked" name="PlantGroup" value="28" style="vertical-align: middle;
+                            cursor: pointer" /><label for="28" style="vertical-align: middle; cursor: pointer">设施名称28
+                            </label>
+                    </div>
+                    <div style="width: 100px; height: 28px; float: left">
+                        <input type="checkbox" checked="checked" name="PlantGroup" value="29" style="vertical-align: middle;
+                            cursor: pointer" /><label for="29" style="vertical-align: middle; cursor: pointer">设施名称29
+                            </label>
+                    </div>
+                    <div style="width: 100px; height: 28px; float: left">
+                        <input type="checkbox" checked="checked" name="PlantGroup" value="30" style="vertical-align: middle;
+                            cursor: pointer" /><label for="30" style="vertical-align: middle; cursor: pointer">设施名称30
+                            </label>
+                    </div>
+                    <div style="width: 100px; height: 28px; float: left">
+                        <input type="checkbox" checked="checked" name="PlantGroup" value="31" style="vertical-align: middle;
+                            cursor: pointer" /><label for="31" style="vertical-align: middle; cursor: pointer">设施名称31
+                            </label>
+                    </div>
+                    <div style="width: 100px; height: 28px; float: left">
+                        <input type="checkbox" checked="checked" name="PlantGroup" value="32" style="vertical-align: middle;
+                            cursor: pointer" /><label for="32" style="vertical-align: middle; cursor: pointer">设施名称32
+                            </label>
+                    </div>
+                    <div style="width: 100px; height: 28px; float: left">
+                        <input type="checkbox" checked="checked" name="PlantGroup" value="33" style="vertical-align: middle;
+                            cursor: pointer" /><label for="33" style="vertical-align: middle; cursor: pointer">设施名称33
+                            </label>
+                    </div>
+                    <div style="width: 100px; height: 28px; float: left">
+                        <input type="checkbox" checked="checked" name="PlantGroup" value="34" style="vertical-align: middle;
+                            cursor: pointer" /><label for="34" style="vertical-align: middle; cursor: pointer">设施名称34
+                            </label>
+                    </div>
+                    <div style="width: 100px; height: 28px; float: left">
+                        <input type="checkbox" checked="checked" name="PlantGroup" value="35" style="vertical-align: middle;
+                            cursor: pointer" /><label for="35" style="vertical-align: middle; cursor: pointer">设施名称35
+                            </label>
+                    </div>
+                    <div style="width: 100px; height: 28px; float: left">
+                        <input type="checkbox" checked="checked" name="PlantGroup" value="36" style="vertical-align: middle;
+                            cursor: pointer" /><label for="36" style="vertical-align: middle; cursor: pointer">设施名称36
+                            </label>
+                    </div>
+                    <div style="width: 100px; height: 28px; float: left">
+                        <input type="checkbox" checked="checked" name="PlantGroup" value="37" style="vertical-align: middle;
+                            cursor: pointer" /><label for="37" style="vertical-align: middle; cursor: pointer">设施名称37
+                            </label>
+                    </div>
+                    <div style="width: 100px; height: 28px; float: left">
+                        <input type="checkbox" checked="checked" name="PlantGroup" value="38" style="vertical-align: middle;
+                            cursor: pointer" /><label for="38" style="vertical-align: middle; cursor: pointer">设施名称38
+                            </label>
+                    </div>
+                    <div style="width: 100px; height: 28px; float: left">
+                        <input type="checkbox" checked="checked" name="PlantGroup" value="39" style="vertical-align: middle;
+                            cursor: pointer" /><label for="39" style="vertical-align: middle; cursor: pointer">设施名称39
+                            </label>
+                    </div>
+                    <div style="width: 100px; height: 28px; float: left">
+                        <input type="checkbox" checked="checked" name="PlantGroup" value="40" style="vertical-align: middle;
+                            cursor: pointer" /><label for="40" style="vertical-align: middle; cursor: pointer">设施名称40
+                            </label>
+                    </div>
+                    <div style="width: 100px; height: 28px; float: left">
+                        <input type="checkbox" checked="checked" name="PlantGroup" value="41" style="vertical-align: middle;
+                            cursor: pointer" /><label for="41" style="vertical-align: middle; cursor: pointer">设施名称41
+                            </label>
+                    </div>
+                    <div style="width: 100px; height: 28px; float: left">
+                        <input type="checkbox" checked="checked" name="PlantGroup" value="42" style="vertical-align: middle;
+                            cursor: pointer" /><label for="42" style="vertical-align: middle; cursor: pointer">设施名称42
+                            </label>
+                    </div>
+                    <div style="width: 100px; height: 28px; float: left">
+                        <input type="checkbox" checked="checked" name="PlantGroup" value="43" style="vertical-align: middle;
+                            cursor: pointer" /><label for="43" style="vertical-align: middle; cursor: pointer">设施名称43
+                            </label>
+                    </div>
+                    <div style="width: 100px; height: 28px; float: left">
+                        <input type="checkbox" checked="checked" name="PlantGroup" value="44" style="vertical-align: middle;
+                            cursor: pointer" /><label for="44" style="vertical-align: middle; cursor: pointer">设施名称44
+                            </label>
+                    </div>
+                    <div style="width: 100px; height: 28px; float: left">
+                        <input type="checkbox" checked="checked" name="PlantGroup" value="45" style="vertical-align: middle;
+                            cursor: pointer" /><label for="45" style="vertical-align: middle; cursor: pointer">设施名称45
+                            </label>
+                    </div>
+                    <div style="width: 100px; height: 28px; float: left">
+                        <input type="checkbox" checked="checked" name="PlantGroup" value="46" style="vertical-align: middle;
+                            cursor: pointer" /><label for="46" style="vertical-align: middle; cursor: pointer">设施名称46
+                            </label>
+                    </div>
+                    <div style="width: 100px; height: 28px; float: left">
+                        <input type="checkbox" checked="checked" name="PlantGroup" value="47" style="vertical-align: middle;
+                            cursor: pointer" /><label for="47" style="vertical-align: middle; cursor: pointer">设施名称47
+                            </label>
+                    </div>
+                    <div style="width: 100px; height: 28px; float: left">
+                        <input type="checkbox" checked="checked" name="PlantGroup" value="48" style="vertical-align: middle;
+                            cursor: pointer" /><label for="48" style="vertical-align: middle; cursor: pointer">设施名称48
+                            </label>
+                    </div>
+                    <div style="width: 100px; height: 28px; float: left">
+                        <input type="checkbox" checked="checked" name="PlantGroup" value="49" style="vertical-align: middle;
+                            cursor: pointer" /><label for="49" style="vertical-align: middle; cursor: pointer">设施名称49
+                            </label>
+                    </div>
+                    <div style="width: 100px; height: 28px; float: left">
+                        <input type="checkbox" checked="checked" name="PlantGroup" value="50" style="vertical-align: middle;
+                            cursor: pointer" /><label for="50" style="vertical-align: middle; cursor: pointer">设施名称50
+                            </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

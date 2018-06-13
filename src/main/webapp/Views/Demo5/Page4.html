@@ -1,0 +1,305 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>辐射职业照射数据采集和统一管理</title>
+    <link type="text/css" rel="Stylesheet" href="../../Contents/Css/base.css" />
+    <link type="text/css" rel="Stylesheet" href="../../Contents/Css/platform.css" />
+    <link type="text/css" rel="Stylesheet" href="../../Scripts/jQEasyUI/themes/easyui.css" />
+    <link type="text/css" rel="Stylesheet" href="../../Scripts/jQEasyUI/themes/icon.css" />
+    <script type="text/javascript" src="../../Scripts/jquery.min.js"></script>
+    <script type="text/javascript" src="../../Scripts/IllegalityCheck.js"></script>
+    <script type="text/javascript" src="../../Scripts/jQEasyUI/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../../Scripts/jQEasyUI/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="../../Scripts/echarts-all.js"></script>
+    <script type="text/javascript" src="../../Scripts/FunctionJS.js"></script>
+</head>
+<body>
+    <div class="easyui-layout" fit="true">
+        <div data-options="region:'north',border:true,iconCls:'icon-search'" style="height: 86px"
+            title="查询条件">
+            <table class="conditions">
+                <tr>
+              <td class="con-left">
+                        行业类别
+                    </td>
+                    <td class="con-right" style="width: 110px">
+                        <select class="easyui-combobox" id="S1" editable="false" style="width: 100px; height: 28px;
+                            line-height: 28px;" panelheight="auto">
+                            <option value="">=全部=</option>
+                            <option value="核设施">核设施</option>
+                            <option value="铀矿冶">铀矿冶</option>
+                            <option value="核技术应用">核技术应用</option>
+                            <option value="其它">其它</option>
+                        </select>
+                    </td>
+                    <td class="con-left">
+                        核设施:
+                    </td>
+                    <td class="con-right" style="width: 115px">
+                        <select class="easyui-combobox"  id="S2" style="width: 110px; height: 28px; line-height: 28px;"
+                            panelheight="auto" enable="false">
+                            <option value="">= 选择 = </option>
+                            <option value="核设施1">核设施1</option>
+                            <option value="核设施2">核设施2</option>
+                            <option value="核设施3">核设施3</option>
+                            <option value="核设施4">核设施4</option>
+                            <option value="核设施5">核设施5</option>
+                            <option value="核设施6">核设施6</option>
+                            <option value="核设施7">核设施7</option>
+                            <option value="核设施8">核设施8</option>
+                            <option value="核设施9">核设施9</option>
+                            <option value="核设施10">核设施10</option>
+                            <option value="核设施11">核设施11</option>
+                            <option value="核设施12">核设施12</option>
+                            <option value="核设施13">核设施13</option>
+                            <option value="核设施14">核设施14</option>
+                            <option value="核设施15">核设施15</option>
+                            <option value="核设施16">核设施16</option>
+                            <option value="核设施17">核设施17</option>
+                            <option value="核设施18">核设施18</option>
+                            <option value="核设施19">核设施19</option>
+                            <option value="核设施20">核设施20</option>
+                            <option value="核设施21">核设施21</option>
+                            <option value="核设施22">核设施22</option>
+                        </select>
+                    </td>
+                    <td class="con-left">
+                        年份:
+                    </td>
+                    <td class="con-right" style="width: 180px">
+                        <select class="easyui-combobox" style="width: 80px; height: 28px; line-height: 28px;"
+                            panelheight="auto" enable="false">
+                            <option value="1997">1997</option>
+                            <option value="1998">1998</option>
+                            <option value="1999">1999</option>
+                            <option value="2000">2000</option>
+                            <option value="2001">2001</option>
+                            <option value="2002">2002</option>
+                            <option value="2003">2003</option>
+                            <option value="2004">2004</option>
+                            <option value="2005">2005</option>
+                            <option value="2006">2006</option>
+                            <option value="2007">2007</option>
+                            <option value="2008">2008</option>
+                            <option value="2009" selected="selected">2009</option>
+                            <option value="2010">2010</option>
+                            <option value="2011">2011</option>
+                            <option value="2012">2012</option>
+                            <option value="2013">2013</option>
+                            <option value="2014">2014</option>
+                            <option value="2015">2015</option>
+                            <option value="2016">2016</option>
+                            <option value="2017">2017</option>
+                            <option value="2018">2018</option>
+                        </select>
+                        -
+                        <select class="easyui-combobox" name="cbxYear" id="Select2" style="width: 80px; height: 28px;
+                            line-height: 28px;" panelheight="auto" enable="false" value="2018">
+                            <option value="1997">1997</option>
+                            <option value="1998">1998</option>
+                            <option value="1999">1999</option>
+                            <option value="2000">2000</option>
+                            <option value="2001">2001</option>
+                            <option value="2002">2002</option>
+                            <option value="2003">2003</option>
+                            <option value="2004">2004</option>
+                            <option value="2005">2005</option>
+                            <option value="2006">2006</option>
+                            <option value="2007">2007</option>
+                            <option value="2008">2008</option>
+                            <option value="2009">2009</option>
+                            <option value="2010">2010</option>
+                            <option value="2011">2011</option>
+                            <option value="2012">2012</option>
+                            <option value="2013">2013</option>
+                            <option value="2014">2014</option>
+                            <option value="2015">2015</option>
+                            <option value="2016">2016</option>
+                            <option value="2017" selected="selected">2017</option>
+                            <option value="2018">2018</option>
+                        </select>
+                    </td>
+                    <td class="con-left">
+                        数据来源:
+                    </td>
+                    <td class="con-right" style="width: 85px">
+                        <select class="easyui-combobox" style="width: 110px; height: 28px; line-height: 28px;"
+                            panelheight="auto" enable="false">
+                            <option value="常规和特殊监测（TLD＋待积有效剂量）">常规和特殊监测（TLD＋待积有效剂量）</option>
+                            <option value="任务监测（EPD）">任务监测（EPD）</option>
+                        </select>
+                    </td>
+                    <td class="con-button">
+                        <a href="javascript:;" id="btnSearch" onclick="LoadChart()" class="easyui-linkbutton" iconcls="icon-search"
+                            data-options="selected:false">生成图表</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div data-options="region:'west',border:true,iconCls:'icon-list'" style="width: 240px" title="数据列表">
+            <table id="grid" border="false"  fit="true" class="easyui-datagrid" data-options="toolbar: '#opButton',singleSelect: true, striped: true, pagination: false, rownumbers: true, nowrap: false">
+                <thead>
+                    <tr>
+                        <th data-options="field:'F0',width:100,align:'center',sortable: true">
+                            年份
+                        </th>
+                        <th data-options="field:'F1',width:100,align:'center',sortable: true">
+                            剂量值
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            2008
+                        </td>
+                        <td>
+                            1.5
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            2009
+                        </td>
+                        <td>
+                            2.43
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            2010
+                        </td>
+                        <td>
+                            3.67
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            2011
+                        </td>
+                        <td>
+                            2.12
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            2012
+                        </td>
+                        <td>
+                            3.56
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            2013
+                        </td>
+                        <td>
+                            4.1
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            2014
+                        </td>
+                        <td>
+                            2.63
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            2015
+                        </td>
+                        <td>
+                            5.67
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            2016
+                        </td>
+                        <td>
+                            1.23
+                        </td>
+                    </tr>
+                     <tr>
+                        <td>
+                            2017
+                        </td>
+                        <td>
+                            2.10
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div data-options="region:'center',border:true,iconCls:'icon-list'" title="趋势图">
+            <div id="main" class="chart-chart" style="height: 450px; margin-top: 20px;">
+            </div>
+        </div>
+    </div>
+    <div id="iframeDialog">
+    </div>
+</body>
+<script type="text/javascript">
+    $(document).ready(function () {
+        LoadChart();
+    });
+
+    function LoadChart() {
+        var nm = $("#S2").combobox("getValue") == "" ? ($("#S1").combobox("getValue") == "" ? "全部核设施" : $("#S1").combobox("getValue")) : $("#S2").combobox("getValue");
+        var option = {
+            tooltip: {
+                trigger: 'axis',
+                formatter: '{a0}:{c0}mSv'
+
+            },
+            legend: {
+                data: [nm]
+            },
+            toolbox: {
+                show: true,
+                feature: {
+                    saveAsImage: { show: true }
+                }
+            },
+            calculable: true,
+            smooth: false,
+            xAxis: [
+                {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: ['2008年', '2009年', '2010年', '2011年', '2012年', '2013年', '2014年', '2015年', '2016年', '2017年']
+                }
+                ],
+            yAxis: [
+                 {
+                     type: 'value',
+                     axisLabel: {
+                         formatter: function (value, index) {
+                             return value + "mSv";
+                         }
+                     }
+                 }
+            ],
+            series: [
+            {
+                name: nm,
+                type: 'line',
+                itemStyle: {
+                    normal: {
+                        lineStyle: {
+                            width: 3
+                        },
+                        label: { show: true }
+                    }
+                },
+                data: [1.5, 2.43, 3.67, 2.12, 3.56, 4.1, 2.63, 5.67, 1.23, 2.10]
+            }
+        ]
+        };
+
+        var myChart0 = echarts.init(document.getElementById('main'));
+        myChart0.setOption(option);
+    }
+</script>
+</html>

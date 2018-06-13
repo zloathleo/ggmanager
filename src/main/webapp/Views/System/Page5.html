@@ -1,0 +1,299 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>辐射职业照射数据采集和统一管理</title>
+    <link type="text/css" rel="Stylesheet" href="../../Contents/Css/base.css" />
+    <link type="text/css" rel="Stylesheet" href="../../Contents/Css/platform.css" />
+    <link type="text/css" rel="Stylesheet" href="../../Scripts/jQEasyUI/themes/easyui.css" />
+    <link type="text/css" rel="Stylesheet" href="../../Scripts/jQEasyUI/themes/icon.css" />
+    <script type="text/javascript" src="../../Scripts/jquery.min.js"></script>
+    <script type="text/javascript" src="../../Scripts/IllegalityCheck.js"></script>
+    <script type="text/javascript" src="../../Scripts/jQEasyUI/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../../Scripts/jQEasyUI/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="../../Scripts/FunctionJS.js"></script>
+    <script type="text/javascript">
+        var __grid;
+        $(function () {
+            $("#grid").datagrid({
+                rowStyler: function (index, row, css) {
+                    if (row.F01.toString().indexOf("异常") > -1) {
+                        return 'color:red;';
+                    }
+                }
+            });
+        });
+        function OpenV3() {
+
+        }
+    </script>
+</head>
+<body class="easyui-layout" fit="true">
+    <div data-options="region:'north',border:true,iconCls:'icon-search'" style="height: 86px"
+        title="查询条件">
+        <form id="searchForm1">
+        <table class="conditions">
+            <tr>
+                <td class="con-left" style="width: 80px">
+                    操作类型
+                </td>
+                <td class="con-right" style="width: 105px">
+                    <select class="easyui-combobox" editable="false" name="cdType" style="width: 80px;
+                        height: 28px; line-height: 28px;" panelheight="auto">
+                        <option value="">= 全部 = </option>
+                        <option value="1">登录</option>
+                        <option value="2">登出</option>
+                        <option value="3">新增</option>
+                        <option value="4">编辑</option>
+                        <option value="5">删除</option>
+                        <option value="6">导入</option>
+                        <option value="7">导出</option>
+                    </select>
+                </td>
+                <td class="con-left" style="width: 70px">
+                    时间段
+                </td>
+                <td class="con-right" style="width: 200px">
+                    <input class="easyui-datebox" editable="false" name="cdSDate" id="cdSDate" value=""
+                        style="width: 85px; height: 28px; line-height: 28px;" data-options="required:false">
+                    ~
+                    <input class="easyui-datebox" editable="false" name="cdEDate" id="cdEDate" value=""
+                        style="width: 85px; height: 28px; line-height: 28px;" data-options="required:false">
+                </td>
+                <td class="con-left" style="width: 80px">
+                    关键字
+                </td>
+                <td class="con-right" style="width: 105px">
+                    <input class="easyui-validatebox" type="text" style="width: 80px" name="WK_CPNAME"
+                        data-options="required:true" />
+                </td>
+                <td class="con-button">
+                    <a href="javascript:;" id="btnSearch" onclick="" class="easyui-linkbutton" iconcls="icon-search"
+                        data-options="selected:false">查询</a>
+                </td>
+            </tr>
+        </table>
+        </form>
+    </div>
+    <div data-options="region:'center',border:false,iconCls:'icon-list'">
+        <div id="opButton">
+            <a href="javascript:;" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-43'"
+                onclick="Exp()" title="导出">导出</a>
+        </div>
+        <table id="grid" border="false" fit="true" class="easyui-datagrid" data-options="toolbar: '#opButton',singleSelect: true, striped: true, pageSize: 20, pagination: true, rownumbers: true, nowrap: false">
+            <thead>
+                <tr>
+                    <th data-options="field:'F01',width:80,align:'center',sortable: true">
+                        异常类型
+                    </th>
+                    <th data-options="field:'F2',width:450,align:'left',sortable: true">
+                        异常内容
+                    </th>
+                    <th data-options="field:'F4',width:100,align:'center',sortable: true">
+                        操作者
+                    </th>
+                    <th data-options="field:'F5',width:140,align:'center',sortable: true">
+                        IP地址
+                    </th>
+                    <th data-options="field:'F6',width:150,align:'center',sortable: true">
+                        操作时间
+                    </th>
+                    <th data-options="field:'F7',width:80,align:'center',sortable: true">
+                        明细
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        新增
+                    </td>
+                    <td>
+                        个人剂量管理 => 常规/特殊监测个人剂量管理 => 批次信息新增
+                    </td>
+                    <td>
+                        张三1
+                    </td>
+                    <td>
+                        202.12.122.11
+                    </td>
+                    <td>
+                        2018-01-10 12:01:12
+                    </td>
+                    <td align="left">
+                        <a href='javascript:;' onclick="OpenV3()">
+                            <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                border: 0" />
+                            查看</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        修改
+                    </td>
+                    <td>
+                        个人剂量管理 => 常规/特殊监测个人剂量管理 => 批次信息新增
+                    </td>
+                    <td>
+                        张三1
+                    </td>
+                    <td>
+                        202.12.122.11
+                    </td>
+                    <td>
+                        2018-01-10 12:01:12
+                    </td>
+                    <td align="left">
+                        <a href='javascript:;' onclick="OpenV3()">
+                            <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                border: 0" />
+                            查看</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        删除
+                    </td>
+                    <td>
+                        个人剂量管理 => 常规/特殊监测个人剂量管理 => 明细信息删除
+                    </td>
+                    <td>
+                        张三1
+                    </td>
+                    <td>
+                        202.12.122.11
+                    </td>
+                    <td>
+                        2018-01-10 12:01:12
+                    </td>
+                    <td align="left">
+                        <a href='javascript:;' onclick="OpenV3()">
+                            <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                border: 0" />
+                            查看</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        删除
+                    </td>
+                    <td>
+                        个人剂量管理 => 任务相关监测个人剂量管理 => 信息删除
+                    </td>
+                    <td>
+                        张三1
+                    </td>
+                    <td>
+                        202.12.122.11
+                    </td>
+                    <td>
+                        2018-01-10 12:01:12
+                    </td>
+                    <td align="left">
+                        <a href='javascript:;' onclick="OpenV3()">
+                            <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                border: 0" />
+                            查看</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        删除
+                    </td>
+                    <td>
+                        个人剂量管理 => 任务相关监测个人剂量管理 => 信息删除
+                    </td>
+                    <td>
+                        张三1
+                    </td>
+                    <td>
+                        202.12.122.11
+                    </td>
+                    <td>
+                        2018-01-10 12:01:12
+                    </td>
+                    <td align="left">
+                        <a href='javascript:;' onclick="OpenV3()">
+                            <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                border: 0" />
+                            查看</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        导入
+                    </td>
+                    <td>
+                        个人剂量管理 => 任务相关监测个人剂量管理 => 明细信息导入
+                    </td>
+                    <td>
+                        张三3
+                    </td>
+                    <td>
+                        202.12.122.11
+                    </td>
+                    <td>
+                        2018-01-10 12:01:12
+                    </td>
+                    <td align="left">
+                        <a href='javascript:;' onclick="OpenV3()">
+                            <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                border: 0" />
+                            查看</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        导出
+                    </td>
+                    <td>
+                        个人剂量管理 => 任务相关监测个人剂量管理 => 明细信息导出
+                    </td>
+                    <td>
+                        张三3
+                    </td>
+                    <td>
+                        202.12.122.11
+                    </td>
+                    <td>
+                        2018-01-10 12:01:12
+                    </td>
+                    <td align="left">
+                        <a href='javascript:;' onclick="OpenV3()">
+                            <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                border: 0" />
+                            查看</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        导出
+                    </td>
+                    <td>
+                        集体剂量查询 => 常规/特殊集体剂量查询 => 导出
+                    </td>
+                    <td>
+                        张三3
+                    </td>
+                    <td>
+                        202.12.122.11
+                    </td>
+                    <td>
+                        2018-01-10 12:01:12
+                    </td>
+                    <td align="left">
+                        <a href='javascript:;' onclick="OpenV3()">
+                            <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                border: 0" />
+                            查看</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="iframeDialog">
+    </div>
+    <div style="display: none">
+        <iframe id="ifrExp" src=""></iframe>
+    </div>
+</body>
+</html>

@@ -1,0 +1,134 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>辐射职业照射数据采集和统一管理</title>
+    <link type="text/css" rel="Stylesheet" href="../../Contents/Css/base.css" />
+    <link type="text/css" rel="Stylesheet" href="../../Contents/Css/platform.css" />
+    <link type="text/css" rel="Stylesheet" href="../../Scripts/jQEasyUI/themes/easyui.css" />
+    <link type="text/css" rel="Stylesheet" href="../../Scripts/jQEasyUI/themes/icon.css" />
+    <script type="text/javascript" src="../../Scripts/jquery.min.js"></script>
+    <script type="text/javascript" src="../../Scripts/IllegalityCheck.js"></script>
+    <script type="text/javascript" src="../../Scripts/jQEasyUI/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../../Scripts/jQEasyUI/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="../../Scripts/FunctionJS.js"></script>
+</head>
+<body class="easyui-layout" fit="true">
+    <div data-options="region:'north',border:true,iconCls:'icon-search'" style="height: 215px"
+        title="上传申请材料">
+        <form id="searchForm1">
+        <table style="width: 98%" class="kv-table">
+            <tbody>
+                <tr>
+                    <td class="kv-label" style="width: 200px">
+                        人员选择<span class="ui-input-must">&nbsp;</span>
+                    </td>
+                    <td class="kv-content">
+                        <input type="hidden" name="WPR_WKID" id="WorkID" />
+                        <input class="easyui-validatebox" type="text" style="width: 150px" name="WorkName"
+                            data-options="required:true" readonly="readonly" id="WorkName" value=" 张三(2128108321718830****X)" />
+                        <img src="../../Contents/Images/users.png" alt="选择" align="absMiddle" style="cursor: pointer"
+                            onclick="ChoiceWorker()" />
+                        <img src="../../Contents/Images/doc.png" alt='' style="width: 13px; height: 13px;
+                            border: 0" />
+                        批量人员导入</a> <a href="javascript:;" id="btnSearch" onclick="" style="width: 260px"
+                            class="easyui-linkbutton" iconcls="icon-50" data-options="selected:false">提交申请材料，并获取人员的个人剂量信息</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="kv-label">
+                        剂量值>=
+                    </td>
+                    <td class="kv-content">
+                        <input class="easyui-validatebox" type="text" style="width: 30px" name="WorkName"
+                            data-options="required:true" readonly="readonly" id="Text1" value=" 0" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="kv-label">
+                        下载申请文件
+                    </td>
+                    <td class="kv-content">
+                        <a href='javascript:;'>
+                            <img src="../../Contents/Images/doc.png" alt='' style="width: 13px; height: 13px;
+                                border: 0" />
+                            申请文件</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="kv-label">
+                        上传申请文件（PDF格式）<span class="ui-input-must">&nbsp;</span>
+                    </td>
+                    <td class="kv-content">
+                        <input type="file" value="张三个人剂量档案申请文件（2018-05-10）.pdf" />
+                    </td>
+                </tr>
+        </table>
+        </form>
+    </div>
+    <div data-options="region:'center',border:false,iconCls:'icon-list'" title="张三个人剂量档案">
+        <table id="grid" border="false" fit="true" class="easyui-datagrid" data-options="singleSelect: true, striped: true, pagination: false, rownumbers: true">
+            <thead>
+                <tr>
+                    <th data-options="field:'F3',width:150,align:'center',sortable: true">
+                        人员姓名
+                    </th>
+                    <th data-options="field:'F4',width:120,align:'center',sortable: true">
+                        证件类型
+                    </th>
+                    <th data-options="field:'F5',width:200,align:'center',sortable: true">
+                        证件号
+                    </th>
+                    <th data-options="field:'F7',width:120,align:'center',sortable: true">
+                        2018年(mSv)
+                    </th>
+                    <th data-options="field:'F8',width:120,align:'center',sortable: true">
+                        2017年(mSv)
+                    </th>
+                    <th data-options="field:'F9',width:120,align:'center',sortable: true">
+                        2016年(mSv)
+                    </th>
+                    <th data-options="field:'F10',width:120,align:'center',sortable: true">
+                        2015年(mSv)
+                    </th>
+                    <th data-options="field:'F11',width:120,align:'center',sortable: true">
+                        2014年(mSv)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        张三
+                    </td>
+                    <td>
+                        身份证
+                    </td>
+                    <td>
+                        2128108321718830****X
+                    </td>
+                    <td>
+                        1.1
+                    </td>
+                    <td>
+                        1.0
+                    </td>
+                    <td>
+                        2.1
+                    </td>
+                     <td>
+                        1.0
+                    </td>
+                    <td>
+                        2.1
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="iframeDialog">
+    </div>
+    <div style="display: none">
+        <iframe id="ifrExp" src=""></iframe>
+    </div>
+</body>
+</html>

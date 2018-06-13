@@ -1,0 +1,98 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>
+        <%= string.Concat(AppHelper.AppName)%></title>
+    <link type="text/css" rel="Stylesheet" href="../../Contents/Css/base.css" />
+    <link type="text/css" rel="Stylesheet" href="../../Contents/Css/platform.css" />
+    <link type="text/css" rel="Stylesheet" href="../../Scripts/jQEasyUI/themes/easyui.css" />
+    <link type="text/css" rel="Stylesheet" href="../../Scripts/jQEasyUI/themes/icon.css" />
+    <script type="text/javascript" src="../../Scripts/jquery.min.js"></script>
+    <script type="text/javascript" src="../../Scripts/IllegalityCheck.js"></script>
+    <script type="text/javascript" src="../../Scripts/jQEasyUI/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../../Scripts/jQEasyUI/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="../../Scripts/FunctionJS.js"></script>
+    <script type="text/javascript">
+        var __form = $("#form1");
+        function DialogSave() {
+            if ($("#CT_FUNCTION").val() != '') {
+                $.messager.alert('提示信息', "数据库里已存在该设施，请注意查证！", 'info');
+                return false;
+            }
+        }
+    </script>
+</head>
+<body class="easyui-layout">
+    <form id="form1" method="post">
+    <table style="width: 560px" class="kv-table">
+        <tbody>
+            <tr>
+                <td class="kv-label">
+                    行业类别<span class="ui-input-must">&nbsp;</span>
+                </td>
+                <td class="kv-content">
+                   <select class="easyui-combobox" editable="false" style="width: 100px; height: 28px;
+                        line-height: 28px;" panelheight="auto">
+                        <option value="核设施">核设施</option>
+                        <option value="铀矿冶">铀矿冶</option>
+                        <option value="核技术应用">核技术应用</option>
+                        <option value="其它">其它</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="kv-label">
+                    职业类别<span class="ui-input-must">&nbsp;</span>
+                </td>
+                <td class="kv-content">
+                    <select class="easyui-combobox" editable="false" style="width: 100px; height: 28px;
+                        line-height: 28px;" panelheight="auto">
+                        <option value="职业类别1">职业类别1</option>
+                        <option value="职业类别2">职业类别2</option>
+                        <option value="职业类别3">职业类别3</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="kv-label">
+                    设施名称<span class="ui-input-must">&nbsp;</span>
+                </td>
+                <td class="kv-content">
+                    <input class="easyui-validatebox" type="text" style="width: 200px; height: 26px;
+                        line-height: 26px;" id="CT_FUNCTION" data-options="required:true" validtype="length[1,20]" />
+                </td>
+            </tr>
+            <tr>
+                <td class="kv-label">
+                    许可证编号<span class="ui-input-must">&nbsp;</span>
+                </td>
+                <td class="kv-content">
+                    <input class="easyui-validatebox" type="text" style="width: 200px; height: 26px;
+                        line-height: 26px;" name="CT_CONSTVALUE" validtype="length[0,20]" />
+                </td>
+            </tr>
+            <tr>
+                <td class="kv-label">
+                    内部编码<span class="ui-input-must">&nbsp;</span>
+                </td>
+                <td class="kv-content">
+                    <input class="easyui-validatebox" type="text" style="width: 200px; height: 26px;
+                        line-height: 26px;" name="CT_CONSTVALUE" validtype="length[0,20]" />
+                </td>
+            </tr>
+            <tr>
+                <td class="kv-label">
+                    备注
+                </td>
+                <td class="kv-content">
+                    <textarea type="text" style="width: 400px; height: 40px;" name="CT_DESC" class="easyui-validatebox"
+                        validtype="length[0,60]"></textarea>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    </form>
+</body>
+</html>
+<div id="ifrDialog">
+</div>

@@ -1,0 +1,156 @@
+html, body, div, span, applet, object, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video
+{
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-family: Arial, "ËÎÌו" ,Verdana,arial,serif, "iconfont";
+    font-size: 12px;
+    list-style: none;
+}
+body
+{
+    min-width: 1000px;
+    position: relative;
+}
+
+.center-part .center-items
+{
+    margin-bottom: 10px;
+}
+
+.center-part .center-items.todo
+{
+    position: relative;
+    height: 233px;
+    padding-right: 0px;
+}
+
+.center-part .center-items.todo .calendar-part
+{
+    position: absolute;
+    right: 0;
+    width: 215px;
+    top: 0;
+    bottom: 0;
+}
+
+.center-part .center-items.todo .work-items
+{
+    height: 230px;
+}
+
+.center-part .center-items.todo .work-items li
+{
+    float: left;
+    width: 33.333333333%;
+    cursor: pointer;
+}
+
+.center-part .center-items.todo .work-items li:first-child .work-inner .work-item i
+{
+    left: -2px;
+}
+
+.center-part .center-items.todo .work-items li .work-inner .work-item
+{
+    position: relative;
+    height: 111px;
+    color: #fff;
+}
+
+.center-part .center-items.todo .work-items li .work-inner .work-item i
+{
+    position: absolute;
+    font-size: 60px;
+    left: 11px;
+    top: 22px;
+}
+
+.center-part .center-items.todo .work-items li .work-inner .work-item span.num
+{
+    position: absolute;
+    left: 80px;
+    top: 30px;
+    font-size: 32px;
+}
+
+.center-part .center-items.todo .work-items li .work-inner .work-item span.num span
+{
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.center-part .center-items.todo .work-items li .work-inner .work-item label
+{
+    position: absolute;
+    top: 70px;
+    font-size: 14px;
+    font-weight: bold;
+    left: 75px;
+}
+
+.center-part .center-items.todo .work-items li .work-inner .work-item.green
+{
+    background-color: #1DA02B;
+    margin-right: 2px;
+    margin-bottom: 2px;
+}
+
+.center-part .center-items.todo .work-items li .work-inner .work-item.red
+{
+    background-color: #f45438;
+    margin-right: 2px;
+    margin-bottom: 2px;
+}
+
+.center-part .center-items.todo .work-items li .work-inner .work-item.yellow
+{
+    background-color: #f29503;
+    margin-right: 2px;
+    margin-bottom: 2px;
+}
+
+.center-part .center-items.todo .work-items li .work-inner .work-item.blue
+{
+    margin-right: 2px;
+    background-color: #11a9e2;
+}
+
+.center-part .center-items.todo .work-items li .work-inner .work-item.purple
+{
+    background-color: #9b59b6;
+    margin-right: 2px;
+}
+
+.center-part .center-items.todo .work-items li .work-inner .work-item.gray
+{
+    margin-right: 2px;
+    background-color: #4f5c65;
+}
+
+.csj-menu
+{
+    padding: 5px;
+    margin: 1px;
+    height: 26px;
+    line-height: 26px;
+    cursor: pointer;
+}
+.csj-menu-selected
+{
+    padding: 5px;
+    margin: 5px;
+    height: 26px;
+    line-height: 26px;
+    cursor: pointer;
+    border: 1px solid #cacaca;
+    background-color: #E4EEFF;
+}
+.csj-menu img, .csj-menu-selected img
+{
+    vertical-align: middle;
+    margin: 2px;
+    margin-bottom: 3px;
+    width: 14px;
+    height: 14px;
+}

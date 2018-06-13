@@ -1,0 +1,1358 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>辐射职业照射数据采集和统一管理</title>
+    <link type="text/css" rel="Stylesheet" href="../../Contents/Css/base.css" />
+    <link type="text/css" rel="Stylesheet" href="../../Contents/Css/platform.css" />
+    <link type="text/css" rel="Stylesheet" href="../../Scripts/jQEasyUI/themes/easyui.css" />
+    <link type="text/css" rel="Stylesheet" href="../../Scripts/jQEasyUI/themes/icon.css" />
+    <script type="text/javascript" src="../../Scripts/jquery.min.js"></script>
+    <script type="text/javascript" src="../../Scripts/IllegalityCheck.js"></script>
+    <script type="text/javascript" src="../../Scripts/jQEasyUI/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../../Scripts/jQEasyUI/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="../../Scripts/FunctionJS.js"></script>
+    <script type="text/javascript">
+        var __grid;
+        $(function () {
+
+        });
+        function GetSelectedArr() {
+            var ids = [];
+            var rows = $("#grid").datagrid('getSelections');
+            for (var i = 0; i < rows.length; i++) {
+                ids.push(rows[i].UI_ID);
+            }
+            return ids.join(',');
+        }
+        function Add() {
+            __flag = 0;
+            var url = "Page2_1.html";
+            easyuiDialog("任务相关监测剂量 - 添加", url, 800, 400);
+        }
+        function Edit() {
+
+            var url = "Page2_1.html";
+            easyuiDialog("任务相关监测剂量 - 编辑", url, 800, 400);
+        }
+        function Imp() {
+            var url = "../Imp2.html";
+            easyuiDialog("数据导入", url, 800, 350);
+        }
+        function Delete() {
+            $.messager.confirm('提示信息', '注：删除操作不可恢复，您确定要继续么？', function (data) {
+                if (data) {
+
+                }
+            });
+        }
+    </script>
+</head>
+<body class="easyui-layout" fit="true">
+    <div data-options="region:'west',border:true,iconCls:'icon-list'" split="true" style="width: 420px"
+        title="剂量批次信息">
+        <div class="easyui-layout" fit="true">
+            <div data-options="region:'north',border:true,iconCls:'icon-search'" style="height: 46px">
+                <table class="conditions">
+                    <tr>
+                        <td class="con-left" style="width: 70px">
+                            关键字
+                        </td>
+                        <td class="con-right" style="width: 125px">
+                            <input class="easyui-validatebox" name="cdKey" value="" style="width: 120px; height: 28px;
+                                line-height: 28px;" data-options="required:false" validtype="length[1,100]">
+                        </td>
+                        <td class="con-button" colspan="3" style="text-align: left">
+                            <a href="javascript:;" id="A1" onclick="Refresh()" class="easyui-linkbutton" iconcls="icon-search"
+                                data-options="selected:false">查询</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div data-options="region:'center',border:false,iconCls:'icon-list'">
+                <div id="Div1">
+                    <a href="javascript:;" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-10'"
+                        onclick="Add1()" title="新增">新增</a> <a href="javascript:;" class="easyui-linkbutton"
+                            data-options="plain:true,iconCls:'icon-edit'" onclick="Edit1()" title="编辑">编辑</a>
+                    <a href="javascript:;" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-no'"
+                        onclick="Delete()" title="删除">删除</a> <a href="javascript:;" class="easyui-linkbutton"
+                            data-options="plain:true,iconCls:'icon-43'" onclick="Add()" title="导出">导出</a>
+                </div>
+                <table id="Table2" border="false" fit="true" class="easyui-datagrid" data-options="toolbar: '#Div1',singleSelect: true, striped: true, fitColumns: true, pageSize: 20, pagination: true, rownumbers: true, nowrap: false">
+                    <thead data-options="frozen:true">
+                        <tr>
+                            <th data-options="field:'4',width:100,align:'center',sortable: true">
+                                批次号
+                            </th>
+                            <th data-options="field:'17',width:60,align:'center',sortable: true">
+                                操作人
+                            </th>
+                            <th data-options="field:'16',width:70,align:'center',sortable: true">
+                                采集方式
+                            </th>
+                            <th data-options="field:'27',width:140,align:'center',sortable: true">
+                                操作时间
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                设施20180402
+                            </td>
+                            <td>
+                                张三1
+                            </td>
+                            <td>
+                                手工录入
+                            </td>
+                            <td>
+                                2018-04-02 10:27:08
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                设施20180301
+                            </td>
+                            <td>
+                                张三1
+                            </td>
+                            <td>
+                                自动录入
+                            </td>
+                            <td>
+                                2018-03-01 10:27:08
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                设施20180131
+                            </td>
+                            <td>
+                                张三1
+                            </td>
+                            <td>
+                                自动录入
+                            </td>
+                            <td>
+                                2018-01-31 10:27:08
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                设施20171110
+                            </td>
+                            <td>
+                                张三1
+                            </td>
+                            <td>
+                                手工录入
+                            </td>
+                            <td>
+                                2017-11-10 10:27:08
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                设施20170829
+                            </td>
+                            <td>
+                                张三1
+                            </td>
+                            <td>
+                                手工录入
+                            </td>
+                            <td>
+                                2017-08-29 10:27:08
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                设施20170328
+                            </td>
+                            <td>
+                                张三1
+                            </td>
+                            <td>
+                                手工录入
+                            </td>
+                            <td>
+                                2017-03-28 10:27:08
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                设施20170127
+                            </td>
+                            <td>
+                                张三1
+                            </td>
+                            <td>
+                                手工录入
+                            </td>
+                            <td>
+                                2017-01-27 10:27:08
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                设施20170326
+                            </td>
+                            <td>
+                                张三2
+                            </td>
+                            <td>
+                                手工录入
+                            </td>
+                            <td>
+                                2017-03-26 10:27:08
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                设施20170325
+                            </td>
+                            <td>
+                                张三4
+                            </td>
+                            <td>
+                                手工录入
+                            </td>
+                            <td>
+                                2017-03-25 10:27:08
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div data-options="region:'center',border:false,iconCls:'icon-list'">
+        <div class="easyui-layout" fit="true">
+            <div data-options="region:'north',border:true,iconCls:'icon-search'" style="height: 86px"
+                title="查询条件">
+                <form id="searchForm1">
+                <table class="conditions">
+                    <tr>
+                        <td class="con-left" style="width: 60px">
+                            设施名称
+                        </td>
+                        <td class="con-right" style="width: 60px">
+                            <input class="easyui-validatebox" type="text" style="width: 30px" name="WK_CPNAME"
+                                data-options="required:true" readonly="readonly" />
+                            <img src="../../Contents/Images/icon_site.gif" alt="选择" align="absMiddle" style="cursor: pointer"
+                                onclick="ChoiceCompany()" />
+                        </td>
+                        <td class="con-left" style="width: 70px">
+                            任务类别
+                        </td>
+                        <td class="con-right" style="width: 85px">
+                            <select class="easyui-combobox" editable="false" name="cdType" style="width: 80px;
+                                height: 28px; line-height: 28px;" panelheight="auto">
+                                <option value="">= 全部 = </option>
+                                <option value="1">作业任务类别1</option>
+                                <option value="2">作业任务类别2</option>
+                            </select>
+                        </td>
+                        <td class="con-left" style="width: 80px">
+                            查询时间段
+                        </td>
+                        <td class="con-right" style="width: 120px">
+                            <input class="easyui-datebox" editable="false" name="cdSDate" id="cdSDate" value=""
+                                style="width: 50px; height: 28px; line-height: 28px;" data-options="required:false">
+                            ~
+                            <input class="easyui-datebox" editable="false" name="cdEDate" id="cdEDate" value=""
+                                style="width: 50px; height: 28px; line-height: 28px;" data-options="required:false">
+                        </td>
+                        <td class="con-left" style="width: 60px">
+                            关键字
+                        </td>
+                        <td class="con-right" style="width: 35px">
+                            <input class="easyui-validatebox" name="cdKey" value="" style="width: 30px; height: 28px;
+                                line-height: 28px;" data-options="required:false" validtype="length[1,100]">
+                        </td>
+                        <td class="con-button">
+                            <a href="javascript:;" id="btnSearch" onclick="" class="easyui-linkbutton" iconcls="icon-search"
+                                data-options="selected:false">查询</a>
+                        </td>
+                    </tr>
+                </table>
+                </form>
+            </div>
+            <div data-options="region:'center',border:false,iconCls:'icon-list'">
+                <div id="opButton">
+                    <a href="javascript:;" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-10'"
+                        onclick="Add()" title="新增">新增</a> <a href="javascript:;" class="easyui-linkbutton"
+                            data-options="plain:true,iconCls:'icon-edit'" onclick="Edit()" title="编辑">编辑</a>
+                    <a href="javascript:;" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-no'"
+                        onclick="Delete()" title="删除">删除</a> <a href="javascript:;" class="easyui-linkbutton"
+                            data-options="plain:true,iconCls:'icon-13'" onclick="Imp()" title="导入">导入</a>
+                    <a href="javascript:;" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-43'"
+                        onclick="Exp()" title="导出">导出</a>
+                </div>
+                <table id="grid" border="false" fit="true" class="easyui-datagrid" data-options="toolbar: '#opButton',singleSelect: true, striped: true, pageSize: 20, pagination: true, rownumbers: true, nowrap: false">
+                    <thead>
+                        <tr>
+                            <th data-options="field:'F111',width:100,align:'center',sortable: true">
+                                设施名称
+                            </th>
+                            <th data-options="field:'F211',width:100,align:'center',sortable: true">
+                                单位
+                            </th>
+                            <th data-options="field:'F01',width:100,align:'center',sortable: true">
+                                数据类型
+                            </th>
+                            <th data-options="field:'F1',width:100,align:'center',sortable: true">
+                                设施运行状态
+                            </th>
+                            <th data-options="field:'F2',width:100,align:'center',sortable: true">
+                                作业任务类别
+                            </th>
+                            <th data-options="field:'F3',width:100,align:'center',sortable: true">
+                                子任务类别
+                            </th>
+                            <th data-options="field:'F10',width:80,align:'center',sortable: true">
+                                人员姓名
+                            </th>
+                            <th data-options="field:'F6',width:160,align:'center',sortable: true">
+                                证件号
+                            </th>
+                            <th data-options="field:'itemid112',width:80,align:'center'">
+                                Hp(10)/中子
+                            </th>
+                            <th data-options="field:'itemid113',width:100,align:'center'">
+                                Hp(10)/除中子外
+                            </th>
+                            <th data-options="field:'itemid114',width:65,align:'center'">
+                                Hp(0.07)
+                            </th>
+                            <th data-options="field:'itemid115',width:65,align:'center'">
+                                Hp(3)
+                            </th>
+                            <th data-options="field:'itemid118',width:80,align:'center'">
+                                肢端
+                            </th>
+                            <th data-options="field:'itemid116',width:80,align:'center'">
+                                待积有效剂量
+                            </th>
+                            <th data-options="field:'F9',width:140,align:'center',sortable: true">
+                                起始时间
+                            </th>
+                            <th data-options="field:'F9',width:140,align:'center',sortable: true">
+                                结束时间
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                设施名称1
+                            </td>
+                            <td>
+                                单位1
+                            </td>
+                            <td>
+                                EPD
+                            </td>
+                            <td>
+                                设施运行状态1
+                            </td>
+                            <td>
+                                作业任务类别1
+                            </td>
+                            <td>
+                                子任务类别1
+                            </td>
+                            <td>
+                                张三1
+                            </td>
+                            <td>
+                                2128108321718830****X
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                                2017-01-01 12:01:02
+                            </td>
+                            <td>
+                                2017-01-01 14:01:02
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                设施名称1
+                            </td>
+                            <td>
+                                单位1
+                            </td>
+                            <td>
+                                EPD
+                            </td>
+                            <td>
+                                设施运行状态2
+                            </td>
+                            <td>
+                                作业任务类别2
+                            </td>
+                            <td>
+                                子任务类别2
+                            </td>
+                            <td>
+                                张三2
+                            </td>
+                            <td>
+                                2128108321718830****X
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                                2017-01-01 12:01:02
+                            </td>
+                            <td>
+                                2017-01-01 14:01:02
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                设施名称1
+                            </td>
+                            <td>
+                                单位1
+                            </td>
+                            <td>
+                                TLD
+                            </td>
+                            <td>
+                                设施运行状态3
+                            </td>
+                            <td>
+                                作业任务类别3
+                            </td>
+                            <td>
+                                子任务类别3
+                            </td>
+                            <td>
+                                张三3
+                            </td>
+                            <td>
+                                2128108321718830****X
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                                2017-01-01 12:01:02
+                            </td>
+                            <td>
+                                2017-01-01 14:01:02
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                设施名称1
+                            </td>
+                            <td>
+                                单位1
+                            </td>
+                            <td>
+                                EPD
+                            </td>
+                            <td>
+                                设施运行状态4
+                            </td>
+                            <td>
+                                作业任务类别4
+                            </td>
+                            <td>
+                                子任务类别4
+                            </td>
+                            <td>
+                                张三4
+                            </td>
+                            <td>
+                                2128108321718830****X
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                                2017-01-01 12:01:02
+                            </td>
+                            <td>
+                                2017-01-01 14:01:02
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                设施名称1
+                            </td>
+                            <td>
+                                单位1
+                            </td>
+                            <td>
+                                EPD
+                            </td>
+                            <td>
+                                设施运行状态5
+                            </td>
+                            <td>
+                                作业任务类别5
+                            </td>
+                            <td>
+                                子任务类别5
+                            </td>
+                            <td>
+                                张三5
+                            </td>
+                            <td>
+                                2128108321718830****X
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                                2017-01-01 12:01:02
+                            </td>
+                            <td>
+                                2017-01-01 14:01:02
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                设施名称1
+                            </td>
+                            <td>
+                                单位1
+                            </td>
+                            <td>
+                                TLD
+                            </td>
+                            <td>
+                                设施运行状态6
+                            </td>
+                            <td>
+                                作业任务类别6
+                            </td>
+                            <td>
+                                子任务类别6
+                            </td>
+                            <td>
+                                张三6
+                            </td>
+                            <td>
+                                2128108321718830****X
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                                2017-01-01 12:01:02
+                            </td>
+                            <td>
+                                2017-01-01 14:01:02
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                设施名称1
+                            </td>
+                            <td>
+                                单位1
+                            </td>
+                            <td>
+                                EPD
+                            </td>
+                            <td>
+                                设施运行状态7
+                            </td>
+                            <td>
+                                作业任务类别7
+                            </td>
+                            <td>
+                                子任务类别7
+                            </td>
+                            <td>
+                                张三7
+                            </td>
+                            <td>
+                                2128108321718830****X
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                                2017-01-01 12:01:02
+                            </td>
+                            <td>
+                                2017-01-01 14:01:02
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                设施名称1
+                            </td>
+                            <td>
+                                单位1
+                            </td>
+                            <td>
+                                EPD
+                            </td>
+                            <td>
+                                设施运行状态8
+                            </td>
+                            <td>
+                                作业任务类别8
+                            </td>
+                            <td>
+                                子任务类别8
+                            </td>
+                            <td>
+                                张三8
+                            </td>
+                            <td>
+                                2128108321718830****X
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                                2017-01-01 12:01:02
+                            </td>
+                            <td>
+                                2017-01-01 14:01:02
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                设施名称1
+                            </td>
+                            <td>
+                                单位1
+                            </td>
+                            <td>
+                                EPD
+                            </td>
+                            <td>
+                                设施运行状态9
+                            </td>
+                            <td>
+                                作业任务类别9
+                            </td>
+                            <td>
+                                子任务类别9
+                            </td>
+                            <td>
+                                张三9
+                            </td>
+                            <td>
+                                2128108321718830****X
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                                2017-01-01 12:01:02
+                            </td>
+                            <td>
+                                2017-01-01 14:01:02
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                设施名称1
+                            </td>
+                            <td>
+                                单位1
+                            </td>
+                            <td>
+                                EPD
+                            </td>
+                            <td>
+                                设施运行状态10
+                            </td>
+                            <td>
+                                作业任务类别10
+                            </td>
+                            <td>
+                                子任务类别10
+                            </td>
+                            <td>
+                                张三10
+                            </td>
+                            <td>
+                                2128108321718830****X
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                                2017-01-01 12:01:02
+                            </td>
+                            <td>
+                                2017-01-01 14:01:02
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                设施名称1
+                            </td>
+                            <td>
+                                单位1
+                            </td>
+                            <td>
+                                EPD
+                            </td>
+                            <td>
+                                设施运行状态11
+                            </td>
+                            <td>
+                                作业任务类别11
+                            </td>
+                            <td>
+                                子任务类别11
+                            </td>
+                            <td>
+                                张三11
+                            </td>
+                            <td>
+                                2128108321718830****X
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                                2017-01-01 12:01:02
+                            </td>
+                            <td>
+                                2017-01-01 14:01:02
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                设施名称1
+                            </td>
+                            <td>
+                                单位1
+                            </td>
+                            <td>
+                                EPD
+                            </td>
+                            <td>
+                                设施运行状态12
+                            </td>
+                            <td>
+                                作业任务类别12
+                            </td>
+                            <td>
+                                子任务类别12
+                            </td>
+                            <td>
+                                张三12
+                            </td>
+                            <td>
+                                2128108321718830****X
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                                2017-01-01 12:01:02
+                            </td>
+                            <td>
+                                2017-01-01 14:01:02
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                设施名称1
+                            </td>
+                            <td>
+                                单位1
+                            </td>
+                            <td>
+                                EPD
+                            </td>
+                            <td>
+                                设施运行状态13
+                            </td>
+                            <td>
+                                作业任务类别13
+                            </td>
+                            <td>
+                                子任务类别13
+                            </td>
+                            <td>
+                                张三13
+                            </td>
+                            <td>
+                                2128108321718830****X
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                                2017-01-01 12:01:02
+                            </td>
+                            <td>
+                                2017-01-01 14:01:02
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                设施名称1
+                            </td>
+                            <td>
+                                单位1
+                            </td>
+                            <td>
+                                EPD
+                            </td>
+                            <td>
+                                设施运行状态14
+                            </td>
+                            <td>
+                                作业任务类别14
+                            </td>
+                            <td>
+                                子任务类别14
+                            </td>
+                            <td>
+                                张三14
+                            </td>
+                            <td>
+                                2128108321718830****X
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                                2017-01-01 12:01:02
+                            </td>
+                            <td>
+                                2017-01-01 14:01:02
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                设施名称1
+                            </td>
+                            <td>
+                                单位1
+                            </td>
+                            <td>
+                                EPD
+                            </td>
+                            <td>
+                                设施运行状态15
+                            </td>
+                            <td>
+                                作业任务类别15
+                            </td>
+                            <td>
+                                子任务类别15
+                            </td>
+                            <td>
+                                张三15
+                            </td>
+                            <td>
+                                2128108321718830****X
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                                2017-01-01 12:01:02
+                            </td>
+                            <td>
+                                2017-01-01 14:01:02
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                设施名称1
+                            </td>
+                            <td>
+                                单位1
+                            </td>
+                            <td>
+                                EPD
+                            </td>
+                            <td>
+                                设施运行状态16
+                            </td>
+                            <td>
+                                作业任务类别16
+                            </td>
+                            <td>
+                                子任务类别16
+                            </td>
+                            <td>
+                                张三16
+                            </td>
+                            <td>
+                                2128108321718830****X
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                                2017-01-01 12:01:02
+                            </td>
+                            <td>
+                                2017-01-01 14:01:02
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                设施名称1
+                            </td>
+                            <td>
+                                单位1
+                            </td>
+                            <td>
+                                EPD
+                            </td>
+                            <td>
+                                设施运行状态17
+                            </td>
+                            <td>
+                                作业任务类别17
+                            </td>
+                            <td>
+                                子任务类别17
+                            </td>
+                            <td>
+                                张三17
+                            </td>
+                            <td>
+                                2128108321718830****X
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                                2017-01-01 12:01:02
+                            </td>
+                            <td>
+                                2017-01-01 14:01:02
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                设施名称1
+                            </td>
+                            <td>
+                                单位1
+                            </td>
+                            <td>
+                                EPD
+                            </td>
+                            <td>
+                                设施运行状态18
+                            </td>
+                            <td>
+                                作业任务类别18
+                            </td>
+                            <td>
+                                子任务类别18
+                            </td>
+                            <td>
+                                张三18
+                            </td>
+                            <td>
+                                2128108321718830****X
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                                2017-01-01 12:01:02
+                            </td>
+                            <td>
+                                2017-01-01 14:01:02
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                设施名称1
+                            </td>
+                            <td>
+                                单位1
+                            </td>
+                            <td>
+                                EPD
+                            </td>
+                            <td>
+                                设施运行状态19
+                            </td>
+                            <td>
+                                作业任务类别19
+                            </td>
+                            <td>
+                                子任务类别19
+                            </td>
+                            <td>
+                                张三19
+                            </td>
+                            <td>
+                                2128108321718830****X
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                                2017-01-01 12:01:02
+                            </td>
+                            <td>
+                                2017-01-01 14:01:02
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                设施名称1
+                            </td>
+                            <td>
+                                单位1
+                            </td>
+                            <td>
+                                EPD
+                            </td>
+                            <td>
+                                设施运行状态20
+                            </td>
+                            <td>
+                                作业任务类别20
+                            </td>
+                            <td>
+                                子任务类别20
+                            </td>
+                            <td>
+                                张三20
+                            </td>
+                            <td>
+                                2128108321718830****X
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                                2017-01-01 12:01:02
+                            </td>
+                            <td>
+                                2017-01-01 14:01:02
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                设施名称1
+                            </td>
+                            <td>
+                                单位1
+                            </td>
+                            <td>
+                                EPD
+                            </td>
+                            <td>
+                                设施运行状态21
+                            </td>
+                            <td>
+                                作业任务类别21
+                            </td>
+                            <td>
+                                子任务类别21
+                            </td>
+                            <td>
+                                张三21
+                            </td>
+                            <td>
+                                2128108321718830****X
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                                0.23
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                                2017-01-01 12:01:02
+                            </td>
+                            <td>
+                                2017-01-01 14:01:02
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div id="iframeDialog">
+    </div>
+</body>
+</html>

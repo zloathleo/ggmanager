@@ -1,0 +1,222 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>辐射职业照射数据采集和统一管理</title>
+    <link type="text/css" rel="Stylesheet" href="../../Contents/Css/base.css" />
+    <link type="text/css" rel="Stylesheet" href="../../Contents/Css/platform.css" />
+    <link type="text/css" rel="Stylesheet" href="../../Scripts/jQEasyUI/themes/easyui.css" />
+    <link type="text/css" rel="Stylesheet" href="../../Scripts/jQEasyUI/themes/icon.css" />
+    <script type="text/javascript" src="../../Scripts/jquery.min.js"></script>
+    <script type="text/javascript" src="../../Scripts/IllegalityCheck.js"></script>
+    <script type="text/javascript" src="../../Scripts/jQEasyUI/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../../Scripts/jQEasyUI/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="../../Scripts/FunctionJS.js"></script>
+    <script type="text/javascript">
+        var __form = $("#form1");
+        $(function () {
+            $('#chk').on("change", function () {
+                if ($("#chk").is(":checked")) {
+                    $("#WK_PASSPORT").validatebox({ validType: 'idcard' });
+                } else {
+                    $("#WK_PASSPORT").validatebox({ validType: 'length[1,40]' });
+                }
+            });
+        })
+        function CompanyDialogSave() {
+            if (__sid == "0") {
+                $.messager.alert('警告', "请选择公司!", 'warning');
+                return false;
+            } else {
+                $("[name=WK_CPID]").val(__sid);
+                $("[name=WK_CPNAME]").val(__sname);
+                __companyDialog.dialog('close');
+            }
+        }
+        function ChoiceCompany() {
+            var url = "/Views/Work/SelCompany.aspx";
+            easyuiCompanyDialog("公司选择", url, 500, 400);
+        }
+        function ShowOrHide() {
+            if ($("[name=WK_ISEXIST]").val() == "是") {
+                $("#trExist").hide();
+                $("#WK_RESIGNDATE").datebox("setValue", "");
+                $("[name=WK_RESIGNDESC]").val("");
+            } else {
+                $("#trExist").show();
+            }
+        }
+        function GetBrith() {
+            var $chbCheck = $("#chk");
+            if ($chbCheck.is(":checked")) {
+                var str = $("[name=WK_PASSPORT]").val();
+                var strYear = str.substr(6, 4);
+                var strMonth = str.substr(10, 2);
+                var strDay = str.substr(12, 2);
+                var brith = strYear + "-" + strMonth + "-" + strDay;
+                if (isDate(brith)) {
+                    $("#WK_BIRTH").datebox("setValue", brith);
+                } else {
+                    $("#WK_BIRTH").datebox("setValue", "");
+                }
+            }
+            var _isExist = $.ajax({
+                url: "/AjaxWORKER/ChkPassportLastIsExist.ashx",
+                data: { passport: $("[name=WK_PASSPORT]").val(), id: "", random: Math.random() },
+                async: false,
+                cache: false
+            }).responseText;
+            if (_isExist != '0') {
+                $.messager.alert('提示信息', "数据库中已存在（<font color=red>" + _isExist + "</font>）条除了身份证号后两位，其它位相同的数据，请注意查证！", 'info');
+            }
+        }
+        function isDate(dateString) {
+            //年月日正则表达式
+            var r = dateString.match(/^(\d{1,4})(-|\/)(\d{1,2})\2(\d{1,2})$/);
+            if (r == null) {
+                return false;
+            }
+            var d = new Date(r[1], r[3] - 1, r[4]);
+            var num = (d.getFullYear() == r[1] && (d.getMonth() + 1) == r[3] && d.getDate() == r[4]);
+            if (num == 0) {
+            }
+            return (num != 0);
+        }
+        function GetEngName() {
+            $("[name=WK_ENNAME]").val($.ajax({
+                url: "/AjaxWORKER/GetEnName.ashx",
+                data: { cnname: $("[name=WK_CNNAME]").val(), random: Math.random() },
+                async: false,
+                cache: false
+            }).responseText);
+
+            var isUserName = $.ajax({
+                url: "/AjaxWORKER/ChkCnNameIsExist.ashx",
+                data: { cnname: $("[name=WK_CNNAME]").val(), id: "", random: Math.random() },
+                async: false,
+                cache: false
+            }).responseText
+            if (isUserName != '0') {
+                $.messager.alert('提示信息', '数据库中已存在（<font color=red>' + isUserName + '</font>）条同名的员工，请注意查证！', 'info');
+            }
+        }
+        function TopDialogSave() {
+            var _isExist = $.ajax({
+                url: "/AjaxWORKER/ChkStaffNoIsExist.ashx",
+                data: { staffno: $("[name=WK_STAFFNO]").val(), id: "", random: Math.random() },
+                async: false,
+                cache: false
+            }).responseText;
+            if (_isExist != '0') {
+                $.messager.alert('提示信息', "员工号已存在，请重新输入！", 'info');
+                return false;
+            }
+            _isExist = $.ajax({
+                url: "/AjaxWORKER/ChkPassportIsExist.ashx",
+                data: { passport: $("[name=WK_PASSPORT]").val(), id: "", random: Math.random() },
+                async: false,
+                cache: false
+            }).responseText;
+            if (_isExist != '0') {
+                $.messager.alert('提示信息', "身份证号已存在，请重新输入！", 'info');
+                return false;
+            }
+            GetFormAjax("/AjaxWORKER/Insert.ashx", RefreshCurTabPage);
+        }
+    </script>
+</head>
+<body class="easyui-layout">
+    <form id="form1" method="post">
+    <table style="width: 760px" class="kv-table">
+        <tbody>
+            <tr>
+                <td class="kv-label">
+                    员工姓名<span class="ui-input-must">&nbsp;</span>
+                </td>
+                <td class="kv-content">
+                    <input class="easyui-validatebox" type="text" style="width: 150px;" name="WK_CNNAME"
+                        data-options="required:true" validtype="length[1,40]" onchange="GetEngName();" />
+                </td>
+                <td class="kv-label">
+                    性别<span class="ui-input-must">&nbsp;</span>
+                </td>
+                <td class="kv-content">
+                    <input name="WK_SEX" value="男" type="hidden" /><input type="radio" checked="checked"
+                        name="GROUP_WK_SEX" value="男" id="WK_SEX_0" style="vertical-align: middle; cursor: pointer;" /><label
+                            for="WK_SEX_0" style="vertical-align: middle; cursor: pointer">男</label>
+                    <input type="radio" name="GROUP_WK_SEX" value="女" id="WK_SEX_1" style="vertical-align: middle;
+                        cursor: pointer;" /><label for="WK_SEX_1" style="vertical-align: middle; cursor: pointer">女</label>
+                    <script type="text/javascript">
+                        $(function () {
+                            $('input:radio[name=GROUP_WK_SEX]').change(function () {
+                                var vals = "";
+                                $('input:radio[name=GROUP_WK_SEX]:checked').each(function (i) {
+                                    vals = $(this).val();
+                                });
+                                $('[name=WK_SEX]').val(vals);
+
+                            });
+                        });
+                    </script>
+                </td>
+            </tr>
+            <tr>
+                <td class="kv-label">
+                    证件类型
+                </td>
+                <td class="kv-content">
+                    <select name="" class="easyui-combobox" style="width: 150px">
+                        <option value="">身份证</option>
+                        <option value="军官证">军官证</option>
+                        <option value="护照号">护照号</option>
+                    </select>
+                </td>
+                <td class="kv-label">
+                    证件号码<span class="ui-input-must">&nbsp;</span>
+                </td>
+                <td class="kv-content">
+                    <input class="easyui-validatebox" type="text" style="width: 150px;" name="WK_PASSPORT"
+                        data-options="required:true" id="WK_PASSPORT" validtype="idcard" onchange="GetBrith();" />
+                    <input type="checkbox" id="chk" checked="checked" style="vertical-align: middle;
+                        cursor: pointer" /><label for="chk" style="cursor: pointer">检测合法性
+                        </label>
+                </td>
+            </tr>
+            <tr>
+                <td class="kv-label">
+                    出生年月<span class="ui-input-must">&nbsp;</span>
+                </td>
+                <td class="kv-content">
+                    <input class="easyui-datebox" editable="false" type="text" style="width: 150px; line-height: 28px;
+                        height: 28px;" name="WK_BIRTH" id="WK_BIRTH" data-options="required:true" />
+                </td>
+                <td class="kv-label">
+                    授权记录
+                </td>
+                <td class="kv-content">
+                    <input class="easyui-validatebox" type="text" style="width: 150px;" name="WK_CPNAME"
+                        data-options="required:true" />
+                </td>
+            </tr>
+            <tr>
+                <td class="kv-label">
+                    工作单位<span class="ui-input-must">&nbsp;</span>
+                </td>
+                <td class="kv-content" colspan="3">
+                    <input type="hidden" name="WK_CPID" />
+                    <input class="easyui-validatebox" type="text" style="width: 90%;" name="WK_CPNAME" />
+                </td>
+            </tr>
+            <tr>
+                <td class="kv-label">
+                    备注：
+                </td>
+                <td class="kv-content" colspan="3">
+                    <textarea style="width: 99%; height: 50px;" class="easyui-validatebox" name="WK_DESC"
+                        validtype="length[0,60]"></textarea>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    </form>
+</body>
+</html>

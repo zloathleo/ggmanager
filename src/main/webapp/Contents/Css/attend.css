@@ -1,0 +1,36 @@
+.account-box{
+	background: #fff;
+	padding: 0 35px 25px 25px;
+}
+.account-title{
+	border-bottom: 2px solid;
+	height: 50px;
+	line-height: 50px;
+	font-size: 16px;
+	margin-bottom: 10px;
+}
+.account-box .ddclearfix{*zoom:1;}
+.account-box .ddclearfix:after{display:block; overflow:hidden; clear:both; height:0; visibility:hidden; content:"";}
+.account-box .clear{ clear: both;}
+/* float */
+.account-box .ddleft{
+	float:left;
+}
+.account-box .ddright{
+	float:right;
+}
+
+.account-box .f-btn-fhby{height: 30px;line-height: 30px;color: #f77b10;border: 1px solid #f77b10;font-size: 14px;display: block;width: 85px;text-align: center;border-radius: 4px;cursor: pointer;margin-top: 10px;margin-left: 20px;}
+.account-box .f-btn-jian{height: 30px;line-height: 30px; border: 1px solid #ccc;border-right: 0px;margin-top:10px;text-align: center;width: 20px;background: #ececec;color: #666;border-radius: 4px;position: relative;left: 2px;cursor: pointer;}
+.account-box .f-btn-jia{height: 30px;line-height: 30px;border: 1px solid #ccc;border-left: 0px;margin-top:10px;text-align: center;width: 20px;background: #ececec;color: #666;border-radius: 4px;position: relative;left: -2px;cursor: pointer;}
+.account-box .f-riqi{width: 110px;padding: 0 10px; background: #fff;color: #666;font-size: 14px;border-top: 1px solid #ccc;border-bottom: 1px solid #ccc;text-align: center;height: 30px;line-height: 30px;margin-top: 10px;display: block;}
+.account-box .f-rili-table tbody td{background: #fff;position: relative;}
+.account-box .f-rili-table tbody tr{border-bottom: 1px dashed #ccc;}
+.account-box .f-rili-table .f-today{background-color: #faf1de;}
+.account-box .f-rili-table .f-on{background-color:cornflowerblue;color: #fff;}
+.account-box .f-number{cursor: pointer;}
+.account-box .f-rili-table{width: 100%;}
+.account-box .f-rili-th{float: left;width: 14.25%;text-align: center;line-height: 46px;height: 46px; background-color: #F9EADE;color: #333;}
+.account-box .f-td{border-bottom: 1px dashed #ccc;float: left;width: 14.25%;text-align: center;height:46px;line-height: 46px;position: relative;}
+.account-box .f-ok{position: absolute;width: 20px;height: 20px;top: 13px;left: 50%;margin-left: 10px; background: url(../images/right.gif) no-repeat center;}
+.account-box .f-no{position: absolute;width: 20px;height: 20px;top: 13px;left: 50%;margin-left: 10px; background: url(../images/del.gif) no-repeat center;}

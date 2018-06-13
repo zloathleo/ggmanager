@@ -1,0 +1,317 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>辐射职业照射数据采集和统一管理</title>
+    <link type="text/css" rel="Stylesheet" href="../../Contents/Css/base.css" />
+    <link type="text/css" rel="Stylesheet" href="../../Contents/Css/platform.css" />
+    <link type="text/css" rel="Stylesheet" href="../../Scripts/jQEasyUI/themes/easyui.css" />
+    <link type="text/css" rel="Stylesheet" href="../../Scripts/jQEasyUI/themes/icon.css" />
+    <script type="text/javascript" src="../../Scripts/jquery.min.js"></script>
+    <script type="text/javascript" src="../../Scripts/IllegalityCheck.js"></script>
+    <script type="text/javascript" src="../../Scripts/jQEasyUI/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../../Scripts/jQEasyUI/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="../../Scripts/FunctionJS.js"></script>
+    <script type="text/javascript">
+        var __form = $("#form1");
+        function OpenV5() {
+            var url = "Page1_4.html";
+            easyuiOtherDialog("人员信息 - 剂量明细", url, 620, 300);
+        }
+    </script>
+</head>
+<body class="easyui-layout">
+    <div class="easyui-panel" title="" data-options="border:false,iconCls:'icon-list',collapsible:true">
+        <table class="kv-table" style="width: 760px">
+            <tbody>
+                <tr>
+                    <td class="kv-label" style="width: 10%">
+                        姓名
+                    </td>
+                    <td class="kv-content" style="width: 25%">
+                        张三
+                    </td>
+                    <td class="kv-label" style="width: 10%">
+                        姓别
+                    </td>
+                    <td class="kv-content" style="width: 25%">
+                        男
+                    </td>
+                    <td class="kv-label" style="width: 10%">
+                        出生年月
+                    </td>
+                    <td class="kv-content">
+                        1988年08月
+                    </td>
+                </tr>
+                <tr>
+                    <td class="kv-label">
+                        证件类型
+                    </td>
+                    <td class="kv-content">
+                        身份证号
+                    </td>
+                    <td class="kv-label">
+                        证件号码
+                    </td>
+                    <td class="kv-content">
+                        110321198201203831
+                    </td>
+                    <td class="kv-label">
+                        工作单位
+                    </td>
+                    <td class="kv-content">
+                        某某单位
+                    </td>
+                </tr>
+                <tr>
+                    <td class="kv-label">
+                        授权记录
+                    </td>
+                    <td class="kv-content">
+                        授权记录****
+                    </td>
+                    <td class="kv-label">
+                        总剂量
+                    </td>
+                    <td class="kv-content" colspan="3">
+                        8.12mSv
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="easyui-panel" title="剂量信息" data-options="border:true,iconCls:'icon-list',collapsible:true">
+        <div class="easyui-tabs" style="padding: 2px; height: 260px; width: 100%;" fit="true">
+            <div title="常规/特殊年剂量信息" data-options="closable:false" style="padding-bottom: 2px">
+                <table class="easyui-datagrid" data-options="border:false,singleSelect:true">
+                    <thead>
+                        <tr>
+                            <th data-options="field:'itemid1',width:80,align:'center'">
+                                年份
+                            </th>
+                            <th data-options="field:'itemid2',width:150,align:'center'">
+                                Hp(10)/中子
+                            </th>
+                            <th data-options="field:'itemid3',width:150,align:'center'">
+                                Hp(10)/除中子外
+                            </th>
+                            <th data-options="field:'itemid4',width:80,align:'center'">
+                                Hp(0.07)
+                            </th>
+                            <th data-options="field:'itemid5',width:80,align:'center'">
+                                Hp(3)
+                            </th>
+                            <th data-options="field:'itemid6',width:80,align:'center'">
+                                待积有效剂量
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                2017年
+                            </td>
+                            <td>
+                                <a href='javascript:;' onclick="OpenV5()">
+                                    <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                        border: 0" />
+                                    0.75</a>
+                            </td>
+                            <td>
+                                <a href='javascript:;' onclick="OpenV5()">
+                                    <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                        border: 0" />
+                                    0.75</a>
+                            </td>
+                            <td>
+                                <a href='javascript:;' onclick="OpenV5()">
+                                    <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                        border: 0" />
+                                    0.75</a>
+                            </td>
+                            <td>
+                                <a href='javascript:;' onclick="OpenV5()">
+                                    <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                        border: 0" />
+                                    0.75</a>
+                            </td>
+                            <td>
+                                <a href='javascript:;' onclick="OpenV5()">
+                                    <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                        border: 0" />
+                                    0.75</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                2015年
+                            </td>
+                            <td>
+                                <a href='javascript:;' onclick="OpenV5()">
+                                    <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                        border: 0" />
+                                    1.75</a>
+                            </td>
+                            <td>
+                                <a href='javascript:;' onclick="OpenV5()">
+                                    <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                        border: 0" />
+                                    1.75</a>
+                            </td>
+                            <td>
+                                <a href='javascript:;' onclick="OpenV5()">
+                                    <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                        border: 0" />
+                                    1.75</a>
+                            </td>
+                            <td>
+                                <a href='javascript:;' onclick="OpenV5()">
+                                    <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                        border: 0" />
+                                    1.75</a>
+                            </td>
+                            <td>
+                                <a href='javascript:;' onclick="OpenV5()">
+                                    <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                        border: 0" />
+                                    1.75</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                2014年
+                            </td>
+                            <td>
+                                <a href='javascript:;' onclick="OpenV5()">
+                                    <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                        border: 0" />
+                                    2.75</a>
+                            </td>
+                            <td>
+                                <a href='javascript:;' onclick="OpenV5()">
+                                    <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                        border: 0" />
+                                    2.75</a>
+                            </td>
+                            <td>
+                                <a href='javascript:;' onclick="OpenV5()">
+                                    <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                        border: 0" />
+                                    2.75</a>
+                            </td>
+                            <td>
+                                <a href='javascript:;' onclick="OpenV5()">
+                                    <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                        border: 0" />
+                                    2.75</a>
+                            </td>
+                            <td>
+                                -
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                2012年
+                            </td>
+                            <td>
+                                <a href='javascript:;' onclick="OpenV5()">
+                                    <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                        border: 0" />
+                                    3.75</a>
+                            </td>
+                            <td>
+                                <a href='javascript:;' onclick="OpenV5()">
+                                    <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                        border: 0" />
+                                    3.75</a>
+                            </td>
+                            <td>
+                                <a href='javascript:;' onclick="OpenV5()">
+                                    <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                        border: 0" />
+                                    3.75</a>
+                            </td>
+                            <td>
+                                <a href='javascript:;' onclick="OpenV5()">
+                                    <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                        border: 0" />
+                                    3.75</a>
+                            </td>
+                            <td>
+                                -
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                2008年
+                            </td>
+                            <td>
+                                <a href='javascript:;' onclick="OpenV5()">
+                                    <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                        border: 0" />
+                                    3.75</a>
+                            </td>
+                            <td>
+                                <a href='javascript:;' onclick="OpenV5()">
+                                    <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                        border: 0" />
+                                    3.75</a>
+                            </td>
+                            <td>
+                                <a href='javascript:;' onclick="OpenV5()">
+                                    <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                        border: 0" />
+                                    3.75</a>
+                            </td>
+                            <td>
+                                <a href='javascript:;' onclick="OpenV5()">
+                                    <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                        border: 0" />
+                                    3.75</a>
+                            </td>
+                            <td>
+                                <a href='javascript:;' onclick="OpenV5()">
+                                    <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                        border: 0" />
+                                    3.75</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                2006年
+                            </td>
+                            <td>
+                                <a href='javascript:;' onclick="OpenV5()">
+                                    <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                        border: 0" />
+                                    3.75</a>
+                            </td>
+                            <td>
+                                <a href='javascript:;' onclick="OpenV5()">
+                                    <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                        border: 0" />
+                                    3.75</a>
+                            </td>
+                            <td>
+                                -
+                            </td>
+                            <td>
+                                <a href='javascript:;' onclick="OpenV5()">
+                                    <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                        border: 0" />
+                                    3.75</a>
+                            </td>
+                            <td>
+                                <a href='javascript:;' onclick="OpenV5()">
+                                    <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                        border: 0" />
+                                    3.75</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

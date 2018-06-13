@@ -1,0 +1,210 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>辐射职业照射数据采集和统一管理</title>
+    <link type="text/css" rel="Stylesheet" href="../../Contents/Css/base.css" />
+    <link type="text/css" rel="Stylesheet" href="../../Contents/Css/platform.css" />
+    <link type="text/css" rel="Stylesheet" href="../../Scripts/jQEasyUI/themes/easyui.css" />
+    <link type="text/css" rel="Stylesheet" href="../../Scripts/jQEasyUI/themes/icon.css" />
+    <script type="text/javascript" src="../../Scripts/jquery.min.js"></script>
+    <script type="text/javascript" src="../../Scripts/IllegalityCheck.js"></script>
+    <script type="text/javascript" src="../../Scripts/jQEasyUI/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../../Scripts/jQEasyUI/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="../../Scripts/Highcharts/highcharts.js"></script>
+    <script type="text/javascript" src="../../Scripts/Highcharts/highcharts-3d.js"></script>
+    <script type="text/javascript" src="../../Scripts/Highcharts/highcharts-zh_CN.js"></script>
+    <script type="text/javascript" src="../../Scripts/echarts-all.js"></script>
+    <script type="text/javascript" src="../../Scripts/FunctionJS.js"></script>
+</head>
+<body>
+    <div class="easyui-layout" fit="true">
+        <div data-options="region:'center',iconCls:'icon-51',border:true" style="padding: 1px">
+            <div class="easyui-tabs" fit="true" id="tt">
+                <div title="单年行业/核设施分布饼图" iconcls="icon-pie" data-options="closable:false" style="padding-bottom: 2px">
+                    <div class="easyui-layout" fit="true">
+                        <div data-options="region:'west',border:true,iconCls:'icon-search'" style="width: 360px">
+                            <table class="conditions" style="padding:3px">
+                                <tr>
+                                    <td class="con-left">
+                                        年份
+                                    </td>
+                                    <td class="con-right" style="width: 100px">
+                                        <select class="easyui-combobox" style="width: 80px; height: 28px; line-height: 28px;"
+                                            panelheight="auto" enable="false">
+                                            <option value="1997">1997</option>
+                                            <option value="1998">1998</option>
+                                            <option value="1999">1999</option>
+                                            <option value="2000">2000</option>
+                                            <option value="2001">2001</option>
+                                            <option value="2002">2002</option>
+                                            <option value="2003">2003</option>
+                                            <option value="2004">2004</option>
+                                            <option value="2005">2005</option>
+                                            <option value="2006">2006</option>
+                                            <option value="2007">2007</option>
+                                            <option value="2008">2008</option>
+                                            <option value="2009">2009</option>
+                                            <option value="2010">2010</option>
+                                            <option value="2011">2011</option>
+                                            <option value="2012">2012</option>
+                                            <option value="2013">2013</option>
+                                            <option value="2014">2014</option>
+                                            <option value="2015">2015</option>
+                                            <option value="2016">2016</option>
+                                            <option value="2017" selected="selected">2017</option>
+                                            <option value="2018">2018</option>
+                                        </select>
+                                    </td>
+                                    <td class="con-button" colspan="4">
+                                        <a href="javascript:;" id="btnSearch" onclick="" class="easyui-linkbutton" iconcls="icon-pie"
+                                            data-options="selected:false">生成图表</a>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table id="grid" border="false" title="数据列表" fit="true" class="easyui-datagrid" data-options="toolbar: '#opButton',singleSelect: true, striped: true, pagination: false, rownumbers: true, nowrap: false">
+                                <thead>
+                                    <tr>
+                                        <th data-options="field:'F0',width:120,align:'center',sortable: true">
+                                            行业类别
+                                        </th>
+                                        <th data-options="field:'F1',width:100,align:'center',sortable: true">
+                                            剂量
+                                        </th>
+                                        <th data-options="field:'itemid112',width:100,align:'center'">
+                                            百分比
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            核设施
+                                        </td>
+                                        <td>
+                                            55.8
+                                        </td>
+                                        <td>
+                                            55.8%
+                                        </td>
+                                    </tr>
+                                     <tr>
+                                        <td>
+                                            铀矿冶
+                                        </td>
+                                        <td>
+                                            26.8
+                                        </td>
+                                        <td>
+                                            26.8%
+                                        </td>
+                                    </tr>
+                                     <tr>
+                                        <td>
+                                            核技术应用
+                                        </td>
+                                        <td>
+                                            8.5
+                                        </td>
+                                        <td>
+                                            8.5%
+                                        </td>
+                                    </tr>
+                                     <tr>
+                                        <td>
+                                            其它
+                                        </td>
+                                        <td>
+                                           8.9
+                                        </td>
+                                        <td>
+                                            8.9%
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div data-options="region:'center',border:true,iconCls:'icon-pie'" title="图表">
+                            <div id="container1" style="height: 500px">
+                              <img src="../../Contents/Images/ppp.png" alt=''
+                               style=" border: 0" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div title="单个核设施与其他核设施对比分析" iconcls="icon-bar" data-options="closable:false" style="padding-bottom: 2px">
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script type="text/javascript">
+    $(function () {
+        $('#tt').tabs({
+            onSelect: function (title) {
+                if (title == "单个核设施与其他核设施对比分析") {
+                    var tab = $('#tt').tabs('getSelected');
+                    $('#tt').tabs('update', {
+                        tab: tab,
+                        options: {
+                            content: createFrame("Page2_1.html")
+                        }
+                    });
+                }
+            }
+        });
+        try {
+            LoadPage1();
+        } catch (e) { }
+    });
+    function LoadPage1() {
+        $('#container1').highcharts({
+            chart: {
+                type: 'pie',
+                options3d: {
+                    enabled: true,
+                    alpha: 45,
+                    beta: 0
+                }
+            },
+            title: {
+                text: '2017年行业/核设施分布饼图'
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    depth: 35,
+                    dataLabels: {
+                        enabled: true,
+                        format: '{point.name}'
+                    }
+                }
+            },
+            series: [{
+                type: 'pie',
+                name: '核设施分布',
+                data: [
+                ['铀矿冶', 26.8],
+                {
+                    name: '核设施',
+                    y: 55.8,
+                    sliced: true,
+                    selected: true
+                },
+                ['核技术应用', 8.5],
+                ['其他', 8.9]
+            ]
+            }]
+        });
+    }
+    function createFrame(url) {
+        return '<iframe scrolling="auto" frameborder="0"  src="' + url + '" style="width:100%;height:100%;"></iframe>';
+    }
+</script>
+<div style="display: none">
+    <iframe id="ifrExp" src=""></iframe>
+</div>

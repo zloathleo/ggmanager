@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>辐射职业照射数据采集和统一管理</title>
+    <link type="text/css" rel="Stylesheet" href="../../Contents/Css/base.css" />
+    <link type="text/css" rel="Stylesheet" href="../../Contents/Css/platform.css" />
+    <link type="text/css" rel="Stylesheet" href="../../Scripts/jQEasyUI/themes/easyui.css" />
+    <link type="text/css" rel="Stylesheet" href="../../Scripts/jQEasyUI/themes/icon.css" />
+    <script type="text/javascript" src="../../Scripts/jquery.min.js"></script>
+    <script type="text/javascript" src="../../Scripts/IllegalityCheck.js"></script>
+    <script type="text/javascript" src="../../Scripts/jQEasyUI/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../../Scripts/jQEasyUI/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="../../Scripts/FunctionJS.js"></script>
+    <script type="text/javascript">
+        var __grid_tree, __flag = 0;
+        var data = { "total": 20, "rows": [{ "CT_ID": "f4004df5-0588-4bd5-9d4f-589eda1dbc04", "CT_PARENTID": "a5c8c3d5-053f-454e-af9b-65d0df3323b6", "CT_FUNNAME": "身份证", "CT_FUNCTION": "WORKKIND_1", "CT_DESC": "", "_parentId": "a5c8c3d5-053f-454e-af9b-65d0df3323b6", "CT_CONSTVALUE": "", "CT_MANAGER": "", "CT_SORTID": 1 }, { "CT_ID": "a5c8c3d5-053f-454e-af9b-65d0df3323b6", "CT_PARENTID": "0", "CT_FUNNAME": "证件号", "CT_FUNCTION": "WORKKIND", "CT_DESC": "用于人员信息模块", "state": "closed", "CT_CONSTVALUE": "", "CT_MANAGER": "", "CT_SORTID": 1 }, { "CT_ID": "20004df5-0588-4bd5-9d4f-589eda1dbc66", "CT_PARENTID": "1008c3d5-053f-454e-af9b-65d0df332355", "CT_FUNNAME": "职业类别1", "CT_FUNCTION": "WBCRESULT_1", "CT_DESC": "", "_parentId": "1008c3d5-053f-454e-af9b-65d0df332355", "CT_CONSTVALUE": "", "CT_MANAGER": "", "CT_SORTID": 1 }, { "CT_ID": "1008c3d5-053f-454e-af9b-65d0df332355", "CT_PARENTID": "0", "CT_FUNNAME": "职业类别", "CT_FUNCTION": "WBCRESULT", "CT_DESC": "用于设施信息管理模块", "state": "closed", "CT_CONSTVALUE": "", "CT_MANAGER": "", "CT_SORTID": 1 }, { "CT_ID": "f4004df5-0588-4bd5-9d4f-589eda1dbc66", "CT_PARENTID": "a5c8c3d5-053f-454e-af9b-65d0df332355", "CT_FUNNAME": "核设施", "CT_FUNCTION": "WBCTYPE_1", "CT_DESC": "", "_parentId": "a5c8c3d5-053f-454e-af9b-65d0df332355", "CT_CONSTVALUE": "", "CT_MANAGER": "", "CT_SORTID": 1 }, { "CT_ID": "a5c8c3d5-053f-454e-af9b-65d0df332355", "CT_PARENTID": "0", "CT_FUNNAME": "行业类别", "CT_FUNCTION": "WBCTYPE", "CT_DESC": "用于设施信息管理模块", "state": "closed", "CT_CONSTVALUE": "", "CT_MANAGER": "", "CT_SORTID": 1 }, { "CT_ID": "03f41dbe-d9b8-4dd9-a74c-85a6ae909e77", "CT_PARENTID": "a5c8c3d5-053f-454e-af9b-65d0df332355", "CT_FUNNAME": "铀矿冶", "CT_FUNCTION": "WBCTYPE_2", "CT_DESC": "", "_parentId": "a5c8c3d5-053f-454e-af9b-65d0df332355", "CT_CONSTVALUE": "", "CT_MANAGER": "", "CT_SORTID": 2 }, { "CT_ID": "03f41dbe-d9b8-4dd9-a74c-85a6ae909e33", "CT_PARENTID": "a5c8c3d5-053f-454e-af9b-65d0df332311", "CT_FUNNAME": "2级", "CT_FUNCTION": "RPLEVEL_2", "CT_DESC": "", "_parentId": "a5c8c3d5-053f-454e-af9b-65d0df332311", "CT_CONSTVALUE": "", "CT_MANAGER": "", "CT_SORTID": 2 }, { "CT_ID": "03f41dbe-d9b8-4dd9-a74c-85a6ae909e87", "CT_PARENTID": "a5c8c3d5-053f-454e-af9b-65d0df3323b6", "CT_FUNNAME": "军官证", "CT_FUNCTION": "WORKKIND_2", "CT_DESC": "", "_parentId": "a5c8c3d5-053f-454e-af9b-65d0df3323b6", "CT_CONSTVALUE": "", "CT_MANAGER": "", "CT_SORTID": 2 }, { "CT_ID": "30041dbe-d9b8-4dd9-a74c-85a6ae909e77", "CT_PARENTID": "1008c3d5-053f-454e-af9b-65d0df332355", "CT_FUNNAME": "职业类别2", "CT_FUNCTION": "WBCRESULT_2", "CT_DESC": "", "_parentId": "1008c3d5-053f-454e-af9b-65d0df332355", "CT_CONSTVALUE": "", "CT_MANAGER": "", "CT_SORTID": 2 }, { "CT_ID": "1708b6c1-e989-4ddc-890c-5d014ec63f43", "CT_PARENTID": "a5c8c3d5-053f-454e-af9b-65d0df3323b6", "CT_FUNNAME": "护照号", "CT_FUNCTION": "WORKKIND_3", "CT_DESC": "", "_parentId": "a5c8c3d5-053f-454e-af9b-65d0df3323b6", "CT_CONSTVALUE": "", "CT_MANAGER": "", "CT_SORTID": 3 }, { "CT_ID": "1708b6c1-e989-4ddc-890c-5d014ec63f88", "CT_PARENTID": "a5c8c3d5-053f-454e-af9b-65d0df332355", "CT_FUNNAME": "核技术应用", "CT_FUNCTION": "WBCTYPE_3", "CT_DESC": "", "_parentId": "a5c8c3d5-053f-454e-af9b-65d0df332355", "CT_CONSTVALUE": "", "CT_MANAGER": "", "CT_SORTID": 3 }, { "CT_ID": "4008b6c1-e989-4ddc-890c-5d014ec63f88", "CT_PARENTID": "1008c3d5-053f-454e-af9b-65d0df332355", "CT_FUNNAME": "职业类别3", "CT_FUNCTION": "WBCRESULT_3", "CT_DESC": "", "_parentId": "1008c3d5-053f-454e-af9b-65d0df332355", "CT_CONSTVALUE": "", "CT_MANAGER": "", "CT_SORTID": 3 }, { "CT_ID": "1708b6c1-e989-4ddc-890c-5d014ec63f44", "CT_PARENTID": "a5c8c3d5-053f-454e-af9b-65d0df332311", "CT_FUNNAME": "3级", "CT_FUNCTION": "RPLEVEL_3", "CT_DESC": "", "_parentId": "a5c8c3d5-053f-454e-af9b-65d0df332311", "CT_CONSTVALUE": "", "CT_MANAGER": "", "CT_SORTID": 3}] };
+        $(function () {
+            __grid_tree = $('#treeGrid').treegrid({
+                rownumbers: true, treeField: "CT_FUNNAME", toolbar: '#opButton',
+                idField: 'CT_ID',
+                data: data,
+                columns:
+                    [[
+                    { field: 'CT_FUNNAME', title: '名称', width: 200 },
+                    { field: 'CT_FUNCTION', title: '编码', width: 150 },
+                    { field: 'CT_CONSTVALUE', title: '值', width: 200, align: 'center' },
+                    { field: 'CT_DESC', title: '描述', width: 400 },
+                    { field: 'CT_SORTID', title: '排序', width: 40, align: 'center' }
+                    ]]
+            });
+        });
+
+        function Refresh() {
+
+        }
+        function Add() {
+            __flag = 0;
+
+        }
+        function Edit() {
+            var __tree = __grid_tree.treegrid('getSelected');
+            var id = __tree == null ? "" : __tree.CT_ID;
+            if (IsEditdata(id)) {
+
+            }
+        }
+        function Delete() {
+            var __tree = __grid_tree.treegrid('getSelected');
+            var id = __tree == null ? "" : __tree.CT_ID;
+            if (IsDelData(id)) {
+                $.messager.confirm('提示信息', '注：删除操作不可恢复，您确定要继续么？', function (data) {
+                    if (data) {
+
+                    }
+                });
+            }
+        }
+       
+    </script>
+</head>
+<body>
+    <div class="easyui-layout" fit="true">
+        <div data-options="region:'center',iconCls:'icon-51',border:true" title="系统设置 - 常量管理"
+            style="padding: 1px">
+            <div id="opButton">
+                <a href="javascript:;" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-10'"
+                    onclick="Add()" title="新增">新增</a> <a href="javascript:;" class="easyui-linkbutton"
+                        data-options="plain:true,iconCls:'icon-edit'" onclick="Edit()" title="编辑">编辑</a>
+                <a href="javascript:;" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-no'"
+                    onclick="Delete()" title="删除">删除</a>
+            </div>
+            <div id="treeGrid" fit="true" border="true">
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<div id="iframeDialog">
+</div>

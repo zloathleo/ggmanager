@@ -1,0 +1,571 @@
+html {
+	height: 100%;
+	min-width: 1000px;
+}
+
+#pf-hd {
+	height: 70px;
+	position: relative;
+	z-index: 2;
+	 background-color: #11A9E2;
+  background: -webkit-linear-gradient(top,#11A9E2 0,#038BBD 100%);
+  background: -moz-linear-gradient(top,#11A9E2 0,#038BBD 100%);
+  background: -o-linear-gradient(top,#11A9E2 0,#038BBD 100%);
+  background: linear-gradient(to bottom,#11A9E2 0,#038BBD 100%);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#11A9E2,endColorstr=#038BBD,GradientType=0);
+   
+}
+
+#pf-hd .pf-logo {
+	float: left;
+	padding: 0 15px;
+	height: 100%;
+	width: 400px;
+
+	line-height: 70px
+}
+
+#pf-hd .pf-logo img {
+	vertical-align: middle;
+	margin-left: -10px;
+	margin-top: 10px
+}
+
+#pf-hd .pf-logo .system-name {
+	display: none;
+	float: left;
+	line-height: 70px;
+	font-size: 26px;
+	color: #fff;
+	text-shadow: 1px 1px 2px rgba(0,0,0,0.5)
+}
+
+#pf-hd .pf-nav {
+	float: left
+}
+
+#pf-hd .pf-nav .pf-nav-item {
+	float: left;
+	height: 70px;
+	color: #fff;
+	padding: 0 15px;
+
+}
+
+#pf-hd .pf-nav .pf-nav-item a {
+	display: block;
+	color: #fff;
+	text-decoration: none
+}
+
+#pf-hd .pf-nav .pf-nav-item .iconfont {
+	display: block;
+	margin-top: 12px;
+	font-size: 26px;
+	height: 30px;
+	text-align: center
+}
+
+#pf-hd .pf-nav .pf-nav-item.current {
+	background: url('../images/main/navbg.png?1465303472')
+}
+
+#pf-hd .pf-nav .pf-nav-item.current a {
+	color: #fff
+}
+
+#pf-hd .pf-nav-wrap {
+	position: relative;
+	float: left
+}
+
+#pf-hd .pf-nav-wrap .pf-nav-ww {
+	float: left;
+	height: 70px;
+
+	overflow: hidden
+}
+
+#pf-hd .pf-nav-prev,#pf-hd .pf-nav-next {
+	position: absolute;
+	right: -32px;
+	top: 10px;
+	width: 26px;
+	height: 23px;
+	border-radius: 3px 3px 0 0;
+	background: #188323;
+	color: #fff;
+	text-decoration: none;
+	text-align: center;
+	line-height: 23px
+}
+
+#pf-hd .pf-nav-prev:hover,#pf-hd .pf-nav-next:hover {
+	background: #fff;
+	color: #11a9e2
+}
+
+#pf-hd .pf-nav-prev.disabled,#pf-hd .pf-nav-next.disabled {
+	color: #cccccc;
+	background: #fff;
+	cursor: default
+}
+
+#pf-hd .pf-nav-next {
+	top: 36px;
+	border-radius: 0 0 3px 3px
+}
+
+#pf-hd .pf-user {
+	position: relative;
+	float: right;
+	margin-right: 20px;
+	padding: 0 10px;
+	height: 70px;
+	line-height: 70px;
+	cursor: pointer
+}
+
+#pf-hd .pf-user .pf-user-photo {
+	float: left;
+	margin: 12px 10px 0 0;
+	width: 48px;
+	height: 48px
+}
+
+#pf-hd .pf-user .pf-user-photo img {
+	margin: 4px
+}
+
+#pf-hd .pf-user .pf-user-name {
+	float: left;
+	max-width: 150px;
+	color: #fff;
+	font-size: 14px;
+	margin-right: 5px
+}
+
+#pf-hd .pf-user .xiala {
+	color: #fff;
+	position: relative;
+	top: -2px
+}
+
+#pf-hd .pf-user .pf-user-panel {
+	display: none;
+	position:fixed;
+	width: 201px;
+	right: 22px;
+	top: 70px;
+	background: #fff;
+	z-index: 999999999;
+	border: 1px solid #e1e1e1;
+	box-shadow: 1px 1px 2px #ddd
+}
+
+#pf-hd .pf-user .pf-user-panel li 
+{
+	height: 30px;
+	line-height: 30px;
+	font-size: 13px;
+	padding: 0 15px
+}
+
+#pf-hd .pf-user .pf-user-panel li a {
+	color: #000;
+	text-decoration: none
+}
+
+#pf-hd .pf-user .pf-user-panel li .iconfont {
+	margin-right: 10px;
+	color: #000
+}
+
+#pf-hd .pf-user .pf-user-panel li:hover {
+	background: #f1f1f1
+}
+
+#pf-hd .pf-user .pf-user-panel li:hover .iconfont {
+	color: #11a9e2
+}
+
+#pf-hd .pf-user:hover {
+	background: url('../images/main/top_userbg.png?1464007598')
+}
+
+#pf-hd .pf-user:hover .pf-user-panel {
+	display: block
+}
+
+#pf-bd {
+	position: absolute;
+	top: 70px;
+	bottom: 31px;
+	left: 0;
+	right: 0;
+	padding: 0 0 0 220px;
+	z-index: 1;
+	transition: all 0.3s ease
+}
+
+#pf-bd.toggle {
+	padding-left: 0
+}
+
+#pf-bd.toggle #pf-sider {
+	margin-left: -440px
+}
+
+#pf-bd.toggle #pf-sider .pf-model-name .toggle-icon {
+	position: fixed;
+	top: 84px;
+	left: 0;
+	z-index: 10;
+	background-position: -22px 0
+}
+
+#pf-bd #pf-sider {
+	float: left;
+	height: 100%;
+	margin-left: -220px;
+	width: 220px;
+	background: #fff;
+	overflow-y: auto;
+	overflow-x: hidden;
+	z-index: 1;
+	transition: all 0.3s ease
+}
+
+#pf-bd #pf-sider .pf-model-name {
+	position: relative;
+	padding: 0 20px;
+	height: 44px;
+	line-height: 44px;
+	color: #000;
+	background: #E3E3E3;
+	
+	border-bottom: 1px solid #bdbdbd;
+	font-size: 12px
+}
+
+#pf-bd #pf-sider .pf-model-name .iconfont {
+	font-size: 20px
+}
+
+#pf-bd #pf-sider .pf-model-name .pf-sider-icon {
+	float: left;
+	margin: 10px 15px 0 0;
+	width: 20px;
+	height: 20px;
+	font-size: 20px
+}
+
+#pf-bd #pf-sider .pf-model-name .toggle-icon {
+	position: absolute;
+	right: 0;
+	top: 14px;
+	width: 19px;
+	height: 22px;
+	background: url(../images/main/sider-toggle.png) no-repeat;
+	background-position: 0 0;
+	cursor: pointer
+}
+
+#pf-bd #pf-sider .sider-nav>li {
+	border-bottom: 1px solid #dbdbdb;
+	background: #D1F3F3
+}
+
+#pf-bd #pf-sider .sider-nav>li a {
+	display: block;
+	padding: 0 15px;
+	height: 100%;
+	height: 40px;
+	line-height: 40px;
+	color: #000;
+	font-size: 14px;
+	text-decoration: none
+}
+
+#pf-bd #pf-sider .sider-nav>li .sider-nav-title {
+	float: left;
+	width: 112px;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	font-size: 14px
+}
+
+#pf-bd #pf-sider .sider-nav>li .iconfont {
+	float: right;
+	font-size: 12px;
+	color: #acacab
+}
+
+#pf-bd #pf-sider .sider-nav>li .sider-nav-icon {
+	float: left;
+	margin: 0 10px 0 0;
+	color: #4fb259;
+	font-size: 20px
+}
+
+#pf-bd #pf-sider .sider-nav>li.current {
+	border-bottom: none;
+	background: #0D7FA9
+}
+
+#pf-bd #pf-sider .sider-nav>li.current>a {
+	border-left: 3px solid #ffa405;
+	padding-left: 12px;
+	color: #fff
+}
+
+#pf-bd #pf-sider .sider-nav>li.current .iconfont {
+	color: #fff
+}
+
+#pf-bd #pf-sider .sider-nav>li.current .sider-nav-icon {
+	color: #fff
+}
+
+#pf-bd #pf-sider .sider-nav>li .sider-nav-s {
+	display: none;
+	padding: 0;
+	background: #fff;
+	color: #000;
+	font-size: 16px;
+	line-height:30px;
+	border-bottom: 1px solid #dbdbdb
+}
+
+#pf-bd #pf-sider .sider-nav>li .sider-nav-s li.active {
+	
+	
+}
+
+#pf-bd #pf-sider .sider-nav>li .sider-nav-s li.active a 
+{
+    font-size: 12px;
+	color: #1DA02B;
+	font-weight: bold
+}
+
+#pf-bd #pf-sider .sider-nav>li .sider-nav-s a {
+	height: 31px;
+	line-height: 31px;
+	color: #000;
+	font-size: 12px;
+	padding-left: 40px;
+	background: url('../images/main/left_list.png?1463555463') no-repeat 30px center
+}
+
+#pf-bd #pf-sider .sider-nav>li.current .sider-nav-s {
+	display: block
+}
+
+#pf-bd #pf-page {
+	float: left;
+	width: 100%;
+	height: 100%;
+	background: #fff;
+	z-index: 0
+}
+
+#pf-bd #pf-page .easyui-tabs1 {
+	min-width: 980px;
+
+}
+
+#pf-bd #pf-page .easyui-tabs1 .tabs-header {
+	border-top: none
+}
+
+#pf-bd #pf-page .easyui-tabs1 .tabs li {
+	border-top: 1px solid #bfbfbf;
+	-moz-border-radius: 2px 2px 0 0;
+	-webkit-border-radius: 2px 2px 0 0;
+	border-radius: 2px 2px 0
+}
+
+#pf-bd #pf-page .easyui-tabs1 .tabs li a.tabs-close {
+	background: url('../images/main/tabs_close_pf.png?1464531592')
+}
+
+#pf-bd #pf-page .easyui-tabs1 .tabs li:hover a.tabs-close {
+	background: url('../images/main/tabs_close_hover.png?1464355659')
+}
+
+#pf-bd #pf-page .easyui-tabs1 .tabs {
+	padding-left: 24px
+}
+
+#pf-bd #pf-page .easyui-tabs1 .tabs li.tabs-selected {
+	border-top: 3px solid #11a9e2
+}
+
+#pf-bd #pf-page .easyui-tabs1 .tabs-panels {
+	border-bottom: none !important
+}
+
+#pf-bd #pf-page .easyui-tabs1 .tabs li a.tabs-inner {
+	background: #dbdbdb;
+	color: #000;
+	border-bottom: 1px solid #bfbfbf;
+	
+}
+
+#pf-bd #pf-page .easyui-tabs1 .tabs li:hover a.tabs-inner,#pf-bd #pf-page .easyui-tabs1 .tabs li.tabs-selected a.tabs-inner {
+	background: #fff
+}
+
+#pf-bd #pf-page .panel-body {
+	overflow: hidden
+}
+
+#pf-ft {
+	position: absolute;
+	width: 100%;
+	height: 27px;
+	line-height: 27px;
+	background: #D3E5FF;
+	border: 1px solid #95B8E7
+	border-top: 0px;
+	 margin-top :1px;
+}
+
+#pf-ft .system-name,#pf-ft .copyright-name {
+	float: left;
+	margin-left: 8px;
+	font-size: 12px;
+	color: #8b8b8b
+}
+
+#pf-ft .system-name .iconfont,#pf-ft .copyright-name .iconfont {
+	color: #11a9e2;
+	margin-right: 3px
+}
+
+#pf-ft .copyright-name {
+	float: right
+}
+
+#pf-ft .copyright-name .iconfont {
+	font-size: 8px;
+}
+
+.menu .menu-active {
+	background: #11a9e2;
+	color: #fff
+}
+.easyui-linkbutton{margin-right:5px}
+.conditions
+{
+    width:99%; padding:2px; margin:1px;
+}
+.conditions.hide{display:none}
+.conditions .con-left{width: 70px; text-align: right; padding: 10px;background: #f5f5f5;
+	border: 1px solid #cacaca; }
+.conditions .con-right{width: 160px; background: #fff; padding-left: 3px;
+	border: 1px solid #cacaca;text-align: left}
+.conditions .con-button{ background: #fff; padding-left: 5px;
+	border: 1px solid #cacaca;text-align: left}
+.opt-buttons{margin-left:-20px;background: #fff; padding-left: 3px;
+	border: 1px solid #cacaca;}
+
+
+/* 主界面顶部 */
+#north {
+   height:83px;
+   color:#fff;
+   overflow:hidden;
+}
+
+#north #north_left{
+   float:left;
+   padding-left:1px;
+}
+#north #north_left table{
+   border:0px;
+   height:83px;
+}
+#north #north_left table td{
+   
+   vertical-align:middle;
+}
+#north #north_right{
+   float:right;
+}
+
+#taskbar{
+   height:35px;
+   overflow:hidden;
+   
+}
+#taskbar #taskbar_left{
+   float:left;
+   padding:0px 10px;
+}
+
+/* 导航菜单 */
+#taskbar #taskbar_left #start_menu{
+   display:block;
+   width:97px;
+   height:40px;
+   background:url('../Images/start_menu.png') center 0px no-repeat;
+}
+#taskbar #taskbar_left #start_menu:hover,
+#taskbar #taskbar_left #start_menu.active{
+   background-position:center -40px;
+}
+#taskbar #taskbar_center{
+   padding-top:10px;
+   float:left;
+}
+#taskbar #taskbar_center #tabs_container{
+   height:30px;
+   width:100%;
+   float:left;
+	overflow:hidden;
+	white-space:nowrap;
+}
+#taskbar #taskbar_center #tabs_container div{
+   cursor: pointer;
+   display:inline-block;
+   margin-right:3px;
+	padding-right:5px;
+	white-space:nowrap;
+	-moz-border-radius-topleft:5px;
+	-moz-border-radius-topright:5px;
+	-webkit-border-top-left-radius:5px;
+	-webkit-border-top-right-radius:5px;
+}
+#taskbar #taskbar_center #tabs_container div {*display:inline !important;}
+#taskbar #taskbar_center #tabs_container div a.tab{
+   display:inline-block;
+	padding-left:10px;
+	padding-right:3px;
+	font-size:14px;
+	font-weight:bold;
+	min-width:64px !important;
+	width:auto !important;
+	width:80px;
+	text-decoration:none;
+	color:#fff;
+	height:30px;
+	line-height:30px;
+	text-align:center;
+	-moz-border-radius-topleft:5px;
+	-moz-border-radius-topright:5px;
+	-webkit-border-top-left-radius:5px;
+	-webkit-border-top-right-radius:5px;
+}
+#taskbar #taskbar_center #tabs_container div.selected{
+	background:url('../Images/tabs_active.png') no-repeat right -30px;
+}
+#taskbar #taskbar_center #tabs_container div.selected a.tab{
+	color:#416AA3;
+	font-size:14px;
+	font-weight:bold;
+	background:url('../Images/tabs_active.png') no-repeat left 0px;
+}

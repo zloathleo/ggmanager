@@ -1,0 +1,145 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>辐射职业照射数据采集和统一管理</title>
+    <link type="text/css" rel="Stylesheet" href="../../Contents/Css/base.css" />
+    <link type="text/css" rel="Stylesheet" href="../../Contents/Css/platform.css" />
+    <link type="text/css" rel="Stylesheet" href="../../Scripts/jQEasyUI/themes/easyui.css" />
+    <link type="text/css" rel="Stylesheet" href="../../Scripts/jQEasyUI/themes/icon.css" />
+    <script type="text/javascript" src="../../Scripts/jquery.min.js"></script>
+    <script type="text/javascript" src="../../Scripts/IllegalityCheck.js"></script>
+    <script type="text/javascript" src="../../Scripts/jQEasyUI/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../../Scripts/jQEasyUI/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="../../Scripts/FunctionJS.js"></script>
+    <script type="text/javascript">
+        var __grid;
+        function Save() {
+            $.messager.confirm('提示信息', '注：确认将选中的3条任务进行统一提交？', function (data) {
+                if (data) {
+
+                }
+            });
+        }
+        function OpenV2() {
+            var url = "Views/Demo9/Page1_1.html";
+            parent.addTab("待办任务操作", url);
+        }
+    </script>
+</head>
+<body class="easyui-layout" fit="true">
+    <div data-options="region:'north',border:true,iconCls:'icon-search'" style="height: 86px"
+        title="查询条件">
+        <form id="searchForm1">
+        <table class="conditions">
+            <tr>
+                <td class="con-left" style="width: 80px">
+                    任务名称
+                </td>
+                <td class="con-right" style="width: 105px">
+                    <input class="easyui-validatebox" type="text" style="width: 80px" name="WK_CPNAME"
+                        data-options="required:true" readonly="readonly" />
+                </td>
+                <td class="con-button">
+                    <a href="javascript:;" id="btnSearch" onclick="" class="easyui-linkbutton" iconcls="icon-search"
+                        data-options="selected:false">查询</a>
+                </td>
+            </tr>
+        </table>
+        </form>
+    </div>
+    <div data-options="region:'center',border:false,iconCls:'icon-list'">
+        <div id="opButton">
+            <a href="javascript:;" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-10'"
+                onclick="Save()" title="批量确认">批量确认</a>
+        </div>
+        <table id="grid" border="false" fit="true" class="easyui-datagrid" data-options="toolbar: '#opButton',singleSelect: true, striped: true, pageSize: 20, pagination: true, rownumbers: true, nowrap: false">
+            <thead>
+                <tr>
+                    <th data-options="field:'ck'">
+                        <input type="checkbox" />
+                    </th>
+                    <th data-options="field:'F1',width:400,align:'left',sortable: true">
+                        任务名称
+                    </th>
+                    <th data-options="field:'F2',width:100,align:'center',sortable: true">
+                        任务发送人
+                    </th>
+                    <th data-options="field:'F3',width:150,align:'center',sortable: true">
+                        发送时间
+                    </th>
+                    <th data-options="field:'F4',width:100,align:'center',sortable: true">
+                        操作
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <input type="checkbox" />
+                    </td>
+                    <td>
+                        常规监测剂量数据导入 - 批次号20180511 - 剂量数据1289条
+                    </td>
+                    <td>
+                        张三
+                    </td>
+                    <td>
+                        2018-05-11 11:01:01
+                    </td>
+                    <td>
+                        <a href='javascript:;' onclick="OpenV2()">
+                            <img src="../../Scripts/jQEasyUI/themes/icons/22.png" alt='' style="width: 13px;
+                                height: 13px; border: 0" />
+                            操作</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="checkbox" />
+                    </td>
+                    <td data-options="align:'left'">
+                        特殊监测剂量数据导入 - 批次号20180510- 剂量数据89条
+                    </td>
+                    <td>
+                        张三
+                    </td>
+                    <td>
+                        2018-05-10 11:01:01
+                    </td>
+                    <td>
+                        <a href='javascript:;' onclick="OpenV2()">
+                            <img src="../../Scripts/jQEasyUI/themes/icons/22.png" alt='' style="width: 13px;
+                                height: 13px; border: 0" />
+                            操作</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="checkbox" />
+                    </td>
+                    <td>
+                        任务监测剂量数据导入 - 批次号20180509 - 剂量数据3289条
+                    </td>
+                    <td>
+                        张三
+                    </td>
+                    <td>
+                        2018-05-09 11:01:01
+                    </td>
+                    <td>
+                        <a href='javascript:;' onclick="OpenV2()">
+                            <img src="../../Scripts/jQEasyUI/themes/icons/22.png" alt='' style="width: 13px;
+                                height: 13px; border: 0" />
+                            操作</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="iframeDialog">
+    </div>
+    <div style="display: none">
+        <iframe id="ifrExp" src=""></iframe>
+    </div>
+</body>
+</html>

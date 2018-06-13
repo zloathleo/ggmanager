@@ -1,0 +1,345 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>辐射职业照射数据采集和统一管理</title>
+    <link type="text/css" rel="Stylesheet" href="../../Contents/Css/base.css" />
+    <link type="text/css" rel="Stylesheet" href="../../Contents/Css/platform.css" />
+    <link type="text/css" rel="Stylesheet" href="../../Scripts/jQEasyUI/themes/easyui.css" />
+    <link type="text/css" rel="Stylesheet" href="../../Scripts/jQEasyUI/themes/icon.css" />
+    <script type="text/javascript" src="../../Scripts/jquery.min.js"></script>
+    <script type="text/javascript" src="../../Scripts/IllegalityCheck.js"></script>
+    <script type="text/javascript" src="../../Scripts/jQEasyUI/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../../Scripts/jQEasyUI/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="../../Scripts/Highcharts/highcharts.js"></script>
+    <script type="text/javascript" src="../../Scripts/Highcharts/highcharts-3d.js"></script>
+    <script type="text/javascript" src="../../Scripts/Highcharts/highcharts-zh_CN.js"></script>
+    <script type="text/javascript" src="../../Scripts/echarts-all.js"></script>
+    <script type="text/javascript" src="../../Scripts/FunctionJS.js"></script>
+    <script type="text/javascript">
+        $("#Table1").datagrid({
+            onLoadSuccess: function (data) {
+                mergeCellsByField("Table1", "F1");
+            }
+        });
+    </script>
+</head>
+<body class="easyui-layout" fit="true">
+    <div data-options="region:'north',border:true,iconCls:'icon-search'" style="height: 86px"
+        title="查询条件">
+        <form id="searchForm1">
+        <table class="conditions">
+            <tr>
+                <td class="con-left">
+                    数据类型
+                </td>
+                <td class="con-right" style="width: 110px">
+                    <select class="easyui-combobox" id="S1" editable="false" style="width: 100px; height: 28px;
+                        line-height: 28px;" panelheight="auto">
+                        <option value="">=全部=</option>
+                        <option value="常规监测剂量数据">常规监测剂量数据</option>
+                        <option value="任务相关监测剂量数据">任务相关监测剂量数据</option>
+                    </select>
+                </td>
+                <td class="con-left" style="width: 150px">
+                    设施名称/单位名称
+                </td>
+                <td class="con-right" style="width: 105px">
+                    <input class="easyui-validatebox" type="text" style="width: 80px" name="WK_CPNAME"
+                        data-options="required:true" readonly="readonly" />
+                </td>
+                <td class="con-button">
+                    <a href="javascript:;" id="btnSearch" onclick="" class="easyui-linkbutton" iconcls="icon-search"
+                        data-options="selected:false">查询</a>
+                </td>
+            </tr>
+        </table>
+        </form>
+    </div>
+    <div data-options="region:'center',border:false,iconCls:'icon-list'">
+        <table id="Table1" border="true" fit="true" class="easyui-datagrid" data-options="toolbar: '#opButton',singleSelect: true, striped: true, pageSize: 20, pagination: true, rownumbers: true, nowrap: false">
+            <thead>
+                <tr>
+                    <th data-options="field:'F1',width:200,align:'left',sortable: true">
+                        数据分类
+                    </th>
+                    <th data-options="field:'F4',width:200,align:'center',sortable: true">
+                        设施名称/单位名称
+                    </th>
+                    <th data-options="field:'F5',width:300,align:'center',sortable: true">
+                        填报周期
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        常规监测剂量数据
+                    </td>
+                    <td>
+                        单位1
+                    </td>
+                    <td>
+                        1月
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        常规监测剂量数据
+                    </td>
+                    <td>
+                        单位2
+                    </td>
+                    <td>
+                        1月
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        常规监测剂量数据
+                    </td>
+                    <td>
+                        单位3
+                    </td>
+                    <td>
+                        1月
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        常规监测剂量数据
+                    </td>
+                    <td>
+                        单位4
+                    </td>
+                    <td>
+                        1月
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        常规监测剂量数据
+                    </td>
+                    <td>
+                        单位5
+                    </td>
+                    <td>
+                        1月
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        常规监测剂量数据
+                    </td>
+                    <td>
+                        设施名称2
+                    </td>
+                    <td>
+                        2月
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        常规监测剂量数据
+                    </td>
+                    <td>
+                        设施名称3
+                    </td>
+                    <td>
+                        2月
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        任务相关监测剂量数据
+                    </td>
+                    <td>
+                        单位1
+                    </td>
+                    <td>
+                        1月
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        任务相关监测剂量数据
+                    </td>
+                    <td>
+                        单位2
+                    </td>
+                    <td>
+                        1季度
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        任务相关监测剂量数据
+                    </td>
+                    <td>
+                        设施名称1
+                    </td>
+                    <td>
+                        1年
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        任务相关监测剂量数据
+                    </td>
+                    <td>
+                        设施名称2
+                    </td>
+                    <td>
+                        2月
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        任务相关监测剂量数据
+                    </td>
+                    <td>
+                        设施名称3
+                    </td>
+                    <td>
+                        3月
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        常规监测剂量数据
+                    </td>
+                    <td>
+                        单位1
+                    </td>
+                    <td>
+                        1月
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        常规监测剂量数据
+                    </td>
+                    <td>
+                        单位2
+                    </td>
+                    <td>
+                        1月
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        常规监测剂量数据
+                    </td>
+                    <td>
+                        单位3
+                    </td>
+                    <td>
+                        1月
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        常规监测剂量数据
+                    </td>
+                    <td>
+                        单位4
+                    </td>
+                    <td>
+                        1月
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        常规监测剂量数据
+                    </td>
+                    <td>
+                        单位5
+                    </td>
+                    <td>
+                        1月
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        常规监测剂量数据
+                    </td>
+                    <td>
+                        设施名称2
+                    </td>
+                    <td>
+                        2月
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        常规监测剂量数据
+                    </td>
+                    <td>
+                        设施名称3
+                    </td>
+                    <td>
+                        2月
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        任务相关监测剂量数据
+                    </td>
+                    <td>
+                        单位1
+                    </td>
+                    <td>
+                        1月
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        任务相关监测剂量数据
+                    </td>
+                    <td>
+                        单位2
+                    </td>
+                    <td>
+                        1季度
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        任务相关监测剂量数据
+                    </td>
+                    <td>
+                        设施名称1
+                    </td>
+                    <td>
+                        1年
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        任务相关监测剂量数据
+                    </td>
+                    <td>
+                        设施名称2
+                    </td>
+                    <td>
+                        2月
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        任务相关监测剂量数据
+                    </td>
+                    <td>
+                        设施名称3
+                    </td>
+                    <td>
+                        3月
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
+<div style="display: none">
+    <iframe id="ifrExp" src=""></iframe>
+</div>

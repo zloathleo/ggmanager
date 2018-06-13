@@ -1,0 +1,121 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>辐射职业照射数据采集和统一管理</title>
+    <link type="text/css" rel="Stylesheet" href="../../Contents/Css/base.css" />
+    <link type="text/css" rel="Stylesheet" href="../../Contents/Css/platform.css" />
+    <link type="text/css" rel="Stylesheet" href="../../Scripts/jQEasyUI/themes/easyui.css" />
+    <link type="text/css" rel="Stylesheet" href="../../Scripts/jQEasyUI/themes/icon.css" />
+    <script type="text/javascript" src="../../Scripts/jquery.min.js"></script>
+    <script type="text/javascript" src="../../Scripts/IllegalityCheck.js"></script>
+    <script type="text/javascript" src="../../Scripts/jQEasyUI/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../../Scripts/jQEasyUI/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="../../Scripts/FunctionJS.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('#selGrid').datagrid({
+                frozenColumns: [[
+                {
+                    field: 'ck',
+                    checkbox: true
+                }]]
+            });
+        })
+       
+    </script>
+</head>
+<body class="easyui-layout" fit="true">
+    <div data-options="region:'north',border:true,iconCls:'icon-search'" style="height: 46px">
+        <form id="searchForm1">
+        <table class="conditions">
+            <tr>
+                <td class="con-left">
+                    设施名称
+                </td>
+                <td class="con-right" style="width: 110px">
+                    <input class="easyui-validatebox" type="text" style="width: 80px" name="WK_CPNAME"
+                        data-options="required:true" readonly="readonly" />
+                    <img src="../../Contents/Images/icon_site.gif" alt="选择" align="absMiddle" style="cursor: pointer"
+                        onclick="ChoiceCompany()" />
+                </td>
+                <td class="con-left">
+                    关键字
+                </td>
+                <td class="con-right" style="width: 110px">
+                    <input class="easyui-validatebox" name="cdKey" value="" style="width: 120px; height: 28px;
+                        line-height: 28px;" data-options="required:false" validtype="length[1,100]">
+                </td>
+                <td class="con-button">
+                    <a href="javascript:;" id="btnSearch" onclick="" class="easyui-linkbutton" iconcls="icon-search"
+                        data-options="selected:false">查询</a>
+                </td>
+            </tr>
+        </table>
+        </form>
+    </div>
+    <div data-options="region:'center',border:false,iconCls:'icon-list'">
+        <table id="selGrid" border="false" fit="true" class="easyui-datagrid" data-options="singleSelect: true, striped: true, pageSize: 20, pagination: true, rownumbers: true, nowrap: false">
+            <thead>
+                <tr>
+                    <th data-options="field:'F1',width:100,align:'center',sortable: true">
+                        用户编号
+                    </th>
+                    <th data-options="field:'F2',width:180,align:'center',sortable: true">
+                        用户姓名
+                    </th>
+                    <th data-options="field:'F3',width:180,align:'center',sortable: true">
+                        来源设施
+                    </th>
+                    <th data-options="field:'F4',width:120,align:'center',sortable: true">
+                        过期日期
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        admin
+                    </td>
+                    <td>
+                        超级管理员
+                    </td>
+                    <td>
+                        设施名称1
+                    </td>
+                    <td>
+                        2030-12-31
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        P990115
+                    </td>
+                    <td>
+                        郁恩建
+                    </td>
+                    <td>
+                        设施名称2
+                    </td>
+                    <td>
+                        2030-12-31
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        test
+                    </td>
+                    <td>
+                        test
+                    </td>
+                    <td>
+                        设施名称2
+                    </td>
+                    <td>
+                        2030-12-31
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

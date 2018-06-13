@@ -1,0 +1,806 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>辐射职业照射数据采集和统一管理</title>
+    <link type="text/css" rel="Stylesheet" href="../../Contents/Css/base.css" />
+    <link type="text/css" rel="Stylesheet" href="../../Contents/Css/platform.css" />
+    <link type="text/css" rel="Stylesheet" href="../../Scripts/jQEasyUI/themes/easyui.css" />
+    <link type="text/css" rel="Stylesheet" href="../../Scripts/jQEasyUI/themes/icon.css" />
+    <script type="text/javascript" src="../../Scripts/jquery.min.js"></script>
+    <script type="text/javascript" src="../../Scripts/IllegalityCheck.js"></script>
+    <script type="text/javascript" src="../../Scripts/jQEasyUI/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../../Scripts/jQEasyUI/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="../../Scripts/FunctionJS.js"></script>
+    <script type="text/javascript">
+        var __grid;
+        $(function () {
+
+        });
+        function GetSelectedArr() {
+            var ids = [];
+            var rows = $("#grid").datagrid('getSelections');
+            for (var i = 0; i < rows.length; i++) {
+                ids.push(rows[i].UI_ID);
+            }
+            return ids.join(',');
+        }
+        function Add() {
+            __flag = 0;
+            var url = "Page1_1.html";
+            easyuiDialog("人员信息管理 - 添加", url, 800, 350);
+        }
+        function Imp() {
+            var url = "../Imp.html";
+            easyuiDialog("数据导入", url, 800, 350);
+        }
+        function Edit() {
+
+            var url = "Page1_1.html";
+            easyuiDialog("人员信息管理 - 编辑", url, 800, 350);
+        }
+        function Delete() {
+            $.messager.confirm('提示信息', '注：删除操作不可恢复，您确定要继续么？', function (data) {
+                if (data) {
+
+                }
+            });
+        }
+        function OpenV2() {
+            var url = "Page1_2.html";
+            easyuiViewDialog("人员基本信息", url, 800, 540);
+        }
+        function OpenV3() {
+            var url = "Page1_3.html";
+            easyuiViewDialog("人员信息 - 变更记录", url, 800, 350);
+        }
+ 
+    </script>
+</head>
+<body class="easyui-layout" fit="true">
+    <div data-options="region:'north',border:true,iconCls:'icon-search'" style="height: 86px"
+        title="查询条件">
+        <form id="searchForm1">
+        <table class="conditions">
+            <tr>
+                <td class="con-left">
+                    证件类型
+                </td>
+                <td class="con-right" style="width: 110px">
+                    <select class="easyui-combobox" editable="false" style="width: 100px; height: 28px;
+                        line-height: 28px;" panelheight="auto">
+                        <option value="">=全部=</option>
+                        <option value="身份证">身份证</option>
+                        <option value="军官证">军官证</option>
+                        <option value="护照号">护照号</option>
+                    </select>
+                </td>
+                <td class="con-left">
+                    关键字
+                </td>
+                <td class="con-right" style="width: 125px">
+                    <input class="easyui-validatebox" name="cdKey" value="" style="width: 120px; height: 28px;
+                        line-height: 28px;" data-options="required:false" validtype="length[1,100]">
+                </td>
+                <td class="con-button">
+                    <a href="javascript:;" id="btnSearch" onclick="" class="easyui-linkbutton" iconcls="icon-search"
+                        data-options="selected:false">查询</a>
+                </td>
+            </tr>
+        </table>
+        </form>
+    </div>
+    <div data-options="region:'center',border:false,iconCls:'icon-list'">
+        <div id="opButton">
+            <a href="javascript:;" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-10'"
+                onclick="Add()" title="新增">新增</a> <a href="javascript:;" class="easyui-linkbutton"
+                    data-options="plain:true,iconCls:'icon-edit'" onclick="Edit()" title="编辑">编辑</a>
+            <a href="javascript:;" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-no'"
+                onclick="Delete()" title="删除">删除</a> <a href="javascript:;" class="easyui-linkbutton"
+                    data-options="plain:true,iconCls:'icon-13'" onclick="Imp()" title="导入">导入</a>
+            <a href="javascript:;" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-43'"
+                onclick="Exp()" title="导出">导出</a>
+        </div>
+        <table id="grid" border="false" fit="true" class="easyui-datagrid" data-options="toolbar: '#opButton',singleSelect: true, striped: true, pageSize: 20, pagination: true, rownumbers: true, nowrap: false">
+            <thead>
+                <tr>
+                    <th data-options="field:'F1',width:100,align:'center',sortable: true">
+                        姓名
+                    </th>
+                    <th data-options="field:'F2',width:60,align:'center',sortable: true">
+                        性别
+                    </th>
+                    <th data-options="field:'F3',width:100,align:'center',sortable: true">
+                        证件类型
+                    </th>
+                    <th data-options="field:'F4',width:170,align:'center',sortable: true">
+                        证件号
+                    </th>
+                    <th data-options="field:'F5',width:100,align:'center',sortable: true">
+                        出生年月
+                    </th>
+                    <th data-options="field:'F6',width:120,align:'center',sortable: true">
+                        授权记录
+                    </th>
+                    <th data-options="field:'F10',width:120,align:'center',sortable: true">
+                        工作单位
+                    </th>
+                    <th data-options="field:'F11',width:80,align:'center',sortable: true">
+                        明细
+                    </th>
+                    <th data-options="field:'F12',width:80,align:'center',sortable: true">
+                        变更记录
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        张三1
+                    </td>
+                    <td>
+                        男
+                    </td>
+                    <td>
+                        身份证
+                    </td>
+                    <td>
+                        2128108321718830****X
+                    </td>
+                    <td>
+                        1980年11月
+                    </td>
+                    <td>
+                        授权记录***1
+                    </td>
+                    <td>
+                        某某单位1
+                    </td>
+                    <td>
+                        <a href='javascript:;' onclick="OpenV2()">
+                            <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                border: 0" />
+                            查看</a>
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        张三2
+                    </td>
+                    <td>
+                        男
+                    </td>
+                    <td>
+                        身份证
+                    </td>
+                    <td>
+                        2128108321718830****X
+                    </td>
+                    <td>
+                        1980年11月
+                    </td>
+                    <td>
+                        授权记录***2
+                    </td>
+                    <td>
+                        某某单位2
+                    </td>
+                    <td>
+                        <a href='javascript:;' onclick="OpenV2()">
+                            <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                border: 0" />
+                            查看</a>
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        张三3
+                    </td>
+                    <td>
+                        男
+                    </td>
+                    <td>
+                        身份证
+                    </td>
+                    <td>
+                        2128108321718830****X
+                    </td>
+                    <td>
+                        1980年11月
+                    </td>
+                    <td>
+                        授权记录***3
+                    </td>
+                    <td>
+                        某某单位3
+                    </td>
+                    <td>
+                        <a href='javascript:;' onclick="OpenV2()">
+                            <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                border: 0" />
+                            查看</a>
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        张三4
+                    </td>
+                    <td>
+                        男
+                    </td>
+                    <td>
+                        身份证
+                    </td>
+                    <td>
+                        2128108321718830****X
+                    </td>
+                    <td>
+                        1980年11月
+                    </td>
+                    <td>
+                        授权记录***4
+                    </td>
+                    <td>
+                        某某单位4
+                    </td>
+                    <td>
+                        <a href='javascript:;' onclick="OpenV2()">
+                            <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                border: 0" />
+                            查看</a>
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        张三5
+                    </td>
+                    <td>
+                        男
+                    </td>
+                    <td>
+                        身份证
+                    </td>
+                    <td>
+                        2128108321718830****X
+                    </td>
+                    <td>
+                        1980年11月
+                    </td>
+                    <td>
+                        授权记录***5
+                    </td>
+                    <td>
+                        某某单位5
+                    </td>
+                    <td>
+                        <a href='javascript:;' onclick="OpenV2()">
+                            <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                border: 0" />
+                            查看</a>
+                    </td>
+                    <td>
+                        <a href='javascript:;' onclick="OpenV3()">
+                            <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                border: 0" />
+                            查看</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        张三6
+                    </td>
+                    <td>
+                        男
+                    </td>
+                    <td>
+                        身份证
+                    </td>
+                    <td>
+                        2128108321718830****X
+                    </td>
+                    <td>
+                        1980年11月
+                    </td>
+                    <td>
+                        授权记录***6
+                    </td>
+                    <td>
+                        某某单位6
+                    </td>
+                    <td>
+                        <a href='javascript:;' onclick="OpenV2()">
+                            <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                border: 0" />
+                            查看</a>
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        张三7
+                    </td>
+                    <td>
+                        男
+                    </td>
+                    <td>
+                        身份证
+                    </td>
+                    <td>
+                        2128108321718830****X
+                    </td>
+                    <td>
+                        1980年11月
+                    </td>
+                    <td>
+                        授权记录***7
+                    </td>
+                    <td>
+                        某某单位7
+                    </td>
+                    <td>
+                        <a href='javascript:;' onclick="OpenV2()">
+                            <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                border: 0" />
+                            查看</a>
+                    </td>
+                    <td>
+                        <a href='javascript:;' onclick="OpenV3()">
+                            <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                border: 0" />
+                            查看</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        张三8
+                    </td>
+                    <td>
+                        男
+                    </td>
+                    <td>
+                        身份证
+                    </td>
+                    <td>
+                        2128108321718830****X
+                    </td>
+                    <td>
+                        1980年11月
+                    </td>
+                    <td>
+                        授权记录***8
+                    </td>
+                    <td>
+                        某某单位8
+                    </td>
+                    <td>
+                        <a href='javascript:;' onclick="OpenV2()">
+                            <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                border: 0" />
+                            查看</a>
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        张三9
+                    </td>
+                    <td>
+                        男
+                    </td>
+                    <td>
+                        身份证
+                    </td>
+                    <td>
+                        2128108321718830****X
+                    </td>
+                    <td>
+                        1980年11月
+                    </td>
+                    <td>
+                        授权记录***9
+                    </td>
+                    <td>
+                        某某单位9
+                    </td>
+                    <td>
+                        <a href='javascript:;' onclick="OpenV2()">
+                            <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                border: 0" />
+                            查看</a>
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        张三10
+                    </td>
+                    <td>
+                        男
+                    </td>
+                    <td>
+                        身份证
+                    </td>
+                    <td>
+                        2128108321718830****X
+                    </td>
+                    <td>
+                        1980年11月
+                    </td>
+                    <td>
+                        授权记录***10
+                    </td>
+                    <td>
+                        某某单位10
+                    </td>
+                    <td>
+                        <a href='javascript:;' onclick="OpenV2()">
+                            <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                border: 0" />
+                            查看</a>
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        张三11
+                    </td>
+                    <td>
+                        男
+                    </td>
+                    <td>
+                        身份证
+                    </td>
+                    <td>
+                        2128108321718830****X
+                    </td>
+                    <td>
+                        1980年11月
+                    </td>
+                    <td>
+                        授权记录***11
+                    </td>
+                    <td>
+                        某某单位11
+                    </td>
+                    <td>
+                        <a href='javascript:;' onclick="OpenV2()">
+                            <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                border: 0" />
+                            查看</a>
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        张三12
+                    </td>
+                    <td>
+                        男
+                    </td>
+                    <td>
+                        身份证
+                    </td>
+                    <td>
+                        2128108321718830****X
+                    </td>
+                    <td>
+                        1980年11月
+                    </td>
+                    <td>
+                        授权记录***12
+                    </td>
+                    <td>
+                        某某单位12
+                    </td>
+                    <td>
+                        <a href='javascript:;' onclick="OpenV2()">
+                            <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                border: 0" />
+                            查看</a>
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        张三13
+                    </td>
+                    <td>
+                        男
+                    </td>
+                    <td>
+                        身份证
+                    </td>
+                    <td>
+                        2128108321718830****X
+                    </td>
+                    <td>
+                        1980年11月
+                    </td>
+                    <td>
+                        授权记录***13
+                    </td>
+                    <td>
+                        某某单位13
+                    </td>
+                    <td>
+                        <a href='javascript:;' onclick="OpenV2()">
+                            <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                border: 0" />
+                            查看</a>
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        张三14
+                    </td>
+                    <td>
+                        男
+                    </td>
+                    <td>
+                        身份证
+                    </td>
+                    <td>
+                        2128108321718830****X
+                    </td>
+                    <td>
+                        1980年11月
+                    </td>
+                    <td>
+                        授权记录***14
+                    </td>
+                    <td>
+                        某某单位14
+                    </td>
+                    <td>
+                        <a href='javascript:;' onclick="OpenV2()">
+                            <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                border: 0" />
+                            查看</a>
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        张三15
+                    </td>
+                    <td>
+                        男
+                    </td>
+                    <td>
+                        身份证
+                    </td>
+                    <td>
+                        2128108321718830****X
+                    </td>
+                    <td>
+                        1980年11月
+                    </td>
+                    <td>
+                        授权记录***15
+                    </td>
+                    <td>
+                        某某单位15
+                    </td>
+                    <td>
+                        <a href='javascript:;' onclick="OpenV2()">
+                            <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                border: 0" />
+                            查看</a>
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        张三16
+                    </td>
+                    <td>
+                        男
+                    </td>
+                    <td>
+                        身份证
+                    </td>
+                    <td>
+                        2128108321718830****X
+                    </td>
+                    <td>
+                        1980年11月
+                    </td>
+                    <td>
+                        授权记录***16
+                    </td>
+                    <td>
+                        某某单位16
+                    </td>
+                    <td>
+                        <a href='javascript:;' onclick="OpenV2()">
+                            <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                border: 0" />
+                            查看</a>
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        张三17
+                    </td>
+                    <td>
+                        男
+                    </td>
+                    <td>
+                        身份证
+                    </td>
+                    <td>
+                        2128108321718830****X
+                    </td>
+                    <td>
+                        1980年11月
+                    </td>
+                    <td>
+                        授权记录***17
+                    </td>
+                    <td>
+                        某某单位17
+                    </td>
+                    <td>
+                        <a href='javascript:;' onclick="OpenV2()">
+                            <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                border: 0" />
+                            查看</a>
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        张三18
+                    </td>
+                    <td>
+                        男
+                    </td>
+                    <td>
+                        身份证
+                    </td>
+                    <td>
+                        2128108321718830****X
+                    </td>
+                    <td>
+                        1980年11月
+                    </td>
+                    <td>
+                        授权记录***18
+                    </td>
+                    <td>
+                        某某单位18
+                    </td>
+                    <td>
+                        <a href='javascript:;' onclick="OpenV2()">
+                            <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                border: 0" />
+                            查看</a>
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        张三19
+                    </td>
+                    <td>
+                        男
+                    </td>
+                    <td>
+                        身份证
+                    </td>
+                    <td>
+                        2128108321718830****X
+                    </td>
+                    <td>
+                        1980年11月
+                    </td>
+                    <td>
+                        授权记录***19
+                    </td>
+                    <td>
+                        某某单位19
+                    </td>
+                    <td>
+                        <a href='javascript:;' onclick="OpenV2()">
+                            <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                border: 0" />
+                            查看</a>
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        张三20
+                    </td>
+                    <td>
+                        男
+                    </td>
+                    <td>
+                        身份证
+                    </td>
+                    <td>
+                        2128108321718830****X
+                    </td>
+                    <td>
+                        1980年11月
+                    </td>
+                    <td>
+                        授权记录***20
+                    </td>
+                    <td>
+                        某某单位20
+                    </td>
+                    <td>
+                        <a href='javascript:;' onclick="OpenV2()">
+                            <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                border: 0" />
+                            查看</a>
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        张三21
+                    </td>
+                    <td>
+                        男
+                    </td>
+                    <td>
+                        身份证
+                    </td>
+                    <td>
+                        2128108321718830****X
+                    </td>
+                    <td>
+                        1980年11月
+                    </td>
+                    <td>
+                        授权记录***21
+                    </td>
+                    <td>
+                        某某单位21
+                    </td>
+                    <td>
+                        <a href='javascript:;' onclick="OpenV2()">
+                            <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                border: 0" />
+                            查看</a>
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="iframeDialog">
+    </div>
+    <div id="iframeOtherDialog">
+    </div>
+    <div style="display: none">
+        <iframe id="ifrExp" src=""></iframe>
+    </div>
+</body>
+</html>

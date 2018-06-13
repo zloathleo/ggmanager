@@ -1,0 +1,199 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>辐射职业照射数据采集和统一管理</title>
+    <link type="text/css" rel="Stylesheet" href="../../Contents/Css/base.css" />
+    <link type="text/css" rel="Stylesheet" href="../../Contents/Css/platform.css" />
+    <link type="text/css" rel="Stylesheet" href="../../Scripts/jQEasyUI/themes/easyui.css" />
+    <link type="text/css" rel="Stylesheet" href="../../Scripts/jQEasyUI/themes/icon.css" />
+    <script type="text/javascript" src="../../Scripts/jquery.min.js"></script>
+    <script type="text/javascript" src="../../Scripts/IllegalityCheck.js"></script>
+    <script type="text/javascript" src="../../Scripts/jQEasyUI/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../../Scripts/jQEasyUI/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="../../Scripts/echarts-all.js"></script>
+    <script type="text/javascript" src="../../Scripts/FunctionJS.js"></script>
+</head>
+<body style="width:988px; height:500px">
+    <div class="easyui-layout" fit="true">
+        <div data-options="region:'west',border:true,iconCls:'icon-list'" style="width: 220px"
+            title="数据列表">
+            <table id="grid" border="false" fit="true" class="easyui-datagrid" data-options="toolbar: '#opButton',singleSelect: true, striped: true, pagination: false, rownumbers: true, nowrap: false">
+                <thead>
+                    <tr>
+                        <th data-options="field:'F0',width:100,align:'center',sortable: true">
+                            子任务
+                        </th>
+                        <th data-options="field:'F1',width:80,align:'center',sortable: true">
+                            剂量(mSv)
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            子任务1
+                        </td>
+                        <td>
+                            211.5
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            子任务2
+                        </td>
+                        <td>
+                            181.5
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            子任务3
+                        </td>
+                        <td>
+                            281.5
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            子任务4
+                        </td>
+                        <td>
+                            581.5
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            子任务5
+                        </td>
+                        <td>
+                            123.5
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            子任务6
+                        </td>
+                        <td>
+                            33.5
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            子任务7
+                        </td>
+                        <td>
+                            56.5
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            子任务8
+                        </td>
+                        <td>
+                            79.8
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            子任务9
+                        </td>
+                        <td>
+                            12.1
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            子任务10
+                        </td>
+                        <td>
+                            9.12
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div data-options="region:'center',border:true,iconCls:'icon-list'" title="趋势图">
+            <div id="main" class="chart-chart" style="height: 400px; margin-top: 10px;">
+            </div>
+        </div>
+    </div>
+    <div id="iframeDialog">
+    </div>
+</body>
+<script type="text/javascript">
+    $(document).ready(function () {
+        LoadChart();
+    });
+
+    function LoadChart() {
+        var option = {
+            title: {
+                x: 'center',
+                text: '子任务剂量分析图',
+            },
+            toolbox: {
+                show: true,
+                feature: {
+                    dataView: { show: true, readOnly: false },
+                    restore: { show: true },
+                    saveAsImage: { show: true }
+                }
+            },
+            tooltip: {
+                trigger: 'axis',
+                formatter: '{b}<br>{c0}mSv'
+            },
+            calculable: true,
+            grid: {
+                borderWidth: 0,
+                y: 80,
+                y2: 60
+            },
+            xAxis: [
+        {
+            type: 'category',
+            show: false,
+            data: ['子任务1', '子任务2', '子任务3', '子任务4', '子任务5', '子任务6', '子任务7', '子任务8', '子任务9', '子任务10']
+        }
+    ],
+            yAxis: [
+        {
+            type: 'value',
+            show: false
+        }
+    ],
+            series: [
+        {
+            name: '子任务剂量',
+            type: 'bar',
+            itemStyle: {
+                normal: {
+                    color: function (params) {
+                        var colorList = [
+                          '#C1232B', '#B5C334', '#FCCE10', '#E87C25', '#27727B',
+                           '#FE8463', '#9BCA63', '#FAD860', '#F3A43B', '#60C0DD',
+                           '#D7504B', '#C6E579', '#F4E001', '#F0805A', '#26C0C0'
+                        ];
+                        return colorList[params.dataIndex]
+                    },
+                    label: {
+                        show: true,
+                        position: 'top',
+                        formatter: '{b}\n{c}'
+                    }
+                }
+            },
+            data: [211.5, 181.5, 281.5, 581.5, 123.5, 33.5, 56.5, 79.8, 12.1, 9.12]
+        }
+    ]
+        };
+        var myChart0 = echarts.init(document.getElementById('main'));
+        myChart0.setOption(option);
+        myChart0.on('click', function (param) {
+            window.location.href = "${base}/admin/user/list.htm";
+        });
+        myChart0.on('click', eConsole);  
+    }
+
+</script>
+</html>

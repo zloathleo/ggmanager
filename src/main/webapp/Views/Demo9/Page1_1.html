@@ -1,0 +1,1038 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>辐射职业照射数据采集和统一管理</title>
+    <link type="text/css" rel="Stylesheet" href="../../Contents/Css/base.css" />
+    <link type="text/css" rel="Stylesheet" href="../../Contents/Css/platform.css" />
+    <link type="text/css" rel="Stylesheet" href="../../Scripts/jQEasyUI/themes/easyui.css" />
+    <link type="text/css" rel="Stylesheet" href="../../Scripts/jQEasyUI/themes/icon.css" />
+    <script type="text/javascript" src="../../Scripts/jquery.min.js"></script>
+    <script type="text/javascript" src="../../Scripts/IllegalityCheck.js"></script>
+    <script type="text/javascript" src="../../Scripts/jQEasyUI/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../../Scripts/jQEasyUI/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="../../Scripts/FunctionJS.js"></script>
+    <script type="text/javascript">
+        var __grid;
+        function Ok() {
+            $.messager.confirm('提示信息', '注：是否确认并提交到系统？', function (data) {
+                if (data) {
+
+                }
+            });
+        }
+    </script>
+</head>
+<body class="easyui-layout" fit="true">
+    <div data-options="region:'north',border:true,iconCls:'icon-list'" style="height: 46px">
+        <table class="conditions">
+            <tr>
+                <td class="con-left" style="width: 80px">
+                    关键字
+                </td>
+                <td class="con-right" style="width: 125px">
+                    <input class="easyui-validatebox" name="cdKey" value="" style="width: 120px; height: 28px;
+                        line-height: 28px;" data-options="required:false" validtype="length[1,100]">
+                </td>
+                <td class="con-right" style="width: 150px">
+                    <a href='javascript:;'>
+                        <img src="../../Contents/Images/xls.png" alt='' style="width: 13px; height: 13px;
+                            border: 0" />
+                        下载处理的原始文件 </a>
+                </td>
+                <td class="con-button" colspan="3" style="text-align: left">
+                    <a href="javascript:;" id="btnSearch" onclick="Refresh()" class="easyui-linkbutton"
+                        iconcls="icon-search" data-options="selected:false">查询</a> <a href="javascript:;"
+                            id="A1" onclick="Ok()" class="easyui-linkbutton" iconcls="icon-ok" data-options="selected:false">
+                            确认</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div data-options="region:'center',border:false,iconCls:'icon-list'">
+        <table id="Table1" border="true" fit="true" class="easyui-datagrid" data-options="singleSelect: true, striped: true, pageSize: 20, pagination: true, rownumbers: true, nowrap: false">
+            <thead>
+                <tr>
+                    <th data-options="field:'2',width:80,align:'center',sortable: true">
+                        设施名称
+                    </th>
+                    <th data-options="field:'1',width:80,align:'center',sortable: true">
+                        单位
+                    </th>
+                    <th data-options="field:'22',width:80,align:'center',sortable: true">
+                        姓名
+                    </th>
+                    <th data-options="field:'5',width:160,align:'center',sortable: true">
+                        证件号
+                    </th>
+                    <th data-options="field:'itemid112',width:90,align:'center'">
+                        Hp(10)/中子
+                    </th>
+                    <th data-options="field:'itemid113',width:110,align:'center'">
+                        Hp(10)/除中子外
+                    </th>
+                    <th data-options="field:'itemid114',width:80,align:'center'">
+                        Hp(0.07)
+                    </th>
+                    <th data-options="field:'itemid115',width:80,align:'center'">
+                        Hp(3)
+                    </th>
+                    <th data-options="field:'itemid115',width:80,align:'center'">
+                        肢端
+                    </th>
+                    <th data-options="field:'itemid116',width:80,align:'center'">
+                        待积有效剂量
+                    </th>
+                    <th data-options="field:'34',width:80,align:'center',sortable: true">
+                        开始日期
+                    </th>
+                    <th data-options="field:'24',width:80,align:'center',sortable: true">
+                        结束日期
+                    </th>
+                    <th data-options="field:'17',width:70,align:'center',sortable: true">
+                        操作人
+                    </th>
+                    <th data-options="field:'27',width:140,align:'center',sortable: true">
+                        操作时间
+                    </th>
+                    <th data-options="field:'F97',width:80,align:'center',sortable: true">
+                        明细
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        设施名称1
+                    </td>
+                    <td>
+                        单位1
+                    </td>
+                    <td>
+                        张三1
+                    </td>
+                    <td>
+                        329120128310122*****
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                        0.01
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                        2017-09-01
+                    </td>
+                    <td>
+                        2017-10-31
+                    </td>
+                    <td>
+                        李四
+                    </td>
+                    <td>
+                        2018-05-05 10:27:08
+                    </td>
+                    <td>
+                        <a href='javascript:;' onclick="OpenV2()">
+                            <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                border: 0" />
+                            查看</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        设施名称2
+                    </td>
+                    <td>
+                        单位1
+                    </td>
+                    <td>
+                        张三2
+                    </td>
+                    <td>
+                        329120128310122*****
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                        0.01
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                        2017-09-01
+                    </td>
+                    <td>
+                        2017-10-31
+                    </td>
+                    <td>
+                        李四
+                    </td>
+                    <td>
+                        2018-05-05 10:27:08
+                    </td>
+                    <td>
+                        <a href='javascript:;' onclick="OpenV2()">
+                            <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                border: 0" />
+                            查看</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        设施名称3
+                    </td>
+                    <td>
+                        单位1
+                    </td>
+                    <td>
+                        张三3
+                    </td>
+                    <td>
+                        329120128310122*****
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                        0.01
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                        2017-09-01
+                    </td>
+                    <td>
+                        2017-10-31
+                    </td>
+                    <td>
+                        李四
+                    </td>
+                    <td>
+                        2018-05-05 10:27:08
+                    </td>
+                    <td>
+                        <a href='javascript:;' onclick="OpenV2()">
+                            <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                border: 0" />
+                            查看</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        设施名称4
+                    </td>
+                    <td>
+                        单位1
+                    </td>
+                    <td>
+                        张三4
+                    </td>
+                    <td>
+                        329120128310122*****
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                        0.01
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                        2017-09-01
+                    </td>
+                    <td>
+                        2017-10-31
+                    </td>
+                    <td>
+                        李四
+                    </td>
+                    <td>
+                        2018-05-05 10:27:08
+                    </td>
+                    <td>
+                        <a href='javascript:;' onclick="OpenV2()">
+                            <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                border: 0" />
+                            查看</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        设施名称5
+                    </td>
+                    <td>
+                        单位1
+                    </td>
+                    <td>
+                        张三5
+                    </td>
+                    <td>
+                        329120128310122*****
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                        0.01
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                        2017-09-01
+                    </td>
+                    <td>
+                        2017-10-31
+                    </td>
+                    <td>
+                        李四
+                    </td>
+                    <td>
+                        2018-05-05 10:27:08
+                    </td>
+                    <td>
+                        <a href='javascript:;' onclick="OpenV2()">
+                            <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                border: 0" />
+                            查看</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        设施名称6
+                    </td>
+                    <td>
+                        单位1
+                    </td>
+                    <td>
+                        张三6
+                    </td>
+                    <td>
+                        329120128310122*****
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                        0.01
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                        2017-09-01
+                    </td>
+                    <td>
+                        2017-10-31
+                    </td>
+                    <td>
+                        李四
+                    </td>
+                    <td>
+                        2018-05-05 10:27:08
+                    </td>
+                    <td>
+                        <a href='javascript:;' onclick="OpenV2()">
+                            <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                border: 0" />
+                            查看</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        设施名称7
+                    </td>
+                    <td>
+                        单位1
+                    </td>
+                    <td>
+                        张三7
+                    </td>
+                    <td>
+                        329120128310122*****
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                        0.01
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                        2017-09-01
+                    </td>
+                    <td>
+                        2017-10-31
+                    </td>
+                    <td>
+                        李四
+                    </td>
+                    <td>
+                        2018-05-05 10:27:08
+                    </td>
+                    <td>
+                        <a href='javascript:;' onclick="OpenV2()">
+                            <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                border: 0" />
+                            查看</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        设施名称8
+                    </td>
+                    <td>
+                        单位1
+                    </td>
+                    <td>
+                        张三8
+                    </td>
+                    <td>
+                        329120128310122*****
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                        0.01
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                        2017-09-01
+                    </td>
+                    <td>
+                        2017-10-31
+                    </td>
+                    <td>
+                        李四
+                    </td>
+                    <td>
+                        2018-05-05 10:27:08
+                    </td>
+                    <td>
+                        <a href='javascript:;' onclick="OpenV2()">
+                            <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                border: 0" />
+                            查看</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        设施名称9
+                    </td>
+                    <td>
+                        单位1
+                    </td>
+                    <td>
+                        张三9
+                    </td>
+                    <td>
+                        329120128310122*****
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                        0.01
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                        2017-09-01
+                    </td>
+                    <td>
+                        2017-10-31
+                    </td>
+                    <td>
+                        李四
+                    </td>
+                    <td>
+                        2018-05-05 10:27:08
+                    </td>
+                    <td>
+                        <a href='javascript:;' onclick="OpenV2()">
+                            <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                border: 0" />
+                            查看</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        设施名称10
+                    </td>
+                    <td>
+                        单位1
+                    </td>
+                    <td>
+                        张三10
+                    </td>
+                    <td>
+                        329120128310122*****
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                        0.01
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                        2017-09-01
+                    </td>
+                    <td>
+                        2017-10-31
+                    </td>
+                    <td>
+                        李四
+                    </td>
+                    <td>
+                        2018-05-05 10:27:08
+                    </td>
+                    <td>
+                        <a href='javascript:;' onclick="OpenV2()">
+                            <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                border: 0" />
+                            查看</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        设施名称11
+                    </td>
+                    <td>
+                        单位1
+                    </td>
+                    <td>
+                        张三11
+                    </td>
+                    <td>
+                        329120128310122*****
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                        0.01
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                        2017-09-01
+                    </td>
+                    <td>
+                        2017-10-31
+                    </td>
+                    <td>
+                        李四
+                    </td>
+                    <td>
+                        2018-05-05 10:27:08
+                    </td>
+                    <td>
+                        <a href='javascript:;' onclick="OpenV2()">
+                            <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                border: 0" />
+                            查看</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        设施名称12
+                    </td>
+                    <td>
+                        单位1
+                    </td>
+                    <td>
+                        张三12
+                    </td>
+                    <td>
+                        329120128310122*****
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                        0.01
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                        2017-09-01
+                    </td>
+                    <td>
+                        2017-10-31
+                    </td>
+                    <td>
+                        李四
+                    </td>
+                    <td>
+                        2018-05-05 10:27:08
+                    </td>
+                    <td>
+                        <a href='javascript:;' onclick="OpenV2()">
+                            <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                border: 0" />
+                            查看</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        设施名称13
+                    </td>
+                    <td>
+                        单位1
+                    </td>
+                    <td>
+                        张三13
+                    </td>
+                    <td>
+                        329120128310122*****
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                        0.01
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                        2017-09-01
+                    </td>
+                    <td>
+                        2017-10-31
+                    </td>
+                    <td>
+                        李四
+                    </td>
+                    <td>
+                        2018-05-05 10:27:08
+                    </td>
+                    <td>
+                        <a href='javascript:;' onclick="OpenV2()">
+                            <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                border: 0" />
+                            查看</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        设施名称14
+                    </td>
+                    <td>
+                        单位1
+                    </td>
+                    <td>
+                        张三14
+                    </td>
+                    <td>
+                        329120128310122*****
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                        0.01
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                        2017-09-01
+                    </td>
+                    <td>
+                        2017-10-31
+                    </td>
+                    <td>
+                        李四
+                    </td>
+                    <td>
+                        2018-05-05 10:27:08
+                    </td>
+                    <td>
+                        <a href='javascript:;' onclick="OpenV2()">
+                            <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                border: 0" />
+                            查看</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        设施名称15
+                    </td>
+                    <td>
+                        单位1
+                    </td>
+                    <td>
+                        张三15
+                    </td>
+                    <td>
+                        329120128310122*****
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                        0.01
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                        2017-09-01
+                    </td>
+                    <td>
+                        2017-10-31
+                    </td>
+                    <td>
+                        李四
+                    </td>
+                    <td>
+                        2018-05-05 10:27:08
+                    </td>
+                    <td>
+                        <a href='javascript:;' onclick="OpenV2()">
+                            <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                border: 0" />
+                            查看</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        设施名称16
+                    </td>
+                    <td>
+                        单位1
+                    </td>
+                    <td>
+                        张三16
+                    </td>
+                    <td>
+                        329120128310122*****
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                        0.01
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                        2017-09-01
+                    </td>
+                    <td>
+                        2017-10-31
+                    </td>
+                    <td>
+                        李四
+                    </td>
+                    <td>
+                        2018-05-05 10:27:08
+                    </td>
+                    <td>
+                        <a href='javascript:;' onclick="OpenV2()">
+                            <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                border: 0" />
+                            查看</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        设施名称17
+                    </td>
+                    <td>
+                        单位1
+                    </td>
+                    <td>
+                        张三17
+                    </td>
+                    <td>
+                        329120128310122*****
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                        0.01
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                        2017-09-01
+                    </td>
+                    <td>
+                        2017-10-31
+                    </td>
+                    <td>
+                        李四
+                    </td>
+                    <td>
+                        2018-05-05 10:27:08
+                    </td>
+                    <td>
+                        <a href='javascript:;' onclick="OpenV2()">
+                            <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                border: 0" />
+                            查看</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        设施名称18
+                    </td>
+                    <td>
+                        单位1
+                    </td>
+                    <td>
+                        张三18
+                    </td>
+                    <td>
+                        329120128310122*****
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                        0.01
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                        2017-09-01
+                    </td>
+                    <td>
+                        2017-10-31
+                    </td>
+                    <td>
+                        李四
+                    </td>
+                    <td>
+                        2018-05-05 10:27:08
+                    </td>
+                    <td>
+                        <a href='javascript:;' onclick="OpenV2()">
+                            <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                border: 0" />
+                            查看</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        设施名称19
+                    </td>
+                    <td>
+                        单位1
+                    </td>
+                    <td>
+                        张三19
+                    </td>
+                    <td>
+                        329120128310122*****
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                        0.01
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        0.21
+                    </td>
+                    <td>
+                        2017-09-01
+                    </td>
+                    <td>
+                        2017-10-31
+                    </td>
+                    <td>
+                        李四
+                    </td>
+                    <td>
+                        2018-05-05 10:27:08
+                    </td>
+                    <td>
+                        <a href='javascript:;' onclick="OpenV2()">
+                            <img src="../../Contents/Images/search.png" alt='' style="width: 13px; height: 13px;
+                                border: 0" />
+                            查看</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
