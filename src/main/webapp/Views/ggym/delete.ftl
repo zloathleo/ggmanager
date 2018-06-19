@@ -36,7 +36,7 @@
     </script>
 </head>
 <body class="easyui-layout">
-<form id="form_delete" action="delete_item.do" method="post">
+<form id="form_delete" action="delete_item.do" method="post" style="padding: 10px;" >
     删除[${item.label}]操作不可恢复，您确定要继续么？
     <input  name="id" style="display: none;" value="${item.id}" />
 </form>

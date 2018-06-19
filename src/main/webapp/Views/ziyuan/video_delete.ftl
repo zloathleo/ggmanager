@@ -2,7 +2,7 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>添加</title>
+    <title>删除</title>
     <link type="text/css" rel="Stylesheet" href="../../Contents/Css/base.css"/>
     <link type="text/css" rel="Stylesheet" href="../../Contents/Css/platform.css"/>
     <link type="text/css" rel="Stylesheet" href="../../Scripts/jQEasyUI/themes/easyui.css"/>
@@ -14,7 +14,7 @@
     <script type="text/javascript" src="../../Scripts/FunctionJS.js"></script>
     <script type="text/javascript">
         function DialogSave(__dialog) {
-            $('#form_add').form('submit', {
+            $('#form_delete').form('submit', {
                 success: function (data) {
 
                     var jsonObject = JSON.parse(data);
@@ -32,25 +32,13 @@
                 }
             });
         }
-
         parent.DialogSave = DialogSave;
     </script>
 </head>
 <body class="easyui-layout">
-<form id="form_add" action="add_item.do" method="post" enctype="multipart/form-data">
-    上传资源(最大允许100M)
-    <table style="width: 660px" class="kv-table">
-        <tbody>
-        <tr>
-            <td class="kv-label">
-                允许文件格式<.jpg .png .bmp .mp4 .flv><span class="ui-input-must">&nbsp;</span>
-            </td>
-            <td class="kv-content">
-                <input type="file" name="uploadFile" value="选择文件" accept=".jpg,.png,.bmp,.mp4,.flv"/>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+<form id="form_delete" action="delete_item.do" method="post">
+    删除[${url}]操作不可恢复，您确定要继续么？
+    <input  name="url" style="display: none;" value="${url}" />
 </form>
 </body>
 </html>

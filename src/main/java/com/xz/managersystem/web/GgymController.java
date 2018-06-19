@@ -4,11 +4,14 @@ import com.xz.managersystem.dao.TablePageParams;
 import com.xz.managersystem.dto.req.BasicTableReq;
 import com.xz.managersystem.dto.req.GgymAdd;
 import com.xz.managersystem.dto.res.BasicTableRes;
+import com.xz.managersystem.entity.TGgmb;
 import com.xz.managersystem.entity.TGgym;
+import com.xz.managersystem.service.GgmbService;
 import com.xz.managersystem.service.GgymService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -21,27 +24,32 @@ import java.util.List;
  * 页面
  */
 @Controller
+@RequestMapping("/Views/ggym")
 public class GgymController {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    @Value("#{config['resource.url.path']}")
+    private String resourceUrlPath;
+
     @Autowired
     GgymService ggymService;
 
-    //对外
-    @RequestMapping(value = "/ym/{id}", method = RequestMethod.GET)
-    @ResponseBody
-    private TGgym getYm(@PathVariable("id") String id) {
-        Integer oneId = Integer.parseInt(id);
-        return ggymService.findOne(oneId);
-    }
+    @Autowired
+    GgmbService ggmbService;
 
-    @RequestMapping(value = "/Views/ggym/search", method = RequestMethod.GET)
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
     private String search(Model model) {
+        model.addAttribute("resourceUrlPath", resourceUrlPath);
         return "/Views/ggym/search";
     }
 
-    @RequestMapping(value = "/Views/ggym/loadList", method = RequestMethod.POST)
+    @RequestMapping(value = "/mb_search", method = RequestMethod.GET)
+    private String mbSearch(Model model) {
+        return "/Views/ggym/mb_search";
+    }
+
+    @RequestMapping(value = "/loadList", method = RequestMethod.POST)
     @ResponseBody
     private BasicTableRes<TGgym> loadList(@Valid BasicTableReq tr) {
         logger.info(tr.toString());
@@ -50,7 +58,16 @@ public class GgymController {
         return new BasicTableRes<TGgym>(total, list);
     }
 
-    @RequestMapping(value = "/Views/ggym/add_item", method = RequestMethod.POST)
+    @RequestMapping(value = "/loadMbList", method = RequestMethod.POST)
+    @ResponseBody
+    private BasicTableRes<TGgmb> loadMbList(@Valid BasicTableReq tr) {
+        logger.info(tr.toString());
+        List<TGgmb> list = ggmbService.selectPage(new TablePageParams((tr.getPage() - 1) * tr.getRows(), tr.getRows()));
+        int total = ggmbService.getVisibleCount();
+        return new BasicTableRes<TGgmb>(total, list);
+    }
+
+    @RequestMapping(value = "/add_item", method = RequestMethod.POST)
     @ResponseBody
     private TGgym addItem(@Valid GgymAdd add) {
         TGgym one = new TGgym();
@@ -60,6 +77,7 @@ public class GgymController {
         one.setImgUrls(add.getImgUrls());
         one.setDes(add.getDesc());
         one.setTextMsg(add.getTextMsg());
+        one.setGgmbId(add.getGgmbId());
 
         TGgym exist = ggymService.findOneByName(add.getName());
         if (exist != null) {
@@ -70,7 +88,7 @@ public class GgymController {
         return result;
     }
 
-    @RequestMapping(value = "/Views/ggym/update_item", method = RequestMethod.POST)
+    @RequestMapping(value = "/update_item", method = RequestMethod.POST)
     @ResponseBody
     private TGgym updateItem(@Valid GgymAdd add) {
         TGgym one = new TGgym();
@@ -80,13 +98,14 @@ public class GgymController {
         one.setImgUrls(add.getImgUrls());
         one.setDes(add.getDesc());
         one.setTextMsg(add.getTextMsg());
+        one.setGgmbId(add.getGgmbId());
 
         int count = ggymService.updateByPrimaryKeySelective(one);
         TGgym result = ggymService.findOne(add.getId());
         return result;
     }
 
-    @RequestMapping(value = "/Views/ggym/delete_item", method = RequestMethod.POST)
+    @RequestMapping(value = "/delete_item", method = RequestMethod.POST)
     @ResponseBody
     private TGgym deleteItem(@Valid GgymAdd add) {
         int count = ggymService.deleteById(add.getId());
@@ -94,16 +113,24 @@ public class GgymController {
         return result;
     }
 
-    @RequestMapping(value = "/Views/ggym/open_operate", method = RequestMethod.GET)
+    @RequestMapping(value = "/open_operate", method = RequestMethod.GET)
     private String openOperate(Model model, @RequestParam(name = "cmd", required = false) String cmd, @RequestParam(name = "itemId", required = false) Integer itemId) {
       
         if ("add".equalsIgnoreCase(cmd)) {
             int count = ggymService.getAllCount() + 1;
             model.addAttribute("count", count);
+
+            List<TGgmb> mbs = ggmbService.selectVisibleAll();
+            model.addAttribute("mbs", mbs);
+
             return "/Views/ggym/add";
         } else if ("edit".equalsIgnoreCase(cmd)) {
             TGgym ggym = ggymService.findOne(itemId);
             model.addAttribute("item", ggym);
+
+            List<TGgmb> mbs = ggmbService.selectVisibleAll();
+            model.addAttribute("mbs", mbs);
+
             return "/Views/ggym/edit";
         } else if ("delete".equalsIgnoreCase(cmd)) {
             TGgym ggym = ggymService.findOne(itemId);

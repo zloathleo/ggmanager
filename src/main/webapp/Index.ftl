@@ -37,7 +37,7 @@
                 <table>
                     <tr>
                         <td style="padding-left: 30px; font-size: 30px; font-weight: bold">
-                            Admin
+                            ADAdmin
                         </td>
                     </tr>
                 </table>
@@ -76,19 +76,28 @@
 <div region="west" border="true" split="true" title="&nbsp;&nbsp;菜单" style="width: 200px;
         padding: 0px;" data-options="iconCls:'icon-05'">
     <div class="easyui-accordion" fit="true" border="false">
-        <div title="广告页面" data-options="iconCls:'icon-56'">
-            <div name="csj-menu" class="csj-menu" rel="查询广告页面" src="Views/ggym/search">
-                <img src="Contents/Images/pagination_next.gif">查询广告页面
+        <div title="广告页面管理" data-options="iconCls:'icon-56'">
+            <div name="csj-menu" class="csj-menu" rel="广告页面管理" src="Views/ggym/search">
+                <img src="Contents/Images/pagination_next.gif">广告页面管理
+            </div>
+            <div name="csj-menu" class="csj-menu" rel="模板页面查询" src="Views/ggym/mb_search">
+                <img src="Contents/Images/pagination_next.gif">模板页面查询
             </div>
         </div>
-        <div title="资源" data-options="iconCls:'icon-49'">
-            <div name="csj-menu" class="csj-menu" rel="查询资源" src="Views/ziyuan/search">
-                <img src="Contents/Images/pagination_next.gif">查询资源
+        <div title="多媒体资源管理" data-options="iconCls:'icon-49'">
+            <div name="csj-menu" class="csj-menu" rel="图片资源管理" src="Views/ziyuan/search_image">
+                <img src="Contents/Images/pagination_next.gif">图片资源管理
+            </div>
+            <div name="csj-menu" class="csj-menu" rel="本地视频资源管理" src="Views/ziyuan/search_video">
+                <img src="Contents/Images/pagination_next.gif">本地视频资源管理
+            </div>
+            <div name="csj-menu" class="csj-menu" rel="实时视频资源查询" src="Views/ziyuan/search_rt">
+                <img src="Contents/Images/pagination_next.gif">实时视频资源查询
             </div>
         </div>
-        <div title="设备管理" data-options="iconCls:'icon-08'">
-            <div name="csj-menu" class="csj-menu" rel="查询设备" src="Views/sbgl/search">
-                <img src="Contents/Images/pagination_next.gif">查询设备
+        <div title="广告机设备管理" data-options="iconCls:'icon-08'">
+            <div name="csj-menu" class="csj-menu" rel="广告机设备管理" src="Views/sbgl/search">
+                <img src="Contents/Images/pagination_next.gif">广告机设备管理
             </div>
         </div>
 

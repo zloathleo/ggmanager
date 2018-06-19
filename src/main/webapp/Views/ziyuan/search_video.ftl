@@ -19,10 +19,11 @@
 
         function Add() {
             var paramString = $.param({
+                "type":"video",
                 "cmd": "add",
             });
             var url = "open_operate?" + paramString;
-            easyuiDialog("资源 - 上传", url, 700, 520, paramString);
+            easyuiDialog("上传资源(最大允许100M)", url, 550, 220, paramString);
         }
 
         function Delete() {
@@ -31,6 +32,7 @@
                 var _url = _row.url;
 
                 var paramString = $.param({
+                    "type":"video",
                     "cmd": "delete",
                     "url": _url
                 });
@@ -49,22 +51,14 @@
         <#--<a href="javascript:;" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-no'"-->
            <#--onclick="Delete()" title="删除">删除</a>-->
     </div>
-    <table id="grid" border="false" fit="true" class="easyui-datagrid" url="loadList"
+    <table id="grid" border="false" fit="true" class="easyui-datagrid" url="loadVideoList"
            data-options="toolbar: '#opButton',singleSelect: true, nowrap: false">
         <thead>
         <tr>
             <th data-options="field:'url',width:300,align:'center',sortable: false">
                 引用路径
             </th>
-            <th data-options="field:'fileName',width:300, align:'center', formatter: function(v){
-                                     var _ext = v.substring(v.length - 3,v.length)
-                                     if(_ext == 'flv' || _ext == 'mp4' || _ext == 'mp3'){
-                                        return v;
-                                     }else{
-                                        return  '<img style='+'width:90px;height:90px'+'  src='+('${resourceUrlPath}'+v)+'  /> ';
-                                     }
-
-            	              }">图片
+            <th data-options="field:'fileName',width:300, align:'center'">文件名称
             </th>
         </tr>
         </thead>

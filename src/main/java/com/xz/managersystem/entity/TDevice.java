@@ -18,6 +18,12 @@ public class TDevice  extends BasicEntity {
 
     private Date updateTime;
 
+    private String ymLabel;
+
+    private Integer mbId;
+
+    private String mbLabel;
+
     public Integer getId() {
         return id;
     }
@@ -72,5 +78,29 @@ public class TDevice  extends BasicEntity {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getYmLabel() {
+        return ymLabel;
+    }
+
+    public void setYmLabel(String ymLabel) {
+        this.ymLabel = ymLabel;
+    }
+
+    public Integer getMbId() {
+        return mbId;
+    }
+
+    public void setMbId(Integer mbId) {
+        this.mbId = mbId;
+    }
+
+    public String getMbLabel() {
+        return mbLabel;
+    }
+
+    public void setMbLabel(String mbLabel) {
+        this.mbLabel = mbLabel;
     }
 }

@@ -6,8 +6,10 @@ import com.xz.managersystem.dto.req.TDeviceAdd;
 import com.xz.managersystem.dto.res.BasicTableRes;
 import com.xz.managersystem.dto.res.SelectOp;
 import com.xz.managersystem.entity.TDevice;
+import com.xz.managersystem.entity.TGgmb;
 import com.xz.managersystem.entity.TGgym;
 import com.xz.managersystem.entity.TResource;
+import com.xz.managersystem.service.GgmbService;
 import com.xz.managersystem.service.GgymService;
 import com.xz.managersystem.service.SbglService;
 import org.slf4j.Logger;
@@ -27,6 +29,7 @@ import java.util.stream.Stream;
  * 设备
  */
 @Controller
+@RequestMapping("/Views/sbgl")
 public class SbglController {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -37,31 +40,33 @@ public class SbglController {
     @Autowired
     GgymService ggymService;
 
-    //对外
-    @RequestMapping(value = "/sb/{id}", method = RequestMethod.GET)
-    @ResponseBody
-    private TGgym getSb(@PathVariable("id") String id) {
-        Integer oneId = Integer.parseInt(id);
-        TDevice device = sbglService.findOne(oneId);
-        Integer ymId = device.getGgymId();
-        return ggymService.findOne(ymId);
-    }
+    @Autowired
+    GgmbService ggmbService;
 
-    @RequestMapping(value = "/Views/sbgl/search", method = RequestMethod.GET)
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
     private String search(Model model) {
         return "/Views/sbgl/search";
     }
 
-    @RequestMapping(value = "/Views/sbgl/loadList", method = RequestMethod.POST)
+    @RequestMapping(value = "/loadList", method = RequestMethod.POST)
     @ResponseBody
     private BasicTableRes<TDevice> loadList(@Valid BasicTableReq tr) {
         logger.info(tr.toString());
         List<TDevice> list = sbglService.selectPage(new TablePageParams((tr.getPage() - 1) * tr.getRows(), tr.getRows()));
+        for (TDevice device : list) {
+            Integer ymId = device.getGgymId();
+            TGgym ym = ggymService.findOne(ymId);
+            Integer mbId = ym.getGgmbId();
+            TGgmb mb = ggmbService.findOne(mbId);
+            device.setYmLabel(ym.getLabel());
+            device.setMbId(mbId);
+            device.setMbLabel(mb.getLabel());
+        }
         int total = sbglService.getVisibleCount();
         return new BasicTableRes<TDevice>(total, list);
     }
 
-    @RequestMapping(value = "/Views/sbgl/add_item", method = RequestMethod.POST)
+    @RequestMapping(value = "/add_item", method = RequestMethod.POST)
     @ResponseBody
     private TDevice addItem(@Valid TDeviceAdd add) {
         TDevice one = new TDevice();
@@ -84,7 +89,7 @@ public class SbglController {
         return result;
     }
 
-    @RequestMapping(value = "/Views/sbgl/update_item", method = RequestMethod.POST)
+    @RequestMapping(value = "/update_item", method = RequestMethod.POST)
     @ResponseBody
     private TDevice updateItem(@Valid TDeviceAdd add) {
         TDevice one = new TDevice();
@@ -99,7 +104,7 @@ public class SbglController {
         return result;
     }
 
-    @RequestMapping(value = "/Views/sbgl/delete_item", method = RequestMethod.POST)
+    @RequestMapping(value = "/delete_item", method = RequestMethod.POST)
     @ResponseBody
     private TDevice deleteItem(@Valid TDeviceAdd add) {
         int count = sbglService.deleteById(add.getId());
@@ -107,10 +112,10 @@ public class SbglController {
         return result;
     }
 
-    @RequestMapping(value = "/Views/sbgl/open_operate", method = RequestMethod.GET)
+    @RequestMapping(value = "/open_operate", method = RequestMethod.GET)
     private String openOperate(Model model, @RequestParam(name = "cmd", required = false) String cmd, @RequestParam(name = "itemId", required = false) Integer itemId) {
         List<TGgym> ggymList = ggymService.selectVisibleAll();
-        Stream<SelectOp> selectOpStream = ggymList.stream().map(n -> new SelectOp(n.getId(),n.getLabel()));
+        Stream<SelectOp> selectOpStream = ggymList.stream().map(n -> new SelectOp(n.getId(), n.getLabel()));
         List<SelectOp> selectOpList = selectOpStream.collect(Collectors.toList());
 
         if ("add".equalsIgnoreCase(cmd)) {

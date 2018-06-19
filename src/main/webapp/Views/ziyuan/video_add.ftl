@@ -37,53 +37,17 @@
     </script>
 </head>
 <body class="easyui-layout">
-<form id="form_add" action="add_item.do" method="post">
-    <table style="width: 660px" class="kv-table">
+<form id="form_add" action="add_item.do" method="post" enctype="multipart/form-data">
+    <table style="width: 500px" class="kv-table">
         <tbody>
         <tr>
             <td class="kv-label">
-                名称<span class="ui-input-must">&nbsp;</span>
+                允许文件格式<.mp4 .flv><span class="ui-input-must">&nbsp;</span>
             </td>
             <td class="kv-content">
-                <input class="easyui-validatebox" type="text" style="width: 300px;" name="label" value="Device_${count}"
-                       data-options="required:true"/>
+                <input type="file" name="uploadFile" value="选择文件" accept=".mp4,.flv"/>
             </td>
         </tr>
-        <tr>
-            <td class="kv-label">
-                展示页面名称<span class="ui-input-must">&nbsp;</span>
-            </td>
-            <td class="kv-content">
-            <#--<input class="easyui-validatebox" type="text" style="width: 300px;" name="ggymId"/>-->
-
-                <select name="ggymId" class="easyui-combobox" labelPosition="top" editable="false" style="width:100px;">
-
-                    <#list selectOpList as selectOp>
-                        <option value=${selectOp.value}>${selectOp.display}</option>
-                    </#list>
-
-                </select>
-
-            </td>
-        </tr>
-        <tr>
-            <td class="kv-label">
-                设备位置
-            </td>
-            <td class="kv-content">
-                <input class="easyui-validatebox" type="text" style="width: 300px;" name="location"/>
-            </td>
-        </tr>
-        <tr>
-            <td class="kv-label">
-                描述
-            </td>
-            <td class="kv-content">
-                <input class="easyui-validatebox" type="text" style="width: 300px;" name="des"/>
-            </td>
-        </tr>
-
-
         </tbody>
     </table>
 </form>

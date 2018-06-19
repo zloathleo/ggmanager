@@ -10,6 +10,8 @@ public class GgymAdd extends BasicReq {
 
     private Integer stype;
 
+    private Integer ggmbId;
+
     private String videoUrls;
 
     private String imgUrls;
@@ -46,6 +48,14 @@ public class GgymAdd extends BasicReq {
 
     public void setStype(Integer stype) {
         this.stype = stype;
+    }
+
+    public Integer getGgmbId() {
+        return ggmbId;
+    }
+
+    public void setGgmbId(Integer ggmbId) {
+        this.ggmbId = ggmbId;
     }
 
     public String getVideoUrls() {

@@ -50,7 +50,7 @@
                     "itemId": _itemId
                 });
                 var url = "open_operate?" + paramString;
-                easyuiDialog("设备 - 删除", url, 600, 400);
+                easyuiDialog("设备 - 删除", url, 400, 150);
             }
         }
     </script>
@@ -70,7 +70,7 @@
            data-options="toolbar: '#opButton',singleSelect: true, nowrap: false ,rownumbers:true, pagination:true, pageSize:10">
         <thead>
         <tr>
-            <th data-options="field:'id',width:50,align:'center',sortable: false">
+            <th data-options="field:'id',hidden:'true',width:50,align:'center',sortable: false">
                 设备ID
             </th>
             <th data-options="field:'label',width:100,align:'center',sortable: false">
@@ -82,9 +82,13 @@
             <th data-options="field:'location',width:200,align:'center',sortable: false">
                 设备位置
             </th>
-            <th data-options="field:'ggymId',width:200,align:'center',sortable: false">
-                设备页面ID
+            <th data-options="field:'ymLabel',width:200,align:'center',sortable: false">
+                展示页面
             </th>
+            <th data-options="field:'mbLabel',width:200,align:'center',sortable: false">
+                页面模板名称
+            </th>
+
         </tr>
         </thead>
 

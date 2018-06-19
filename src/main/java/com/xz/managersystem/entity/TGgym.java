@@ -8,9 +8,11 @@ public class TGgym extends BasicEntity {
 
     private String label;
 
+    private Integer stype;
+
     private String des;
 
-    private Integer stype;
+    private Integer ggmbId;
 
     private String videoUrls;
 
@@ -21,6 +23,11 @@ public class TGgym extends BasicEntity {
     private Date createTime;
 
     private Date updateTime;
+
+    private String mbLabel;
+
+    private String mbDes;
+
 
     public Integer getId() {
         return id;
@@ -52,6 +59,14 @@ public class TGgym extends BasicEntity {
 
     public void setStype(Integer stype) {
         this.stype = stype;
+    }
+
+    public Integer getGgmbId() {
+        return ggmbId;
+    }
+
+    public void setGgmbId(Integer ggmbId) {
+        this.ggmbId = ggmbId;
     }
 
     public String getVideoUrls() {
@@ -94,4 +109,19 @@ public class TGgym extends BasicEntity {
         this.updateTime = updateTime;
     }
 
+    public String getMbLabel() {
+        return mbLabel;
+    }
+
+    public void setMbLabel(String mbLabel) {
+        this.mbLabel = mbLabel;
+    }
+
+    public String getMbDes() {
+        return mbDes;
+    }
+
+    public void setMbDes(String mbDes) {
+        this.mbDes = mbDes;
+    }
 }

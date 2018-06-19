@@ -40,15 +40,27 @@ public class ZiYuanController {
     @Value("#{config['resource.path']}")
     private String resourcePath;
 
-    @RequestMapping(value = "/search", method = RequestMethod.GET)
-    private String search(Model model) {
+    @RequestMapping(value = "/search_image", method = RequestMethod.GET)
+    private String search_image(Model model) {
         model.addAttribute("resourceUrlPath", resourceUrlPath);
-        return "/Views/ziyuan/search";
+        return "/Views/ziyuan/search_image";
     }
 
-    @RequestMapping(value = "/loadList", method = RequestMethod.POST)
+    @RequestMapping(value = "/search_video", method = RequestMethod.GET)
+    private String search_video(Model model) {
+        model.addAttribute("resourceUrlPath", resourceUrlPath);
+        return "/Views/ziyuan/search_video";
+    }
+
+    @RequestMapping(value = "/search_rt", method = RequestMethod.GET)
+    private String search_rt(Model model) {
+        model.addAttribute("resourceUrlPath", resourceUrlPath);
+        return "/Views/ziyuan/search_rt";
+    }
+
+    @RequestMapping(value = "/loadImageList", method = RequestMethod.POST)
     @ResponseBody
-    private BasicTableRes<TResource> loadList(@Valid BasicTableReq tr) {
+    private BasicTableRes<TResource> loadImageList(@Valid BasicTableReq tr) {
         File dirFile = new File(resourcePath);
         if (!dirFile.isDirectory()) {
             throw new NullPointerException("资源目录不存在");
@@ -59,26 +71,51 @@ public class ZiYuanController {
         Stream<String> filterStream = Arrays.stream(fileList).filter(
                 f -> f.toLowerCase().endsWith(".jpg") ||
                         f.toLowerCase().endsWith(".bmp") ||
-                        f.toLowerCase().endsWith(".png") ||
-                        f.toLowerCase().endsWith(".mp4") ||
+                        f.toLowerCase().endsWith(".png")
+        );
+
+        //对象化
+        Stream<TResource> resourcesStream = filterStream.map(n -> new TResource(n, n));
+        List<TResource> result = resourcesStream.collect(Collectors.toList());
+        return new BasicTableRes<TResource>(result.size(), result);
+    }
+
+    @RequestMapping(value = "/loadVideoList", method = RequestMethod.POST)
+    @ResponseBody
+    private BasicTableRes<TResource> loadList(@Valid BasicTableReq tr) {
+        File dirFile = new File(resourcePath);
+        if (!dirFile.isDirectory()) {
+            throw new NullPointerException("资源目录不存在");
+        }
+        String[] fileList = dirFile.list();
+
+        //过滤指定文件类型
+        Stream<String> filterStream = Arrays.stream(fileList).filter(
+                f -> f.toLowerCase().endsWith(".mp4") ||
                         f.toLowerCase().endsWith(".flv")
         );
 
         //对象化
         Stream<TResource> resourcesStream = filterStream.map(n -> new TResource(n, n));
-
         List<TResource> result = resourcesStream.collect(Collectors.toList());
-
         return new BasicTableRes<TResource>(result.size(), result);
     }
 
     @RequestMapping(value = "/open_operate", method = RequestMethod.GET)
-    private String openOperate(Model model, @RequestParam(name = "cmd", required = false) String cmd, @RequestParam(name = "url", required = false) String url) {
+    private String openOperate(Model model, @RequestParam(name = "cmd", required = false) String cmd, @RequestParam(name = "type", required = false) String type, @RequestParam(name = "url", required = false) String url) {
         if ("add".equalsIgnoreCase(cmd)) {
-            return "/Views/ziyuan/add";
+            if("image".equalsIgnoreCase(type)){
+                return "/Views/ziyuan/image_add";
+            }else{
+                return "/Views/ziyuan/video_add";
+            }
         } else if ("delete".equalsIgnoreCase(cmd)) {
             model.addAttribute("url", url);
-            return "/Views/ziyuan/delete";
+            if("image".equalsIgnoreCase(type)){
+                return "/Views/ziyuan/image_delete";
+            }else{
+                return "/Views/ziyuan/video_delete";
+            }
         }
         return "/Views/ziyuan/add";
     }

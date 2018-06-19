@@ -59,6 +59,21 @@
         </tr>
         <tr>
             <td class="kv-label">
+                模板类型<span class="ui-input-must">&nbsp;</span>
+            </td>
+            <td class="kv-content">
+                <select class="easyui-combobox" editable="false" name="ggmbId" style="width: 100px; height: 28px;
+                        line-height: 28px;" panelheight="auto">
+
+                    <#list mbs as mb>
+                        <option value=${mb.id}>${mb.label}</option>
+                    </#list>
+
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="kv-label">
                 屏幕类型<span class="ui-input-must">&nbsp;</span>
             </td>
             <td class="kv-content">
@@ -71,23 +86,23 @@
         </tr>
         <tr>
             <td class="kv-label">
-                视频URL
-            </td>
-            <td class="kv-content">
-                <span class="textbox easyui-fluid" style="width: 100%; height: 120px;">
-                    <textarea name="videoUrls" autocomplete="off"
-                              style="margin: 0px; height: 120px; width: 95%;"></textarea>
-                </span>
-            </td>
-        </tr>
-        <tr>
-            <td class="kv-label">
                 图片URL
             </td>
             <td class="kv-content">
                 <span class="textbox easyui-fluid" style="width: 100%; height: 120px;">
                     <textarea name="imgUrls" autocomplete="off"
                               style="margin: 0px; height: 120px; width: 95%;"></textarea>
+                </span>
+            </td>
+        </tr>
+        <tr>
+            <td class="kv-label">
+                视频URL
+            </td>
+            <td class="kv-content">
+                <span class="textbox easyui-fluid" style="width: 100%; height: 60px;">
+                    <textarea name="videoUrls" autocomplete="off"
+                              style="margin: 0px; height: 60px; width: 95%;"></textarea>
                 </span>
             </td>
         </tr>
