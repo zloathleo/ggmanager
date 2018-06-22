@@ -12,22 +12,12 @@
     <script type="text/javascript" src="../../Scripts/jQEasyUI/jquery.easyui.min.js"></script>
     <script type="text/javascript" src="../../Scripts/jQEasyUI/easyui-lang-zh_CN.js"></script>
     <script type="text/javascript" src="../../Scripts/FunctionJS.js"></script>
+    <script type="text/javascript" src="../../Scripts/self/open_operate.js"></script>
     <script type="text/javascript">
         function DialogSave(__dialog) {
             $('#form_delete').form('submit', {
                 success: function (data) {
-                    var jsonObject = JSON.parse(data);
-                    if (jsonObject.hasOwnProperty('err')) {
-                        $.messager.alert('异常', '提交操作异常[' + jsonObject.message + "]", function (r) {
-                            __dialog.dialog('close');
-                            parent.EndEdit();
-                        });
-                    } else {
-                        $.messager.alert('成功', '提交操作成功', "info", function (r) {
-                            __dialog.dialog('close');
-                            parent.EndEdit();
-                        });
-                    }
+                    OnSuccess(__dialog, data)
                 }
             });
         }

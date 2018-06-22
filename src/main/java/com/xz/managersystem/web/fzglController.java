@@ -4,18 +4,17 @@ import com.xz.managersystem.dao.TablePageParams;
 import com.xz.managersystem.dto.req.BasicTableReq;
 import com.xz.managersystem.dto.res.BasicRes;
 import com.xz.managersystem.dto.res.BasicTableRes;
-import com.xz.managersystem.entity.TSbxx;
 import com.xz.managersystem.entity.TFzxx;
-import com.xz.managersystem.entity.TYmxx;
-import com.xz.managersystem.service.YmglService;
-import com.xz.managersystem.service.SbglService;
 import com.xz.managersystem.service.FzglService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
@@ -23,56 +22,50 @@ import javax.validation.Valid;
 import java.util.List;
 
 /**
- * 设备
+ * 分组
  */
 @Controller
-@RequestMapping("/Views/sbgl")
-public class SbglController {
+@RequestMapping("/Views/fzgl")
+public class fzglController {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    SbglService sbglService;
-
-    @Autowired
     FzglService fzglService;
 
-    @Autowired
-    YmglService ymglService;
-
     @RequestMapping(value = "/search", method = RequestMethod.GET)
-    private String searchSb(Model model) {
-        return "/Views/sbgl/search";
+    private String searchFz(Model model) {
+        return "/Views/fzgl/search";
     }
 
     @RequestMapping(value = "/load_list", method = RequestMethod.POST)
     @ResponseBody
-    private BasicTableRes<TSbxx> loadList(@Valid BasicTableReq tr) {
+    private BasicTableRes<TFzxx> loadList(@Valid BasicTableReq tr) {
         logger.info(tr.toString());
-        List<TSbxx> list = sbglService.selectPage(new TablePageParams((tr.getPage() - 1) * tr.getRows(), tr.getRows()));
-        int total = sbglService.getVisibleCount();
+        List<TFzxx> list = fzglService.selectPage(new TablePageParams((tr.getPage() - 1) * tr.getRows(), tr.getRows()));
+        int total = fzglService.getVisibleCount();
         return new BasicTableRes<>(total, list);
     }
 
     @RequestMapping(value = "/add_item", method = RequestMethod.POST)
     @ResponseBody
-    private BasicRes addItem(@Valid TSbxx item) {
-        TSbxx exist = sbglService.findOneByName(item.getLabel());
+    private BasicRes addItem(@Valid TFzxx item) {
+        TFzxx exist = fzglService.findOneByName(item.getLabel());
         if (exist != null) {
-            throw new EntityExistsException("设备" + item.getLabel() + "已经存在");
+            throw new EntityExistsException("分组" + item.getLabel() + "已经存在");
         }
 
-        int count = sbglService.insert(item);
+        int count = fzglService.insert(item);
         if (count < 1) {
-            throw new EntityNotFoundException("新增设备" + item.getLabel() + "失败");
+            throw new EntityNotFoundException("新增分组" + item.getLabel() + "失败");
         }
         return new BasicRes("操作成功");
     }
 
     @RequestMapping(value = "/update_item", method = RequestMethod.POST)
     @ResponseBody
-    private BasicRes updateItem(@Valid TSbxx item) {
-        int count = sbglService.updateByPrimaryKeySelective(item);
+    private BasicRes updateItem(@Valid TFzxx item) {
+        int count = fzglService.updateByPrimaryKeySelective(item);
         if (count < 1) {
             throw new EntityNotFoundException("修改设备" + item.getLabel() + "失败");
         }
@@ -81,8 +74,8 @@ public class SbglController {
 
     @RequestMapping(value = "/delete_item", method = RequestMethod.POST)
     @ResponseBody
-    private BasicRes deleteItem(@Valid TSbxx item) {
-        sbglService.deleteById(item.getId());
+    private BasicRes deleteItem(@Valid TFzxx item) {
+        fzglService.deleteById(item.getId());
         return new BasicRes("操作成功");
     }
 
@@ -91,22 +84,13 @@ public class SbglController {
                                @RequestParam(name = "cmd", required = false) String cmd,
                                @RequestParam(name = "itemId", required = false) Integer itemId) {
         List<TFzxx> fzList = fzglService.selectVisibleAll();
-        List<TYmxx> ymList = ymglService.selectVisibleAll();
-        TSbxx item = sbglService.findOne(itemId);
 
         if ("add".equalsIgnoreCase(cmd)) {
-            model.addAttribute("count", sbglService.getAllCount() + 1);
-            model.addAttribute("fzs", fzList);
-            model.addAttribute("yms", ymList);
-            return "/Views/sbgl/add";
+            return "/Views/fzgl/add";
         } else if ("edit".equalsIgnoreCase(cmd)) {
-            model.addAttribute("item", item);
-            model.addAttribute("fzs", fzList);
-            model.addAttribute("yms", ymList);
-            return "/Views/sbgl/edit";
+            return "/Views/fzgl/edit";
         } else {
-            model.addAttribute("item", item);
-            return "/Views/sbgl/delete";
+            return "/Views/fzgl/delete";
         }
     }
 }

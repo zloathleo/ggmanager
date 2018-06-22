@@ -99,10 +99,10 @@
             </div>
         </div>
         <div title="广告机设备管理" data-options="iconCls:'icon-08'">
-            <div name="csj-menu" class="csj-menu" rel="设备管理" src="Views/sbgl/search_sb">
+            <div name="csj-menu" class="csj-menu" rel="设备管理" src="Views/sbgl/search">
                 <img src="Contents/Images/pagination_next.gif">设备管理
             </div>
-            <div name="csj-menu" class="csj-menu" rel="分组管理" src="Views/sbgl/search_fz">
+            <div name="csj-menu" class="csj-menu" rel="分组管理" src="Views/fzgl/search">
                 <img src="Contents/Images/pagination_next.gif">分组管理
             </div>
         </div>

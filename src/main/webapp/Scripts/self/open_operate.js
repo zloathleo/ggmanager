@@ -52,21 +52,18 @@ function Delete(obj) {
     }
 }
 
-function DialogSave(__dialog) {
-    $('#form_add').form('submit', {
-        success: function (data) {
-            var jsonObject = JSON.parse(data);
-            if (jsonObject.hasOwnProperty('err')) {
-                $.messager.alert('失败', '提交操作异常[' + jsonObject.message + "]", "error", function (r) {
-                    __dialog.dialog('close');
-                    parent.EndEdit();
-                });
-            } else {
-                $.messager.alert('成功', '提交操作成功', "info", function (r) {
-                    __dialog.dialog('close');
-                    parent.EndEdit();
-                });
-            }
-        }
-    });
+function OnSuccess(__dialog, data) {
+    var jsonObject = JSON.parse(data);
+
+    if (jsonObject.hasOwnProperty('err')) {
+        $.messager.alert('失败', '提交操作异常[' + jsonObject.message + "]", "error", function (r) {
+            __dialog.dialog('close');
+            parent.EndEdit();
+        });
+    } else {
+        $.messager.alert('成功', '提交操作成功', "info", function (r) {
+            __dialog.dialog('close');
+            parent.EndEdit();
+        });
+    }
 }

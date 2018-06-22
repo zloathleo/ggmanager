@@ -3,6 +3,7 @@ package com.xz.managersystem.web;
 import com.xz.managersystem.dao.TablePageParams;
 import com.xz.managersystem.dto.req.BasicTableReq;
 import com.xz.managersystem.dto.res.BasicTableRes;
+import com.xz.managersystem.dto.res.BasicRes;
 import com.xz.managersystem.entity.TMbxx;
 import com.xz.managersystem.entity.TYmxx;
 import com.xz.managersystem.service.MbglService;
@@ -56,7 +57,7 @@ public class YmglController {
         logger.info(tr.toString());
         List<TYmxx> list = ymglService.selectPage(new TablePageParams((tr.getPage() - 1) * tr.getRows(), tr.getRows()));
         int total = ymglService.getVisibleCount();
-        return new BasicTableRes<TYmxx>(total, list);
+        return new BasicTableRes<>(total, list);
     }
 
     @RequestMapping(value = "/load_mb", method = RequestMethod.POST)
@@ -65,41 +66,39 @@ public class YmglController {
         logger.info(tr.toString());
         List<TMbxx> list = mbglService.selectPage(new TablePageParams((tr.getPage() - 1) * tr.getRows(), tr.getRows()));
         int total = mbglService.getVisibleCount();
-        return new BasicTableRes<TMbxx>(total, list);
+        return new BasicTableRes<>(total, list);
     }
 
     @RequestMapping(value = "/add_item", method = RequestMethod.POST)
     @ResponseBody
-    private TYmxx addItem(@Valid TYmxx item) {
+    private BasicRes addItem(@Valid TYmxx item) {
         TYmxx exist = ymglService.findOneByName(item.getLabel());
         if (exist != null) {
             throw new EntityExistsException("页面" + item.getLabel() + "已经存在");
         }
 
-        ymglService.insert(item);
-        TYmxx one = ymglService.findOneByName(item.getLabel());
-        if (one == null) {
-            throw new EntityNotFoundException("添加页面" + item.getLabel() + "失败");
+        int count = ymglService.insert(item);
+        if (count < 1) {
+            throw new EntityNotFoundException("新增页面" + item.getLabel() + "失败");
         }
-        return one;
+        return new BasicRes("操作成功");
     }
 
     @RequestMapping(value = "/update_item", method = RequestMethod.POST)
     @ResponseBody
-    private TYmxx updateItem(@Valid TYmxx item) {
-        ymglService.updateByPrimaryKeySelective(item);
-        TYmxx one = ymglService.findOne(item.getId());
-        if (one == null) {
+    private BasicRes updateItem(@Valid TYmxx item) {
+        int count = ymglService.updateByPrimaryKeySelective(item);
+        if (count < 1) {
             throw new EntityNotFoundException("修改页面" + item.getLabel() + "失败");
         }
-        return one;
+        return new BasicRes("操作成功");
     }
 
     @RequestMapping(value = "/delete_item", method = RequestMethod.POST)
     @ResponseBody
-    private TYmxx deleteItem(@Valid TYmxx item) {
+    private BasicRes deleteItem(@Valid TYmxx item) {
         ymglService.deleteById(item.getId());
-        return ymglService.findOne(item.getId());
+        return new BasicRes("操作成功");
     }
 
     @RequestMapping(value = "/open_operate", method = RequestMethod.GET)
@@ -107,25 +106,16 @@ public class YmglController {
                                @RequestParam(name = "cmd", required = false) String cmd,
                                @RequestParam(name = "itemId", required = false) Integer itemId) {
         if ("add".equalsIgnoreCase(cmd)) {
-            int count = ymglService.getAllCount() + 1;
-            model.addAttribute("count", count);
-
-            List<TMbxx> mbList = mbglService.selectVisibleAll();
-            model.addAttribute("mbs", mbList);
-            return "/Views/ymgl/add_ym";
+            model.addAttribute("mbs", mbglService.selectVisibleAll());
+            model.addAttribute("count", ymglService.getAllCount() + 1);
+            return "/Views/ymgl/add";
         } else if ("edit".equalsIgnoreCase(cmd)) {
-            TYmxx ymxx = ymglService.findOne(itemId);
-            model.addAttribute("item", ymxx);
-
-            List<TMbxx> mbList = mbglService.selectVisibleAll();
-            model.addAttribute("mbs", mbList);
-
-            return "/Views/ymgl/edit_ym";
-        } else if ("delete".equalsIgnoreCase(cmd)) {
-            TYmxx ggym = ymglService.findOne(itemId);
-            model.addAttribute("item", ggym);
-            return "/Views/ymgl/delete_ym";
+            model.addAttribute("item", ymglService.findOne(itemId));
+            model.addAttribute("mbs", mbglService.selectVisibleAll());
+            return "/Views/ymgl/edit";
+        } else {
+            model.addAttribute("item", ymglService.findOne(itemId));
+            return "/Views/ymgl/delete";
         }
-        return "/Views/ymgl/add_ym";
     }
 }

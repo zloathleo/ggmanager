@@ -2,7 +2,7 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>修改</title>
+    <title>添加</title>
     <link type="text/css" rel="Stylesheet" href="../../Contents/Css/base.css"/>
     <link type="text/css" rel="Stylesheet" href="../../Contents/Css/platform.css"/>
     <link type="text/css" rel="Stylesheet" href="../../Scripts/jQEasyUI/themes/easyui.css"/>
@@ -15,36 +15,27 @@
     <script type="text/javascript" src="../../Scripts/self/open_operate.js"></script>
     <script type="text/javascript" src="../../Scripts/self/common.js"></script>
     <script type="text/javascript">
+        function DialogSave(__dialog) {
+            $('#form_add').form('submit', {
+                success: function (data) {
+                    OnSuccess(__dialog, data)
+                }
+            });
+        }
         parent.DialogSave = DialogSave;
-            $(function () {
-               /* FillSelect("myselect", mbs, ${item.ymId});*/
-                var json = [];
-
-            <#list mbs as mb>
-            var json2 = {};
-                json2["text"] = "${mb.label}";
-                json2["id"] = ${mb.id};
-                json.push(json2);
-            </#list>
-
-            var str = JSON.stringify(json);
-            $.messager.alert("tishi", str, "info");
-            $('#myselect').combobox("loadData", json);
-        });
     </script>
 </head>
 <body class="easyui-layout">
-<form id="form_update" action="update_item.do" method="post">
+<form id="form_add" action="add_item.do" method="post">
     <table style="width: 565px" class="kv-table">
         <tbody>
-        <input name="id" style="display: none;" value="${item.id}"/>
         <tr>
             <td class="kv-label">
                 页面名称<span class="ui-input-must">&nbsp;</span>
             </td>
             <td class="kv-content">
-                <input class="easyui-validatebox" type="text" disabled="disabled" style="width: 96%;"
-                       name="label" value="${item.label}"/>
+                <input class="easyui-validatebox" type="text" style="width: 96%;" name="label"
+                       value="Page_${count}" data-options="required:true"/>
             </td>
         </tr>
         <tr>
@@ -52,7 +43,7 @@
                 页面描述
             </td>
             <td class="kv-content">
-                <input class="easyui-validatebox" type="text" style="width: 96%;" name="des" value="${item.des}"/>
+                <input class="easyui-validatebox" type="text" style="width: 96%;" name="des"/>
             </td>
         </tr>
         <tr>
@@ -60,11 +51,11 @@
                 引用模板<span class="ui-input-must">&nbsp;</span>
             </td>
             <td class="kv-content">
-                <select id="myselect" class="easyui-combobox" editable="false" name="mbId"
-                        style="width: 100px; height: 28px; line-height: 28px;" panelheight="auto">
-                <#-- <#list mbs as mb>
-                        <option id=${mb.id}>${mb.label}</option>
-                    </#list>-->
+                <select class="easyui-combobox" editable="false" name="mbId" style="width: 150px; height: 28px;
+                        line-height: 28px;" panelheight="auto">
+                    <#list mbs as mb>
+                            <option value=${mb.id}>${mb.label}</option>
+                    </#list>
                 </select>
             </td>
         </tr>
@@ -75,7 +66,7 @@
             <td class="kv-content">
                 <span class="textbox easyui-fluid" style="width: 100%; height: 100px;">
                     <textarea name="imgUrls" autocomplete="off"
-                              style="margin: 0px; height: 100px; width: 90%;">${item.imgUrls}</textarea>
+                              style="margin: 0px; height: 100px; width: 95%;"></textarea>
                 </span>
             </td>
         </tr>
@@ -85,8 +76,8 @@
             </td>
             <td class="kv-content">
                 <span class="textbox easyui-fluid" style="width: 100%; height: 60px;">
-                        <textarea name="videoUrls" autocomplete="off"
-                                  style="margin: 0px; height: 60px; width: 90%;">${item.videoUrls}</textarea>
+                    <textarea name="videoUrls" autocomplete="off"
+                              style="margin: 0px; height: 60px; width: 95%;"></textarea>
                 </span>
             </td>
         </tr>
@@ -97,7 +88,7 @@
             <td class="kv-content">
                 <span class="textbox easyui-fluid" style="width: 100%; height: 60px;">
                     <textarea name="textUrls" autocomplete="off"
-                              style="margin: 0px; height: 60px; width: 95%;">${item.textUrls}</textarea>
+                              style="margin: 0px; height: 60px; width: 95%;"></textarea>
                 </span>
             </td>
         </tr>

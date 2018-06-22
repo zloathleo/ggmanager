@@ -2,7 +2,7 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>模板页面查询</title>
+    <title>查询设备</title>
     <link type="text/css" rel="Stylesheet" href="../../Contents/Css/base.css"/>
     <link type="text/css" rel="Stylesheet" href="../../Contents/Css/platform.css"/>
     <link type="text/css" rel="Stylesheet" href="../../Scripts/jQEasyUI/themes/easyui.css"/>
@@ -15,27 +15,37 @@
     <script type="text/javascript" src="../../Scripts/self/open_operate.js"></script>
     <script type="text/javascript" src="../../Scripts/self/common.js"></script>
     <script type="text/javascript">
-        $(document).ready(function () {
-            Init("load_mb", 20)
+        var obj = "分组";
+        $(document).ready(function(){
+            Init("load_list", 20)
         });
     </script>
 </head>
 <body class="easyui-layout" fit="true">
-<div data-options="region:'center',border:false, iconCls:'icon-list'">
-    <table id="grid" border="false" fit="true" class="easyui-datagrid">
+
+<div data-options="region:'center',border:false,iconCls:'icon-list'">
+    <div id="opButton">
+        <a href="javascript:;" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-10'"
+           onclick="Add(obj)" title="新增">新增</a>
+        <a href="javascript:;" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-edit'"
+           onclick="Edit(obj)" title="编辑">编辑</a>
+        <a href="javascript:;" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-no'"
+           onclick="Delete(obj)" title="删除">删除</a>
+    </div>
+    <table id="grid" border="false" fit="true" class="easyui-datagrid" data-options="toolbar: '#opButton'">
         <thead>
         <tr>
-            <th data-options="field:'label', width:100, align:'center', sortable:false">
-                模板名称
+            <th data-options="field:'id', hidden:'true', width:50, align:'center', sortable:false">
+                分组ID
             </th>
-            <th data-options="field:'type',width:100, align:'center', sortable:false" formatter="ToScreenType">
-                模板类型
+            <th data-options="field:'label', width:150, align:'center', sortable:false">
+                分组名称
             </th>
-            <th data-options="field:'des', width:400, align:'center', sortable:false">
-                模板介绍
+            <th data-options="field:'desc', width:200, align:'center', sortable:false">
+                分组描述
             </th>
-            <th data-options="field:'demo', width:100, align:'center', sortable:false">
-                样式预览
+            <th data-options="field:'ymLabel', width:200, align:'center', sortable:false">
+                展示页面
             </th>
         </tr>
         </thead>
