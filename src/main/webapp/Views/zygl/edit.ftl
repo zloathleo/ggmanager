@@ -2,7 +2,7 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>添加</title>
+    <title>修改</title>
     <link type="text/css" rel="Stylesheet" href="../../Contents/Css/base.css"/>
     <link type="text/css" rel="Stylesheet" href="../../Contents/Css/platform.css"/>
     <link type="text/css" rel="Stylesheet" href="../../Scripts/jQEasyUI/themes/easyui.css"/>
@@ -35,17 +35,56 @@
 
         parent.DialogSave = DialogSave;
     </script>
+    <script type="text/javascript">
+        function HideRow(rowId) {
+            var row = document.getElementById(rowId);
+            row.style.display = "none";
+        }
+
+        $(document).ready(function(){
+            if ("${type}" != "wz") {
+                HideRow("tr2");
+            } else {
+                HideRow("tr3");
+            }
+        });
+    </script>
 </head>
 <body class="easyui-layout">
-<form id="form_add" action="add_item.do" method="post" enctype="multipart/form-data">
-    <table style="width: 500px" class="kv-table">
+<form id="form_add" action="update_item.do" method="post" enctype="multipart/form-data">
+    <table style="width: 565px" class="kv-table">
         <tbody>
-        <tr>
+        <input name="id" style="display: none;" value="${item.id}"/>
+        <tr id="tr1">
             <td class="kv-label">
-                允许文件格式<.jpg .png .bmp><span class="ui-input-must">&nbsp;</span>
+                资源名称
             </td>
             <td class="kv-content">
-                <input type="file" name="uploadFile" value="选择文件" accept=".jpg,.png,.bmp"/>
+                <input class="easyui-validatebox" disabled="disabled" type="text" style="width: 96%;" name="label" value="${item.label}"/>
+            </td>
+        </tr>
+        <tr id="tr2">
+            <td class="kv-label">
+                资源内容
+            </td>
+            <td class="kv-content">
+                <input class="easyui-validatebox" type="text" style="width: 96%;" name="content" value="${item.content}"/>
+            </td>
+        </tr>
+        <tr id="tr3">
+            <td class="kv-label">
+                资源描述
+            </td>
+            <td class="kv-content">
+                <input class="easyui-validatebox" type="text" style="width: 96%;" name="des" value="${item.des}"/>
+            </td>
+        </tr>
+        <tr id="tr4">
+            <td class="kv-label">
+                关联链接
+            </td>
+            <td class="kv-content">
+                <input class="easyui-validatebox" type="text" style="width: 96%;" name="link" value="${item.link}"/>
             </td>
         </tr>
         </tbody>

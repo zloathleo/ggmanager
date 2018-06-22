@@ -1,8 +1,8 @@
 package com.xz.managersystem.web;
 
-import com.xz.managersystem.entity.TDevice;
-import com.xz.managersystem.entity.TGgym;
-import com.xz.managersystem.service.GgymService;
+import com.xz.managersystem.entity.TSbxx;
+import com.xz.managersystem.entity.TYmxx;
+import com.xz.managersystem.service.YmglService;
 import com.xz.managersystem.service.SbglService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,25 +23,25 @@ public class ApiController {
     SbglService sbglService;
 
     @Autowired
-    GgymService ggymService;
+    YmglService ymglService;
 
     //页面
     @RequestMapping(value = "/ym/{name}", method = RequestMethod.GET)
     @ResponseBody
-    private TGgym getYm(@PathVariable("name") String name) {
-        return ggymService.findOneByName(name);
+    private TYmxx getYm(@PathVariable("name") String name) {
+        return ymglService.findOneByName(name);
     }
 
     //设备
     @RequestMapping(value = "/sb/{name}", method = RequestMethod.GET)
     @ResponseBody
-    private TGgym getSb(@PathVariable("name") String name) {
-        TDevice device = sbglService.findOneByName(name);
+    private TYmxx getSb(@PathVariable("name") String name) {
+        TSbxx device = sbglService.findOneByName(name);
         if(device == null){
             throw new NullPointerException("设备不存在");
         }
-        Integer ymId = device.getGgymId();
-        return ggymService.findOne(ymId);
+        Integer ymId = device.getYmId();
+        return ymglService.findOne(ymId);
     }
 
 }

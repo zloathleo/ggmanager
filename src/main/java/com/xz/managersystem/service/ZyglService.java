@@ -1,24 +1,26 @@
 package com.xz.managersystem.service;
 
-import com.xz.managersystem.dao.SbglMapper;
+import com.xz.managersystem.dao.ZyglMapper;
 import com.xz.managersystem.dao.TablePageParams;
-import com.xz.managersystem.entity.TSbxx;
+import com.xz.managersystem.entity.TZyxx;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class SbglService {
+public class ZyglService {
 
     @Autowired
-    SbglMapper mapper;
+    ZyglMapper mapper;
 
-    public List<TSbxx> selectVisibleAll() {
+    public List<TZyxx> selectVisibleAll() {
         return mapper.selectVisibleAll();
     }
 
-    public List<TSbxx> selectPage(TablePageParams params) {
+    public List<TZyxx> selectPage(TablePageParams params) {
         return mapper.selectPage(params);
     }
 
@@ -30,19 +32,21 @@ public class SbglService {
         return mapper.getVisibleCount();
     }
 
-    public TSbxx findOne(Integer id) {
+    @Cacheable(value = "CacheTGgym", key = "#id")
+    public TZyxx findOne(Integer id) {
         return mapper.findOne(id);
     }
 
-    public TSbxx findOneByName(String label) {
+    public TZyxx findOneByName(String label) {
         return mapper.findOneByName(label);
     }
 
-    public int insert(TSbxx one) {
-        return mapper.insert(one);
+    public int insert(TZyxx tZyxx) {
+        return mapper.insert(tZyxx);
     }
 
-    public int updateByPrimaryKeySelective(TSbxx one) {
+    @CacheEvict(value = "CacheTGgym", key = "#one.getId()")
+    public int updateByPrimaryKeySelective(TZyxx one) {
         return mapper.updateByPrimaryKeySelective(one);
     }
 

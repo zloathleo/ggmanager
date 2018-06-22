@@ -2,27 +2,23 @@ package com.xz.managersystem.entity;
 
 import java.util.Date;
 
-public class TDevice  extends BasicEntity {
+public class TZyxx extends BasicEntity {
 
     private Integer id;
 
     private String label;
 
+    private String content;
+
     private String des;
 
-    private String location;
+    private String link;
 
-    private Integer ggymId;
+    private Integer type;
 
     private Date createTime;
 
     private Date updateTime;
-
-    private String ymLabel;
-
-    private Integer mbId;
-
-    private String mbLabel;
 
     public Integer getId() {
         return id;
@@ -48,20 +44,28 @@ public class TDevice  extends BasicEntity {
         this.des = des;
     }
 
-    public String getLocation() {
-        return location;
+    public String getContent(){
+        return content;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setContent(String content){
+        this.content = content;
     }
 
-    public Integer getGgymId() {
-        return ggymId;
+    public String getLink() {
+        return link;
     }
 
-    public void setGgymId(Integer ggymId) {
-        this.ggymId = ggymId;
+    public void setLink(String link) {
+        this.link = link;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
     }
 
     public Date getCreateTime() {
@@ -80,27 +84,4 @@ public class TDevice  extends BasicEntity {
         this.updateTime = updateTime;
     }
 
-    public String getYmLabel() {
-        return ymLabel;
-    }
-
-    public void setYmLabel(String ymLabel) {
-        this.ymLabel = ymLabel;
-    }
-
-    public Integer getMbId() {
-        return mbId;
-    }
-
-    public void setMbId(Integer mbId) {
-        this.mbId = mbId;
-    }
-
-    public String getMbLabel() {
-        return mbLabel;
-    }
-
-    public void setMbLabel(String mbLabel) {
-        this.mbLabel = mbLabel;
-    }
 }

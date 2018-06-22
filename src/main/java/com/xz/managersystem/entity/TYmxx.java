@@ -2,32 +2,27 @@ package com.xz.managersystem.entity;
 
 import java.util.Date;
 
-public class TGgym extends BasicEntity {
+public class TYmxx extends BasicEntity {
 
     private Integer id;
 
     private String label;
 
-    private Integer stype;
-
     private String des;
-
-    private Integer ggmbId;
 
     private String videoUrls;
 
     private String imgUrls;
 
-    private String textMsg;
+    private String textUrls;
+
+    private Integer mbId;
 
     private Date createTime;
 
     private Date updateTime;
 
     private String mbLabel;
-
-    private String mbDes;
-
 
     public Integer getId() {
         return id;
@@ -53,22 +48,6 @@ public class TGgym extends BasicEntity {
         this.des = des;
     }
 
-    public Integer getStype() {
-        return stype;
-    }
-
-    public void setStype(Integer stype) {
-        this.stype = stype;
-    }
-
-    public Integer getGgmbId() {
-        return ggmbId;
-    }
-
-    public void setGgmbId(Integer ggmbId) {
-        this.ggmbId = ggmbId;
-    }
-
     public String getVideoUrls() {
         return videoUrls;
     }
@@ -85,12 +64,20 @@ public class TGgym extends BasicEntity {
         this.imgUrls = imgUrls;
     }
 
-    public String getTextMsg() {
-        return textMsg;
+    public String getTextUrls() {
+        return textUrls;
     }
 
-    public void setTextMsg(String textMsg) {
-        this.textMsg = textMsg;
+    public void setTextUrls(String textUrls) {
+        this.textUrls = textUrls;
+    }
+
+    public Integer getMbId() {
+        return mbId;
+    }
+
+    public void setMbId(Integer mbId) {
+        this.mbId = mbId;
     }
 
     public Date getCreateTime() {
@@ -117,11 +104,4 @@ public class TGgym extends BasicEntity {
         this.mbLabel = mbLabel;
     }
 
-    public String getMbDes() {
-        return mbDes;
-    }
-
-    public void setMbDes(String mbDes) {
-        this.mbDes = mbDes;
-    }
 }

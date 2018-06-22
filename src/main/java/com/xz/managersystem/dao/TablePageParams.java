@@ -4,6 +4,7 @@ public class TablePageParams {
 
     private Integer start;
     private Integer rows;
+    private Integer type;
 
     public TablePageParams() {
     }
@@ -11,6 +12,13 @@ public class TablePageParams {
     public TablePageParams(Integer start, Integer rows) {
         this.start = start;
         this.rows = rows;
+        this.type = 0;
+    }
+
+    public TablePageParams(Integer start, Integer rows, Integer type) {
+        this.start = start;
+        this.rows = rows;
+        this.type = type;
     }
 
     public Integer getStart() {

@@ -1,24 +1,24 @@
 package com.xz.managersystem.service;
 
-import com.xz.managersystem.dao.SbglMapper;
+import com.xz.managersystem.dao.FzglMapper;
 import com.xz.managersystem.dao.TablePageParams;
-import com.xz.managersystem.entity.TSbxx;
+import com.xz.managersystem.entity.TFzxx;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class SbglService {
+public class FzglService {
 
     @Autowired
-    SbglMapper mapper;
+    FzglMapper mapper;
 
-    public List<TSbxx> selectVisibleAll() {
+    public List<TFzxx> selectVisibleAll() {
         return mapper.selectVisibleAll();
     }
 
-    public List<TSbxx> selectPage(TablePageParams params) {
+    public List<TFzxx> selectPage(TablePageParams params) {
         return mapper.selectPage(params);
     }
 
@@ -30,19 +30,19 @@ public class SbglService {
         return mapper.getVisibleCount();
     }
 
-    public TSbxx findOne(Integer id) {
+    public TFzxx findOne(Integer id) {
         return mapper.findOne(id);
     }
 
-    public TSbxx findOneByName(String label) {
+    public TFzxx findOneByName(String label) {
         return mapper.findOneByName(label);
     }
 
-    public int insert(TSbxx one) {
+    public int insert(TFzxx one) {
         return mapper.insert(one);
     }
 
-    public int updateByPrimaryKeySelective(TSbxx one) {
+    public int updateByPrimaryKeySelective(TFzxx one) {
         return mapper.updateByPrimaryKeySelective(one);
     }
 

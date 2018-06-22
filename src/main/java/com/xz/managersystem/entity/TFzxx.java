@@ -2,7 +2,7 @@ package com.xz.managersystem.entity;
 
 import java.util.Date;
 
-public class TGgmb extends BasicEntity {
+public class TFzxx extends BasicEntity {
 
     private Integer id;
 
@@ -10,9 +10,13 @@ public class TGgmb extends BasicEntity {
 
     private String des;
 
+    private Integer ymId;
+
     private Date createTime;
 
     private Date updateTime;
+
+    private String ymLabel;
 
     public Integer getId() {
         return id;
@@ -34,8 +38,16 @@ public class TGgmb extends BasicEntity {
         return des;
     }
 
-    public void setDes(String des) {
+    public void setDes(String desc) {
         this.des = des;
+    }
+
+    public Integer getYmId() {
+        return ymId;
+    }
+
+    public void setYmId(Integer ymId) {
+        this.ymId = ymId;
     }
 
     public Date getCreateTime() {
@@ -53,4 +65,13 @@ public class TGgmb extends BasicEntity {
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
+
+    public String getYmLabel() {
+        return ymLabel;
+    }
+
+    public void setYmLabel(String ymLabel) {
+        this.ymLabel = ymLabel;
+    }
+
 }

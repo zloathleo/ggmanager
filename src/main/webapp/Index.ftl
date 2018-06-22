@@ -77,30 +77,35 @@
         padding: 0px;" data-options="iconCls:'icon-05'">
     <div class="easyui-accordion" fit="true" border="false">
         <div title="广告页面管理" data-options="iconCls:'icon-56'">
-            <div name="csj-menu" class="csj-menu" rel="广告页面管理" src="Views/ggym/search">
+            <div name="csj-menu" class="csj-menu" rel="广告页面管理" src="Views/ymgl/search_ym">
                 <img src="Contents/Images/pagination_next.gif">广告页面管理
             </div>
-            <div name="csj-menu" class="csj-menu" rel="模板页面查询" src="Views/ggym/mb_search">
+            <div name="csj-menu" class="csj-menu" rel="模板页面查询" src="Views/ymgl/search_mb">
                 <img src="Contents/Images/pagination_next.gif">模板页面查询
             </div>
         </div>
         <div title="多媒体资源管理" data-options="iconCls:'icon-49'">
-            <div name="csj-menu" class="csj-menu" rel="图片资源管理" src="Views/ziyuan/search_image">
+            <div name="csj-menu" class="csj-menu" rel="图片资源管理" src="Views/zygl/search_tp">
                 <img src="Contents/Images/pagination_next.gif">图片资源管理
             </div>
-            <div name="csj-menu" class="csj-menu" rel="本地视频资源管理" src="Views/ziyuan/search_video">
+            <div name="csj-menu" class="csj-menu" rel="本地视频资源管理" src="Views/zygl/search_sp">
                 <img src="Contents/Images/pagination_next.gif">本地视频资源管理
             </div>
-            <div name="csj-menu" class="csj-menu" rel="实时视频资源查询" src="Views/ziyuan/search_rt">
+            <div name="csj-menu" class="csj-menu" rel="实时视频资源查询" src="Views/zygl/search_zb">
                 <img src="Contents/Images/pagination_next.gif">实时视频资源查询
+            </div>
+            <div name="csj-menu" class="csj-menu" rel="文字资源查询" src="Views/zygl/search_wz">
+                <img src="Contents/Images/pagination_next.gif">文字资源查询
             </div>
         </div>
         <div title="广告机设备管理" data-options="iconCls:'icon-08'">
-            <div name="csj-menu" class="csj-menu" rel="广告机设备管理" src="Views/sbgl/search">
-                <img src="Contents/Images/pagination_next.gif">广告机设备管理
+            <div name="csj-menu" class="csj-menu" rel="设备管理" src="Views/sbgl/search_sb">
+                <img src="Contents/Images/pagination_next.gif">设备管理
+            </div>
+            <div name="csj-menu" class="csj-menu" rel="分组管理" src="Views/sbgl/search_fz">
+                <img src="Contents/Images/pagination_next.gif">分组管理
             </div>
         </div>
-
     </div>
 </div>
 <div region="center" border="true">

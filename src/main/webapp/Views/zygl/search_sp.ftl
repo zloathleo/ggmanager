@@ -13,32 +13,42 @@
     <script type="text/javascript" src="../../Scripts/jQEasyUI/easyui-lang-zh_CN.js"></script>
     <script type="text/javascript" src="../../Scripts/FunctionJS.js"></script>
     <script type="text/javascript">
-
         function EndEdit() {
             $('#grid').datagrid('reload');
         }
 
         function Add() {
             var paramString = $.param({
-                "type": "image",
                 "cmd": "add",
+                "type": "sp"
             });
             var url = "open_operate?" + paramString;
-            easyuiDialog("上传资源(最大允许100M)", url, 550, 220, paramString);
+            easyuiDialog("本地视频 - 新增", url, 600, 280, paramString);
+        }
+
+        function Edit() {
+            var _row = $('#grid').datagrid('getSelected');
+            if (_row) {
+                var paramString = $.param({
+                    "cmd": "edit",
+                    "type": "sp",
+                    "itemId": _row.id
+                });
+                var url = "open_operate?" + paramString;
+                easyuiDialog("本地视频 - 修改", url, 600, 280, paramString);
+            }
         }
 
         function Delete() {
             var _row = $('#grid').datagrid('getSelected');
             if (_row) {
-                var _url = _row.url;
-
                 var paramString = $.param({
-                    "type": "image",
                     "cmd": "delete",
-                    "url": _url
+                    "type": "sp",
+                    "itemId": _row.id
                 });
                 var url = "open_operate?" + paramString;
-                easyuiDialog("资源 - 删除", url, 300, 200);
+                easyuiDialog("本地视频 - 删除", url, 350, 280);
             }
         }
     </script>
@@ -48,24 +58,34 @@
 <div data-options="region:'center',border:false,iconCls:'icon-list'">
     <div id="opButton">
         <a href="javascript:;" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-10'"
-           onclick="Add()" title="上传">上传</a>
-    <#--<a href="javascript:;" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-no'"-->
-    <#--onclick="Delete()" title="删除">删除</a>-->
+           onclick="Add()" title="新增">新增</a>
+        <a href="javascript:;" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-edit'"
+           onclick="Edit()" title="编辑">编辑</a>
+        <a href="javascript:;" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-no'"
+           onclick="Delete()" title="删除">删除</a>
     </div>
-    <table id="grid" border="false" fit="true" class="easyui-datagrid" url="loadImageList"
-           data-options="toolbar: '#opButton',singleSelect: true, nowrap: false">
+    <table id="grid" border="false" fit="true" class="easyui-datagrid" url="load_sp"
+           data-options="toolbar: '#opButton', singleSelect: true, nowrap: false, rownumbers: true, pagination: true, pageSize: 20">
         <thead>
         <tr class="gridnote">
-            <th data-options="field:'url',width:300,align:'center',sortable: false">
-                引用路径
+            <th data-options="field:'id',hidden:'true',width:50,align:'center',sortable: false">
+                资源ID
             </th>
-            <th data-options="field:'fileName',width:300, align:'center',
-                formatter: function(v){ return  '<img style='+'width:40px;height:40px'+'  src='+('${resourceUrlPath}'+v)+'  /> '; }">
-                图片预览
+            <th data-options="field:'label',width:200,align:'center',sortable: false">
+                资源名称
+            </th>
+            <th data-options="field:'desc',width:200,align:'center',sortable: false">
+                资源描述
+            </th>
+            <th data-options="field:'link',width:250,align:'center',sortable: false,
+                formatter: function(v){ if (v == null) return ''; else return '<a href=' + v + ' target=_blank>' + v + '</a>'; }">
+                点击链接
+            </th>
+            <th data-options="field:'content',width:150, align:'center',sortable: false">
+                视频预览
             </th>
         </tr>
         </thead>
-
     </table>
 </div>
 <div id="iframeDialog">
@@ -75,6 +95,5 @@
 <div style="display: none">
     <iframe id="ifrExp" src=""></iframe>
 </div>
-
 </body>
 </html>

@@ -19,12 +19,12 @@
 
                     var jsonObject = JSON.parse(data);
                     if (jsonObject.hasOwnProperty('err')) {
-                        $.messager.confirm('异常', '提交操作异常[' + jsonObject.message + "]", function (r) {
+                        $.messager.alert('异常', '提交操作异常[' + jsonObject.message + "]", function (r) {
                             __dialog.dialog('close');
                             parent.EndEdit();
                         });
                     } else {
-                        $.messager.confirm('成功', '提交操作成功', function (r) {
+                        $.messager.alert('成功', '提交操作成功', "info", function (r) {
                             __dialog.dialog('close');
                             parent.EndEdit();
                         });
@@ -36,9 +36,9 @@
     </script>
 </head>
 <body class="easyui-layout">
-<form id="form_delete" action="delete_item.do" method="post" style="padding: 10px;" >
-    删除[${item.label}]操作不可恢复，您确定要继续么？
-    <input  name="id" style="display: none;" value="${item.id}" />
+<form id="form_delete" action="delete_item.do" method="post">
+    <p style="font-size:14px">确认要删除[${item.label}]吗？</p>
+    <input name="id" style="display: none;" value="${item.id}" />
 </form>
 </body>
 </html>

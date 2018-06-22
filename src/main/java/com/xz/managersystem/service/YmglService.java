@@ -1,8 +1,8 @@
 package com.xz.managersystem.service;
 
-import com.xz.managersystem.dao.GgymMapper;
+import com.xz.managersystem.dao.YmglMapper;
 import com.xz.managersystem.dao.TablePageParams;
-import com.xz.managersystem.entity.TGgym;
+import com.xz.managersystem.entity.TYmxx;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -11,16 +11,16 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class GgymService {
+public class YmglService {
 
     @Autowired
-    GgymMapper mapper;
+    YmglMapper mapper;
 
-    public List<TGgym> selectVisibleAll() {
+    public List<TYmxx> selectVisibleAll() {
         return mapper.selectVisibleAll();
     }
 
-    public List<TGgym> selectPage(TablePageParams params) {
+    public List<TYmxx> selectPage(TablePageParams params) {
         return mapper.selectPage(params);
     }
 
@@ -33,20 +33,20 @@ public class GgymService {
     }
 
     @Cacheable(value = "CacheTGgym", key = "#id")
-    public TGgym findOne(Integer id) {
+    public TYmxx findOne(Integer id) {
         return mapper.findOne(id);
     }
 
-    public TGgym findOneByName(String label) {
+    public TYmxx findOneByName(String label) {
         return mapper.findOneByName(label);
     }
 
-    public int insert(TGgym tGgym) {
-        return mapper.insert(tGgym);
+    public int insert(TYmxx tYmxx) {
+        return mapper.insert(tYmxx);
     }
 
     @CacheEvict(value = "CacheTGgym", key = "#one.getId()")
-    public int updateByPrimaryKeySelective(TGgym one) {
+    public int updateByPrimaryKeySelective(TYmxx one) {
         return mapper.updateByPrimaryKeySelective(one);
     }
 

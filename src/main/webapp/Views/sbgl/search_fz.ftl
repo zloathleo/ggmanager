@@ -2,7 +2,7 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>查询资源</title>
+    <title>查询设备</title>
     <link type="text/css" rel="Stylesheet" href="../../Contents/Css/base.css"/>
     <link type="text/css" rel="Stylesheet" href="../../Contents/Css/platform.css"/>
     <link type="text/css" rel="Stylesheet" href="../../Scripts/jQEasyUI/themes/easyui.css"/>
@@ -19,25 +19,38 @@
 
         function Add() {
             var paramString = $.param({
-                "type":"video",
                 "cmd": "add",
             });
             var url = "open_operate?" + paramString;
-            easyuiDialog("上传资源(最大允许100M)", url, 550, 220, paramString);
+            easyuiDialog("设备 - 添加", url, 600, 400, paramString);
+        }
+
+        function Edit() {
+            var _row = $('#grid').datagrid('getSelected');
+            if (_row) {
+                // var _itemId = _row.id.replace(/\s/g, "");
+                var _itemId = _row.id;
+
+                var paramString = $.param({
+                    "cmd": "edit",
+                    "itemId": _itemId
+                });
+                var url = "open_operate?" + paramString;
+                easyuiDialog("设备 - 修改", url, 600, 400, paramString);
+            }
         }
 
         function Delete() {
             var _row = $('#grid').datagrid('getSelected');
             if (_row) {
-                var _url = _row.url;
+                var _itemId = _row.id;
 
                 var paramString = $.param({
-                    "type":"video",
                     "cmd": "delete",
-                    "url": _url
+                    "itemId": _itemId
                 });
                 var url = "open_operate?" + paramString;
-                easyuiDialog("资源 - 删除", url, 600, 400);
+                easyuiDialog("设备 - 删除", url, 400, 150);
             }
         }
     </script>
@@ -47,18 +60,27 @@
 <div data-options="region:'center',border:false,iconCls:'icon-list'">
     <div id="opButton">
         <a href="javascript:;" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-10'"
-           onclick="Add()" title="上传">上传</a>
-        <#--<a href="javascript:;" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-no'"-->
-           <#--onclick="Delete()" title="删除">删除</a>-->
+           onclick="Add()" title="新增">新增</a>
+        <a href="javascript:;" class="easyui-linkbutton"
+           data-options="plain:true,iconCls:'icon-edit'" onclick="Edit()" title="编辑">编辑</a>
+        <a href="javascript:;" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-no'"
+           onclick="Delete()" title="删除">删除</a>
     </div>
-    <table id="grid" border="false" fit="true" class="easyui-datagrid" url="loadVideoList"
-           data-options="toolbar: '#opButton',singleSelect: true, nowrap: false">
+    <table id="grid" border="false" fit="true" class="easyui-datagrid" url="load_fz"
+           data-options="toolbar: '#opButton',singleSelect: true, nowrap: false ,rownumbers:true, pagination:true, pageSize:20">
         <thead>
         <tr>
-            <th data-options="field:'url',width:300,align:'center',sortable: false">
-                引用路径
+            <th data-options="field:'id',hidden:'true',width:50,align:'center',sortable: false">
+                分组ID
             </th>
-            <th data-options="field:'fileName',width:300, align:'center'">文件名称
+            <th data-options="field:'label',width:150,align:'center',sortable: false">
+                分组名称
+            </th>
+            <th data-options="field:'desc',width:200,align:'center',sortable: false">
+                分组描述
+            </th>
+            <th data-options="field:'ymLabel',width:200,align:'center',sortable: false">
+                展示页面
             </th>
         </tr>
         </thead>

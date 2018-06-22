@@ -41,44 +41,12 @@
     <table style="width: 560px" class="kv-table">
         <tbody>
         <input name="id" style="display: none;" value="${item.id}"/>
-
         <tr>
             <td class="kv-label">
-                名称<span class="ui-input-must">&nbsp;</span>
+                设备名称<span class="ui-input-must">&nbsp;</span>
             </td>
             <td class="kv-content">
-            ${item.label}
-            </td>
-        </tr>
-
-        <tr>
-            <td class="kv-label">
-                设备页面ID<span class="ui-input-must">&nbsp;</span>
-            </td>
-            <td class="kv-content">
-                <#--<input class="easyui-validatebox" type="text" style="width: 300px;" name="ggymId"-->
-                       <#--value="${item.ggymId}"/>-->
-
-                <select name="ggymId" class="easyui-combobox" labelPosition="top" editable="false" style="width:100px;">
-
-                    <#list selectOpList as selectOp>
-                             <#if selectOp.value==item.ggymId>
-                                 <option value=${selectOp.value} selected>${selectOp.display}</option>
-                             <#else>
-                                 <option value=${selectOp.value}>${selectOp.display}</option>
-                             </#if>
-                    </#list>
-
-                </select>
-
-            </td>
-        </tr>
-        <tr>
-            <td class="kv-label">
-                描述
-            </td>
-            <td class="kv-content">
-                <input class="easyui-validatebox" type="text" style="width: 300px;" name="des" value="${item.des!}"/>
+                <input class="easyui-validatebox" type="text" disabled="disabled" style="width: 96%;" name="label" value="${item.label}"/>
             </td>
         </tr>
         <tr>
@@ -87,7 +55,47 @@
             </td>
             <td class="kv-content">
                 <input class="easyui-validatebox" type="text" style="width: 300px;" name="location"
-                       value="${item.location!}"/>
+                       value="${item.location}"/>
+            </td>
+        </tr>
+        <tr>
+            <td class="kv-label">
+                描述
+            </td>
+            <td class="kv-content">
+                <input class="easyui-validatebox" type="text" style="width: 300px;" name="des" value="${item.des}"/>
+            </td>
+        </tr>
+        <tr>
+            <td class="kv-label">
+                展示页面<span class="ui-input-must">&nbsp;</span>
+            </td>
+            <td class="kv-content">
+                <select name="ymId" class="easyui-combobox" labelPosition="top" editable="false" style="width:100px;" panelheight="150px">
+                    <#list yms as ym>
+                             <#if ym.id == item.ymId>
+                                 <option value=${ym.id} selected>${ym.label}</option>
+                             <#else>
+                                 <option value=${ym.id}>${ym.label}</option>
+                             </#if>
+                    </#list>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="kv-label">
+                所在分组<span class="ui-input-must">&nbsp;</span>
+            </td>
+            <td class="kv-content">
+                <select name="fzId" class="easyui-combobox" labelPosition="top" editable="false" style="width:100px;" panelheight="auto">
+                    <#list fzs as fz>
+                             <#if fz.id == item.fzId>
+                                 <option value=${fz.id} selected>${fz.label}</option>
+                             <#else>
+                                 <option value=${fz.id}>${fz.label}</option>
+                             </#if>
+                    </#list>
+                </select>
             </td>
         </tr>
         </tbody>

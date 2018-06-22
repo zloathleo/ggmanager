@@ -42,28 +42,11 @@
         <tbody>
         <tr>
             <td class="kv-label">
-                名称<span class="ui-input-must">&nbsp;</span>
+                设备名称<span class="ui-input-must">&nbsp;</span>
             </td>
             <td class="kv-content">
                 <input class="easyui-validatebox" type="text" style="width: 300px;" name="label" value="Device_${count}"
                        data-options="required:true"/>
-            </td>
-        </tr>
-        <tr>
-            <td class="kv-label">
-                展示页面名称<span class="ui-input-must">&nbsp;</span>
-            </td>
-            <td class="kv-content">
-            <#--<input class="easyui-validatebox" type="text" style="width: 300px;" name="ggymId"/>-->
-
-                <select name="ggymId" class="easyui-combobox" labelPosition="top" editable="false" style="width:100px;">
-
-                    <#list selectOpList as selectOp>
-                        <option value=${selectOp.value}>${selectOp.display}</option>
-                    </#list>
-
-                </select>
-
             </td>
         </tr>
         <tr>
@@ -76,14 +59,40 @@
         </tr>
         <tr>
             <td class="kv-label">
-                描述
+                设备描述
             </td>
             <td class="kv-content">
                 <input class="easyui-validatebox" type="text" style="width: 300px;" name="des"/>
             </td>
         </tr>
-
-
+        <tr>
+            <td class="kv-label">
+                展示页面
+            </td>
+            <td class="kv-content">
+                <select name="ymId" class="easyui-combobox" editable="false" style="width: 150px; height: 28px;
+                        line-height: 28px;" panelheight="auto">
+                    <option value="0">请选择</option>
+                    <#list yms as ym>
+                        <option value=${ym.id}>${ym.label}</option>
+                    </#list>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="kv-label">
+                所在分组
+            </td>
+            <td class="kv-content">
+                <select name="fzId" class="easyui-combobox" editable="false" style="width: 150px; height: 28px;
+                        line-height: 28px;" panelheight="auto">
+                    <option value="0">请选择</option>
+                    <#list fzs as fz>
+                        <option value=${fz.id}>${fz.label}</option>
+                    </#list>
+                </select>
+            </td>
+        </tr>
         </tbody>
     </table>
 </form>

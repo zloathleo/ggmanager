@@ -35,87 +35,94 @@
 
         parent.DialogSave = DialogSave;
     </script>
+    <script type="text/javascript">
+        function HideRow(id) {
+            var row = document.getElementById(id);
+            row.style.display = "none";
+        }
+
+        function SetValue(id, value) {
+            var col = document.getElementById(id);
+            col.innerText = value;
+        }
+
+        function InertValue(id, value) {
+            var col = document.getElementById(id);
+            col.insertBefore(document.createTextNode(value), col.childNodes[0]);
+        }
+
+        function SetAccept(id, value) {
+            var col = document.getElementById(id);
+            col.accept = value;
+        }
+
+        $(document).ready(function(){
+            if ("${type}" == "tp") {
+                HideRow('tr2');
+                SetValue("td1", "资源名称");
+                InertValue("td2", "支持格式<.jpg .png .bmp>");
+                SetAccept("input1", ".jpg,.png,.bmp");
+            } else if ("${type}" == "sp") {
+                HideRow('tr2');
+                SetValue("td1", "资源名称");
+                InertValue("td2", "支持格式<.mp4 .flv>");
+                SetAccept("input1", ".mp4,.flv");
+            } else if ("${type}" == "zb") {
+                HideRow('tr2');
+                HideRow('tr5');
+            } else {
+                HideRow('tr3');
+                HideRow('tr5');
+            }
+        });
+    </script>
 </head>
 <body class="easyui-layout">
-<form id="form_add" action="add_item.do" method="post">
-    <table style="width: 660px" class="kv-table">
+<form id="form_add" action="add_item.do" method="post" enctype="multipart/form-data">
+    <table style="width: 565px" class="kv-table">
         <tbody>
-        <tr>
-            <td class="kv-label">
-                名称<span class="ui-input-must">&nbsp;</span>
+        <tr id="tr1">
+            <td id="td1" class="kv-label">
+                资源名称<span class="ui-input-must">&nbsp;</span>
             </td>
             <td class="kv-content">
-                <input class="easyui-validatebox" type="text" style="width: 300px;" name="name" value="Page_${count}"
-                       data-options="required:true"/>
+                <input class="easyui-validatebox" type="text" style="width: 96%;" name="label"/>
+            </td>
+        </tr>
+        <tr id="tr2">
+            <td class="kv-label">
+                资源内容
+            </td>
+            <td class="kv-content">
+                <input class="easyui-validatebox" type="text" style="width: 96%;" name="content"/>
+            </td>
+        </tr>
+        <tr id="tr3">
+            <td class="kv-label">
+                资源描述
+            </td>
+            <td class="kv-content">
+                <input class="easyui-validatebox" type="text" style="width: 96%;" name="des"/>
+            </td>
+        </tr>
+        <tr id="tr4">
+            <td class="kv-label">
+                关联链接
+            </td>
+            <td class="kv-content">
+                <input class="easyui-validatebox" type="text" style="width: 96%;" name="link"/>
+            </td>
+        </tr>
+        <tr id="tr5">
+            <td id="td2" class="kv-label">
+                <span class="ui-input-must">&nbsp;</span>
+            </td>
+            <td class="kv-content">
+                <input id="input1" type="file" name="file" value="选择文件"/>
             </td>
         </tr>
         <tr>
-            <td class="kv-label">
-                描述
-            </td>
-            <td class="kv-content">
-                <input class="easyui-validatebox" type="text" style="width: 300px;" name="desc"/>
-            </td>
-        </tr>
-        <tr>
-            <td class="kv-label">
-                模板类型<span class="ui-input-must">&nbsp;</span>
-            </td>
-            <td class="kv-content">
-                <select class="easyui-combobox" editable="false" name="ggmbId" style="width: 100px; height: 28px;
-                        line-height: 28px;" panelheight="auto">
-
-                    <#list mbs as mb>
-                        <option value=${mb.id}>${mb.label}</option>
-                    </#list>
-
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td class="kv-label">
-                屏幕类型<span class="ui-input-must">&nbsp;</span>
-            </td>
-            <td class="kv-content">
-                <select class="easyui-combobox" editable="false" name="stype" style="width: 100px; height: 28px;
-                        line-height: 28px;" panelheight="auto">
-                    <option value=0>竖屏</option>
-                    <option value=1>横屏</option>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td class="kv-label">
-                图片URL
-            </td>
-            <td class="kv-content">
-                <span class="textbox easyui-fluid" style="width: 100%; height: 120px;">
-                    <textarea name="imgUrls" autocomplete="off"
-                              style="margin: 0px; height: 120px; width: 95%;"></textarea>
-                </span>
-            </td>
-        </tr>
-        <tr>
-            <td class="kv-label">
-                视频URL
-            </td>
-            <td class="kv-content">
-                <span class="textbox easyui-fluid" style="width: 100%; height: 60px;">
-                    <textarea name="videoUrls" autocomplete="off"
-                              style="margin: 0px; height: 60px; width: 95%;"></textarea>
-                </span>
-            </td>
-        </tr>
-        <tr>
-            <td class="kv-label">
-                文字
-            </td>
-            <td class="kv-content">
-                <span class="textbox easyui-fluid" style="width: 100%; height: 60px;">
-                    <textarea name="textMsg" autocomplete="off"
-                              style="margin: 0px; height: 60px; width: 95%;"></textarea>
-                </span>
-            </td>
+            <input name="type" style="display: none;" value="${type}"/>
         </tr>
         </tbody>
     </table>

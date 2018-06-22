@@ -61,19 +61,19 @@
     <div id="opButton">
         <a href="javascript:;" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-10'"
            onclick="Add()" title="新增">新增</a>
-        <a href="javascript:;" class="easyui-linkbutton"
-           data-options="plain:true,iconCls:'icon-edit'" onclick="Edit()" title="编辑">编辑</a>
+        <a href="javascript:;" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-edit'"
+           onclick="Edit()" title="编辑">编辑</a>
         <a href="javascript:;" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-no'"
            onclick="Delete()" title="删除">删除</a>
     </div>
-    <table id="grid" border="false" fit="true" class="easyui-datagrid" url="loadList"
-           data-options="toolbar: '#opButton',singleSelect: true, nowrap: false ,rownumbers:true, pagination:true, pageSize:10">
+    <table id="grid" border="false" fit="true" class="easyui-datagrid" url="load_sb"
+           data-options="toolbar: '#opButton', singleSelect: true, nowrap: false, rownumbers: true, pagination: true, pageSize: 20">
         <thead>
         <tr>
             <th data-options="field:'id',hidden:'true',width:50,align:'center',sortable: false">
                 设备ID
             </th>
-            <th data-options="field:'label',width:100,align:'center',sortable: false">
+            <th data-options="field:'label',width:150,align:'center',sortable: false">
                 设备名称
             </th>
             <th data-options="field:'des',width:200,align:'center',sortable: false">
@@ -82,16 +82,14 @@
             <th data-options="field:'location',width:200,align:'center',sortable: false">
                 设备位置
             </th>
+            <th data-options="field:'fzLabel',width:200,align:'center',sortable: false">
+                所在分组
+            </th>
             <th data-options="field:'ymLabel',width:200,align:'center',sortable: false">
                 展示页面
             </th>
-            <th data-options="field:'mbLabel',width:200,align:'center',sortable: false">
-                页面模板名称
-            </th>
-
         </tr>
         </thead>
-
     </table>
 </div>
 <div id="iframeDialog">

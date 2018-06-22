@@ -5,13 +5,12 @@ import com.xz.managersystem.dto.req.BasicTableReq;
 import com.xz.managersystem.dto.req.TDeviceAdd;
 import com.xz.managersystem.dto.res.BasicTableRes;
 import com.xz.managersystem.dto.res.SelectOp;
-import com.xz.managersystem.entity.TDevice;
-import com.xz.managersystem.entity.TGgmb;
-import com.xz.managersystem.entity.TGgym;
-import com.xz.managersystem.entity.TResource;
-import com.xz.managersystem.service.GgmbService;
-import com.xz.managersystem.service.GgymService;
+import com.xz.managersystem.entity.TSbxx;
+import com.xz.managersystem.entity.TFzxx;
+import com.xz.managersystem.entity.TYmxx;
+import com.xz.managersystem.service.YmglService;
 import com.xz.managersystem.service.SbglService;
+import com.xz.managersystem.service.FzglService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,102 +37,99 @@ public class SbglController {
     SbglService sbglService;
 
     @Autowired
-    GgymService ggymService;
+    FzglService fzglService;
 
     @Autowired
-    GgmbService ggmbService;
+    YmglService ymglService;
 
-    @RequestMapping(value = "/search", method = RequestMethod.GET)
-    private String search(Model model) {
-        return "/Views/sbgl/search";
+    @RequestMapping(value = "/search_sb", method = RequestMethod.GET)
+    private String searchSb(Model model) {
+        return "/Views/sbgl/search_sb";
     }
 
-    @RequestMapping(value = "/loadList", method = RequestMethod.POST)
+    @RequestMapping(value = "/search_fz", method = RequestMethod.GET)
+    private String searchFz(Model model) {
+        return "/Views/sbgl/search_fz";
+    }
+
+    @RequestMapping(value = "/load_sb", method = RequestMethod.POST)
     @ResponseBody
-    private BasicTableRes<TDevice> loadList(@Valid BasicTableReq tr) {
+    private BasicTableRes<TSbxx> loadSb(@Valid BasicTableReq tr) {
         logger.info(tr.toString());
-        List<TDevice> list = sbglService.selectPage(new TablePageParams((tr.getPage() - 1) * tr.getRows(), tr.getRows()));
-        for (TDevice device : list) {
-            Integer ymId = device.getGgymId();
-            TGgym ym = ggymService.findOne(ymId);
-            Integer mbId = ym.getGgmbId();
-            TGgmb mb = ggmbService.findOne(mbId);
-            device.setYmLabel(ym.getLabel());
-            device.setMbId(mbId);
-            device.setMbLabel(mb.getLabel());
-        }
+        List<TSbxx> list = sbglService.selectPage(new TablePageParams((tr.getPage() - 1) * tr.getRows(), tr.getRows()));
         int total = sbglService.getVisibleCount();
-        return new BasicTableRes<TDevice>(total, list);
+        return new BasicTableRes<TSbxx>(total, list);
+    }
+
+    @RequestMapping(value = "/load_fz", method = RequestMethod.POST)
+    @ResponseBody
+    private BasicTableRes<TFzxx> loadFz(@Valid BasicTableReq tr) {
+        logger.info(tr.toString());
+        List<TFzxx> list = fzglService.selectPage(new TablePageParams((tr.getPage() - 1) * tr.getRows(), tr.getRows()));
+        int total = fzglService.getVisibleCount();
+        return new BasicTableRes<TFzxx>(total, list);
     }
 
     @RequestMapping(value = "/add_item", method = RequestMethod.POST)
     @ResponseBody
-    private TDevice addItem(@Valid TDeviceAdd add) {
-        TDevice one = new TDevice();
-        one.setLabel(add.getLabel());
-        one.setDes(add.getDes());
-        one.setGgymId(add.getGgymId());
-        one.setLocation(add.getLocation());
-
-        TGgym ggym = ggymService.findOne(add.getGgymId());
-        if (ggym == null) {
-            throw new RuntimeException("页面ID ->" + add.getGgymId() + " 不存在");
-        }
-
-        TDevice exist = sbglService.findOneByName(add.getLabel());
+    private TSbxx addItem(@Valid TSbxx add) {
+        TSbxx exist = sbglService.findOneByName(add.getLabel());
         if (exist != null) {
             throw new EntityExistsException("名称 ->" + add.getLabel() + " 已经存在");
         }
-        int count = sbglService.insert(one);
-        TDevice result = sbglService.findOneByName(add.getLabel());
+
+        int count = sbglService.insert(add);
+        TSbxx result = sbglService.findOneByName(add.getLabel());
         return result;
     }
 
     @RequestMapping(value = "/update_item", method = RequestMethod.POST)
     @ResponseBody
-    private TDevice updateItem(@Valid TDeviceAdd add) {
-        TDevice one = new TDevice();
+    private TSbxx updateItem(@Valid TDeviceAdd add) {
+        TSbxx one = new TSbxx();
         one.setId(add.getId());
         one.setLabel(add.getLabel());
         one.setDes(add.getDes());
-        one.setGgymId(add.getGgymId());
+        one.setYmId(add.getGgymId());
         one.setLocation(add.getLocation());
 
         int count = sbglService.updateByPrimaryKeySelective(one);
-        TDevice result = sbglService.findOne(add.getId());
+        TSbxx result = sbglService.findOne(add.getId());
         return result;
     }
 
     @RequestMapping(value = "/delete_item", method = RequestMethod.POST)
     @ResponseBody
-    private TDevice deleteItem(@Valid TDeviceAdd add) {
+    private TSbxx deleteItem(@Valid TDeviceAdd add) {
         int count = sbglService.deleteById(add.getId());
-        TDevice result = sbglService.findOne(add.getId());
+        TSbxx result = sbglService.findOne(add.getId());
         return result;
     }
 
     @RequestMapping(value = "/open_operate", method = RequestMethod.GET)
-    private String openOperate(Model model, @RequestParam(name = "cmd", required = false) String cmd, @RequestParam(name = "itemId", required = false) Integer itemId) {
-        List<TGgym> ggymList = ggymService.selectVisibleAll();
-        Stream<SelectOp> selectOpStream = ggymList.stream().map(n -> new SelectOp(n.getId(), n.getLabel()));
-        List<SelectOp> selectOpList = selectOpStream.collect(Collectors.toList());
+    private String openOperate(Model model,
+                               @RequestParam(name = "cmd", required = false) String cmd,
+                               @RequestParam(name = "itemId", required = false) Integer itemId) {
+        List<TFzxx> fzList = fzglService.selectVisibleAll();
+        List<TYmxx> ymList = ymglService.selectVisibleAll();
 
         if ("add".equalsIgnoreCase(cmd)) {
             int count = sbglService.getAllCount() + 1;
             model.addAttribute("count", count);
-            model.addAttribute("selectOpList", selectOpList);
+            model.addAttribute("fzs", fzList);
+            model.addAttribute("yms", ymList);
             return "/Views/sbgl/add";
         } else if ("edit".equalsIgnoreCase(cmd)) {
-            TDevice one = sbglService.findOne(itemId);
+            TSbxx one = sbglService.findOne(itemId);
             model.addAttribute("item", one);
-            model.addAttribute("selectOpList", selectOpList);
+            model.addAttribute("fzs", fzList);
+            model.addAttribute("yms", ymList);
             return "/Views/sbgl/edit";
         } else if ("delete".equalsIgnoreCase(cmd)) {
-            TDevice one = sbglService.findOne(itemId);
+            TSbxx one = sbglService.findOne(itemId);
             model.addAttribute("item", one);
             return "/Views/sbgl/delete";
         }
         return "/Views/sbgl/add";
     }
-
 }
