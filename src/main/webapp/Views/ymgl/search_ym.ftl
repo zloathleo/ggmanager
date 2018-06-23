@@ -35,7 +35,7 @@
         <a href="javascript:;" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-no'"
            onclick="Delete(obj)" title="删除">删除</a>
     </div>
-    <table id="grid" border="false" fit="true" class="easyui-datagrid" data-options="toolbar:'#opButton'">
+    <table id="grid" border="false" fit="true" data-options="toolbar:'#opButton'">
         <thead>
         <tr>
             <th data-options="field:'id', hidden:'true', width:100, align:'center', sortable: false">
@@ -61,7 +61,6 @@
             </th>
         </tr>
         </thead>
-
     </table>
 </div>
 <div id="iframeDialog">

@@ -31,7 +31,7 @@
         <tbody>
         <tr>
             <td class="kv-label">
-                分组名称<span class="ui-input-must">&nbsp;</span>
+                消息名称<span class="ui-input-must">&nbsp;</span>
             </td>
             <td class="kv-content">
                 <input class="easyui-validatebox" type="text" style="width: 300px;" name="label" data-options="required:true"/>
@@ -39,22 +39,44 @@
         </tr>
         <tr>
             <td class="kv-label">
-                分组描述
+                播放时间<span class="ui-input-must">&nbsp;</span>
             </td>
             <td class="kv-content">
-                <input class="easyui-validatebox" type="text" style="width: 300px;" name="des"/>
+                <input class="easyui-datetimebox" style="width: 300px;" name="startTime" data-options="required:true"/>
             </td>
         </tr>
         <tr>
             <td class="kv-label">
-                展示页面
+                停止时间<span class="ui-input-must">&nbsp;</span>
             </td>
             <td class="kv-content">
-                <select name="ymId" class="easyui-combobox" editable="false" style="width: 150px; height: 28px;
+                <input class="easyui-datetimebox" style="width: 300px;" name="endTime" data-options="required:true"/>
+            </td>
+        </tr>
+        <tr>
+            <td class="kv-label">
+                关联资源
+            </td>
+            <td class="kv-content">
+                <select name="zyId" class="easyui-combobox" editable="false" style="width: 150px; height: 28px;
                         line-height: 28px;" panelheight="auto">
                     <option value="0">请选择</option>
-                    <#list yms as ym>
-                        <option value=${ym.id}>${ym.label}</option>
+                    <#list zys as zy>
+                        <option value=${zy.id}>${zy.label}</option>
+                    </#list>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="kv-label">
+                关联分组
+            </td>
+            <td class="kv-content">
+                <select name="fzId" class="easyui-combobox" editable="false" style="width: 150px; height: 28px;
+                        line-height: 28px;" panelheight="auto">
+                    <option value="0">请选择</option>
+                    <#list fzs as fz>
+                        <option value=${fz.id}>${fz.label}</option>
                     </#list>
                 </select>
             </td>

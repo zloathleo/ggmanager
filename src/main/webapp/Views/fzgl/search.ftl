@@ -32,7 +32,7 @@
         <a href="javascript:;" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-no'"
            onclick="Delete(obj)" title="删除">删除</a>
     </div>
-    <table id="grid" border="false" fit="true" class="easyui-datagrid" data-options="toolbar: '#opButton'">
+    <table id="grid" border="false" fit="true" data-options="toolbar: '#opButton'">
         <thead>
         <tr>
             <th data-options="field:'id', hidden:'true', width:50, align:'center', sortable:false">
@@ -41,7 +41,7 @@
             <th data-options="field:'label', width:150, align:'center', sortable:false">
                 分组名称
             </th>
-            <th data-options="field:'desc', width:200, align:'center', sortable:false">
+            <th data-options="field:'des', width:200, align:'center', sortable:false">
                 分组描述
             </th>
             <th data-options="field:'ymLabel', width:200, align:'center', sortable:false">

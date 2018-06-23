@@ -55,7 +55,7 @@ public interface FzglMapper extends Mapper<TFzxx>, MySqlMapper<TFzxx> {
             "  t.update_time,\n" +
             "  b.label as ym_label \n" +
             "  FROM t_fz t " +
-            "  LEFT JOIN t_fz b on t.fz_id = b.id " +
+            "  LEFT JOIN t_fz b on t.ym_id = b.id " +
             "  WHERE t.is_deleted = 0 AND t.id = #{id} LIMIT 1")
     TFzxx findOne(Integer id);
 
@@ -68,14 +68,14 @@ public interface FzglMapper extends Mapper<TFzxx>, MySqlMapper<TFzxx> {
             "  t.update_time,\n" +
             "  b.label as ym_label \n" +
             "  FROM t_fz t " +
-            "  LEFT JOIN t_fz b on t.fz_id = b.id " +
-            "  WHERE t.is_delete = 0 AND t.label = #{label} LIMIT 1")
+            "  LEFT JOIN t_fz b on t.ym_id = b.id " +
+            "  WHERE t.is_deleted = 0 AND t.label = #{label} LIMIT 1")
     TFzxx findOneByName(String label);
 
-    @Insert("INSERT INTO t_fz(label, des, ym_id) VALUES(#{label}, #{des}, #{ym_id})")
+    @Insert("INSERT INTO t_fz(label, des, ym_id) VALUES(#{label}, #{des}, #{ymId})")
     int insert(TFzxx fzxx);
 
-    @Update("update t_fz t set t.des = #{des}, t.ym_id = #{ym_id} where t.id = #{id}")
+    @Update("update t_fz t set t.des = #{des}, t.ym_id = #{ymId} where t.id = #{id}")
     int updateByPrimaryKeySelective(TFzxx fzxx);
 
     @Delete("update t_fz t set t.is_deleted = 1 where t.id = #{id}")

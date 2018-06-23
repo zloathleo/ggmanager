@@ -4,9 +4,12 @@ import com.xz.managersystem.dao.TablePageParams;
 import com.xz.managersystem.dto.req.BasicTableReq;
 import com.xz.managersystem.dto.res.BasicRes;
 import com.xz.managersystem.dto.res.BasicTableRes;
+import com.xz.managersystem.entity.TZyxx;
 import com.xz.managersystem.entity.TFzxx;
+import com.xz.managersystem.entity.TRmsg;
+import com.xz.managersystem.service.ZyglService;
 import com.xz.managersystem.service.FzglService;
-import com.xz.managersystem.service.YmglService;
+import com.xz.managersystem.service.RmsgService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,60 +29,63 @@ import java.util.List;
  * 分组
  */
 @Controller
-@RequestMapping("/Views/fzgl")
-public class fzglController {
+@RequestMapping("/Views/rmsg")
+public class RsmgController {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    FzglService fzglService;
+    RmsgService rmsgService;
 
     @Autowired
-    YmglService ymglService;
+    ZyglService zyglService;
+
+    @Autowired
+    FzglService fzglService;
 
     @RequestMapping(value = "/search", method = RequestMethod.GET)
     private String search(Model model) {
-        return "/Views/fzgl/search";
+        return "/Views/rmsg/search";
     }
 
     @RequestMapping(value = "/load_list", method = RequestMethod.POST)
     @ResponseBody
-    private BasicTableRes<TFzxx> loadList(@Valid BasicTableReq tr) {
+    private BasicTableRes<TRmsg> loadList(@Valid BasicTableReq tr) {
         logger.info(tr.toString());
-        List<TFzxx> list = fzglService.selectPage(new TablePageParams((tr.getPage() - 1) * tr.getRows(), tr.getRows()));
+        List<TRmsg> list = rmsgService.selectPage(new TablePageParams((tr.getPage() - 1) * tr.getRows(), tr.getRows()));
         int total = fzglService.getVisibleCount();
         return new BasicTableRes<>(total, list);
     }
 
     @RequestMapping(value = "/add_item", method = RequestMethod.POST)
     @ResponseBody
-    private BasicRes addItem(@Valid TFzxx item) {
-        TFzxx exist = fzglService.findOneByName(item.getLabel());
+    private BasicRes addItem(@Valid TRmsg item) {
+        TRmsg exist = rmsgService.findOneByName(item.getLabel());
         if (exist != null) {
-            throw new EntityExistsException("分组" + item.getLabel() + "已经存在");
+            throw new EntityExistsException("消息" + item.getLabel() + "已经存在");
         }
 
-        int count = fzglService.insert(item);
+        int count = rmsgService.insert(item);
         if (count < 1) {
-            throw new EntityNotFoundException("新增分组" + item.getLabel() + "失败");
+            throw new EntityNotFoundException("新增消息" + item.getLabel() + "失败");
         }
         return new BasicRes("操作成功");
     }
 
     @RequestMapping(value = "/update_item", method = RequestMethod.POST)
     @ResponseBody
-    private BasicRes updateItem(@Valid TFzxx item) {
-        int count = fzglService.updateByPrimaryKeySelective(item);
+    private BasicRes updateItem(@Valid TRmsg item) {
+        int count = rmsgService.updateByPrimaryKeySelective(item);
         if (count < 1) {
-            throw new EntityNotFoundException("修改设备" + item.getLabel() + "失败");
+            throw new EntityNotFoundException("修改消息" + item.getLabel() + "失败");
         }
         return new BasicRes("操作成功");
     }
 
     @RequestMapping(value = "/delete_item", method = RequestMethod.POST)
     @ResponseBody
-    private BasicRes deleteItem(@Valid TFzxx item) {
-        fzglService.deleteById(item.getId());
+    private BasicRes deleteItem(@Valid TRmsg item) {
+        rmsgService.deleteById(item.getId());
         return new BasicRes("操作成功");
     }
 
@@ -87,18 +93,21 @@ public class fzglController {
     private String openOperate(Model model,
                                @RequestParam(name = "cmd", required = false) String cmd,
                                @RequestParam(name = "itemId", required = false) Integer itemId) {
+        List<TZyxx> zyList = zyglService.selectVisibleAll();
         List<TFzxx> fzList = fzglService.selectVisibleAll();
 
         if ("add".equalsIgnoreCase(cmd)) {
-            model.addAttribute("yms", ymglService.selectVisibleAll());
-            return "/Views/fzgl/add";
+            model.addAttribute("zys", zyList);
+            model.addAttribute("fzs", fzList);
+            return "/Views/rmsg/add";
         } else if ("edit".equalsIgnoreCase(cmd)) {
-            model.addAttribute("item", fzglService.findOne(itemId));
-            model.addAttribute("yms", ymglService.selectVisibleAll());
-            return "/Views/fzgl/edit";
+            model.addAttribute("zys", zyList);
+            model.addAttribute("fzs", fzList);
+            model.addAttribute("item", rmsgService.findOne(itemId));
+            return "/Views/rmsg/edit";
         } else {
-            model.addAttribute("item", fzglService.findOne(itemId));
-            return "/Views/fzgl/delete";
+            model.addAttribute("item", rmsgService.findOne(itemId));
+            return "/Views/rmsg/delete";
         }
     }
 }

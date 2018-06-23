@@ -32,59 +32,61 @@
         <input name="id" style="display: none;" value="${item.id}"/>
         <tr>
             <td class="kv-label">
-                设备名称<span class="ui-input-must">&nbsp;</span>
+                消息名称<span class="ui-input-must">&nbsp;</span>
             </td>
             <td class="kv-content">
-                <input class="easyui-validatebox" type="text" disabled="disabled" style="width: 96%;" name="label" value="${item.label}"/>
+                <input class="easyui-validatebox" type="text" disabled="disabled" style="width: 300px;"
+                       name="label" data-options="required:true" value="${item.label}"/>
             </td>
         </tr>
         <tr>
             <td class="kv-label">
-                设备位置
+                播放时间<span class="ui-input-must">&nbsp;</span>
             </td>
             <td class="kv-content">
-                <input class="easyui-validatebox" type="text" style="width: 300px;" name="location"
-                       value="${item.location}"/>
+                <input class="easyui-datetimebox" style="width: 300px;" name="startTime" data-options="required:true" value="${item.startTime}"/>
             </td>
         </tr>
         <tr>
             <td class="kv-label">
-                设备描述
+                停止时间<span class="ui-input-must">&nbsp;</span>
             </td>
             <td class="kv-content">
-                <input class="easyui-validatebox" type="text" style="width: 300px;" name="des" value="${item.des}"/>
+                <input class="easyui-datetimebox" style="width: 300px;" name="endTime" data-options="required:true" value="${item.endTime}"/>
             </td>
         </tr>
         <tr>
             <td class="kv-label">
-                展示页面
+                关联资源
             </td>
             <td class="kv-content">
-                <select name="ymId" class="easyui-combobox" labelPosition="top" editable="false" style="width:150px;" panelheight="150px">
+                <select name="zyId" class="easyui-combobox" editable="false" style="width: 150px; height: 28px;
+                        line-height: 28px;" panelheight="auto">
                     <option value="0">请选择</option>
-                    <#list yms as ym>
-                             <#if ym.id == item.ymId>
-                                 <option value=${ym.id} selected>${ym.label}</option>
-                             <#else>
-                                 <option value=${ym.id}>${ym.label}</option>
-                             </#if>
+                    <#list zys as zy>
+                        <#if zy.id == item.zyId>
+                            <option value=${zy.id} selected>${zy.label}</option>
+                        <#else>
+                            <option value=${zy.id}>${zy.label}</option>
+                        </#if>
                     </#list>
                 </select>
             </td>
         </tr>
         <tr>
             <td class="kv-label">
-                所在分组
+                关联分组
             </td>
             <td class="kv-content">
-                <select name="fzId" class="easyui-combobox" labelPosition="top" editable="false" style="width:150px;" panelheight="auto">
+                <select name="fzId" class="easyui-combobox" editable="false" style="width: 150px; height: 28px;
+                        line-height: 28px;" panelheight="auto">
                     <option value="0">请选择</option>
                     <#list fzs as fz>
-                             <#if fz.id == item.fzId>
-                                 <option value=${fz.id} selected>${fz.label}</option>
-                             <#else>
-                                 <option value=${fz.id}>${fz.label}</option>
-                             </#if>
+                        <#if fz.id == item.fzId>
+                            <option value=${fz.id} selected>${fz.label}</option>
+                        <#else>
+                            <option value=${fz.id}>${fz.label}</option>
+                        </#if>
                     </#list>
                 </select>
             </td>

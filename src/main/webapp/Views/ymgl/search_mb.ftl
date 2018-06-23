@@ -22,7 +22,7 @@
 </head>
 <body class="easyui-layout" fit="true">
 <div data-options="region:'center',border:false, iconCls:'icon-list'">
-    <table id="grid" border="false" fit="true" class="easyui-datagrid">
+    <table id="grid" border="false" fit="true">
         <thead>
         <tr>
             <th data-options="field:'label', width:100, align:'center', sortable:false">

@@ -15,7 +15,7 @@
     <script type="text/javascript" src="../../Scripts/self/open_operate.js"></script>
     <script type="text/javascript" src="../../Scripts/self/common.js"></script>
     <script type="text/javascript">
-        var obj = "设备";
+        var obj = "消息";
         $(document).ready(function(){
             Init("load_list", 20)
         });
@@ -35,22 +35,22 @@
         <thead>
         <tr>
             <th data-options="field:'id', hidden:'true', width:50, align:'center', sortable:false">
-                设备ID
+                消息ID
             </th>
             <th data-options="field:'label', width:150, align:'center', sortable:false">
-                设备名称
+                消息名称
             </th>
-            <th data-options="field:'location', width:200, align:'center', sortable:false">
-                设备位置
+            <th data-options="field:'startTime', width:200, align:'center', sortable:false">
+                播放时间
             </th>
-            <th data-options="field:'des', width:200, align:'center', sortable:false">
-                设备描述
+            <th data-options="field:'endTime', width:200, align:'center', sortable:false">
+                停止时间
             </th>
-            <th data-options="field:'fzLabel', width:200, align:'center', sortable:false">
-                所在分组
+            <th data-options="field:'zyLabel', width:150, align:'center', sortable:false">
+                关联资源
             </th>
-            <th data-options="field:'ymLabel', width:200, align:'center', sortable:false">
-                展示页面
+            <th data-options="field:'fzLabel', width:150, align:'center', sortable:false">
+                关联分组
             </th>
         </tr>
         </thead>

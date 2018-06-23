@@ -38,7 +38,7 @@ public class TFzxx extends BasicEntity {
         return des;
     }
 
-    public void setDes(String desc) {
+    public void setDes(String des) {
         this.des = des;
     }
 

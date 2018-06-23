@@ -106,6 +106,11 @@
                 <img src="Contents/Images/pagination_next.gif">分组管理
             </div>
         </div>
+        <div title="消息管理" data-options="iconCls:'icon-22'">
+            <div name="csj-menu" class="csj-menu" rel="消息管理" src="Views/rmsg/search">
+                <img src="Contents/Images/pagination_next.gif">设备管理
+            </div>
+        </div>
     </div>
 </div>
 <div region="center" border="true">

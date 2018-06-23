@@ -8,13 +8,21 @@ public class TRmsg extends BasicEntity {
 
     private String label;
 
-    private Integer ggymId;
+    private String startTime;
 
-    private String content;
+    private String endTime;
+
+    private Integer zyId;
+
+    private Integer fzId;
 
     private Date createTime;
 
     private Date updateTime;
+
+    private String zyLabel;
+
+    private String fzLabel;
 
     public Integer getId() {
         return id;
@@ -32,20 +40,36 @@ public class TRmsg extends BasicEntity {
         this.label = label;
     }
 
-    public Integer getGgymId() {
-        return ggymId;
+    public String getStartTime() {
+        return startTime;
     }
 
-    public void setGgymId(Integer ggymId) {
-        this.ggymId = ggymId;
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
     }
 
-    public String getContent() {
-        return content;
+    public String getEndTime() {
+        return endTime;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
+
+    public Integer getFzId() {
+        return fzId;
+    }
+
+    public void setFzId(Integer fzId) {
+        this.fzId = fzId;
+    }
+
+    public Integer getZyId() {
+        return zyId;
+    }
+
+    public void setZyId(Integer zyId) {
+        this.zyId = zyId;
     }
 
     public Date getCreateTime() {
@@ -62,5 +86,21 @@ public class TRmsg extends BasicEntity {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getZyLabel() {
+        return zyLabel;
+    }
+
+    public void setZyLabel(String zyLabel) {
+        this.zyLabel = zyLabel;
+    }
+
+    public String getFzLabel() {
+        return fzLabel;
+    }
+
+    public void setFzLabel(String fzLabel) {
+        this.fzLabel = fzLabel;
     }
 }
