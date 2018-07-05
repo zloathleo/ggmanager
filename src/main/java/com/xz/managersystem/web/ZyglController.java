@@ -1,201 +1,144 @@
 package com.xz.managersystem.web;
 
-import com.xz.managersystem.entity.TYmxx;
+import com.xz.managersystem.entity.BasicEntity;
+import com.xz.managersystem.entity.TZbxx;
+import com.xz.managersystem.entity.TZyxx;
 import com.xz.managersystem.service.ZyglService;
-import com.xz.managersystem.dao.TablePageParams;
 import com.xz.managersystem.dto.req.BasicTableReq;
 import com.xz.managersystem.dto.res.BasicRes;
 import com.xz.managersystem.dto.res.BasicTableRes;
-import com.xz.managersystem.entity.TZyxx;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import javax.servlet.http.HttpServletRequest;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 
 import javax.validation.Valid;
-import java.io.File;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.Base64;
 
 /**
  * 资源
  */
 @Controller
-@RequestMapping("/Views/zygl")
+@RequestMapping("/zygl")
 public class ZyglController {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @Value("#{config['resource.url.path']}")
-    private String resourceUrlPath;
-
-    @Value("#{config['resource.path']}")
-    private String resourcePath;
-
     @Autowired
     ZyglService zyglService;
 
-    @RequestMapping(value = "/search_tp", method = RequestMethod.GET)
-    private String search_tp(Model model) {
-        model.addAttribute("resourceUrlPath", resourceUrlPath);
-        return "/Views/zygl/search_tp";
-    }
-
-    @RequestMapping(value = "/search_sp", method = RequestMethod.GET)
-    private String search_sp(Model model) {
-        model.addAttribute("resourceUrlPath", resourceUrlPath);
-        return "/Views/zygl/search_sp";
-    }
-
-    @RequestMapping(value = "/search_zb", method = RequestMethod.GET)
-    private String search_zb(Model model) {
-        return "/Views/zygl/search_zb";
-    }
-
-    @RequestMapping(value = "/search_wz", method = RequestMethod.GET)
-    private String search_wz(Model model) {
-        return "/Views/zygl/search_wz";
-    }
-
-    @RequestMapping(value = "/load_tp", method = RequestMethod.POST)
+    @RequestMapping(value = "/zy", method = RequestMethod.GET)
     @ResponseBody
-    private BasicTableRes<TZyxx> loadTp(@Valid BasicTableReq tr) {
-        logger.info(tr.toString());
-        List<TZyxx> list = zyglService.selectPage(new TablePageParams((tr.getPage() - 1) * tr.getRows(), tr.getRows(), 0));
-        int total = zyglService.getVisibleCount();
-        return new BasicTableRes<TZyxx>(total, list);
-    }
-
-    @RequestMapping(value = "/load_sp", method = RequestMethod.POST)
-    @ResponseBody
-    private BasicTableRes<TZyxx> loadSp(@Valid BasicTableReq tr) {
-        logger.info(tr.toString());
-        List<TZyxx> list = zyglService.selectPage(new TablePageParams((tr.getPage() - 1) * tr.getRows(), tr.getRows(),1));
-        int total = zyglService.getVisibleCount();
-        return new BasicTableRes<TZyxx>(total, list);
-    }
-
-    @RequestMapping(value = "/load_zb", method = RequestMethod.POST)
-    @ResponseBody
-    private BasicTableRes<TZyxx> loadZb(@Valid BasicTableReq tr) {
-        logger.info(tr.toString());
-        List<TZyxx> list = zyglService.selectPage(new TablePageParams((tr.getPage() - 1) * tr.getRows(), tr.getRows(),2));
-        int total = zyglService.getVisibleCount();
-        return new BasicTableRes<TZyxx>(total, list);
-    }
-
-    @RequestMapping(value = "/load_wz", method = RequestMethod.POST)
-    @ResponseBody
-    private BasicTableRes<TZyxx> loadWz(@Valid BasicTableReq tr) {
-        logger.info(tr.toString());
-        List<TZyxx> list = zyglService.selectPage(new TablePageParams((tr.getPage() - 1) * tr.getRows(), tr.getRows(),3));
-        int total = zyglService.getVisibleCount();
-        return new BasicTableRes<TZyxx>(total, list);
-    }
-
-    @RequestMapping(value = "/open_operate", method = RequestMethod.GET)
-    private String openOperate(Model model,
-                               @RequestParam(name = "cmd", required = false) String cmd,
-                               @RequestParam(name = "type", required = false) String type,
-                               @RequestParam(name = "itemId", required = false) Integer itemId) {
-        if ("add".equalsIgnoreCase(cmd)) {
-            model.addAttribute("type", type);
-            return "/Views/zygl/add";
-        } else if ("edit".equalsIgnoreCase(cmd)) {
-            TZyxx zyxx = zyglService.findOne(itemId);
-            model.addAttribute("item", zyxx);
-            model.addAttribute("type", type);
-            return "/Views/zygl/edit";
-        } else if ("delete".equalsIgnoreCase(cmd)) {
-            TZyxx zyxx = zyglService.findOne(itemId);
-            model.addAttribute("item", zyxx);
-            return "/Views/zygl/delete";
+    private BasicEntity selectZyList(@RequestParam(name = "type", required = false) String type,
+                                     @RequestParam(name = "page", required = false) Integer page,
+                                     @RequestParam(name = "rows", required = false) Integer rows) {
+        int zyCount = zyglService.selectZyCount(type);
+        List<TZyxx> zyList;
+        if (zyCount == 0) {
+            zyList = new ArrayList<>();
+        } else if (page == null || rows == null) {
+            zyList = zyglService.selectZyList(type);
+        } else {
+            zyList = zyglService.selectZyPage(new BasicTableReq(page, rows, type));
         }
-        return "/Views/zygl/add";
+        return new BasicTableRes<>(zyCount, zyList);
     }
 
-    @RequestMapping(value = "/add_item", method = RequestMethod.POST)
+    @RequestMapping(value = "/zy/add", method = RequestMethod.POST)
     @ResponseBody
-    private BasicRes addItem(@RequestParam(name = "file") MultipartFile multipartFile,
-                             @RequestParam(name = "label", required = false) String label,
-                             @RequestParam(name = "content", required = false) String content,
-                             @RequestParam(name = "des", required = false) String des,
-                             @RequestParam(name = "link", required = false) String link,
-                             @RequestParam(name = "type", required = false) String type){
-        String newLabel = label;
-        String newLink = link;
-        String newContent = content;
-        Integer newType = 0;
-        String fileName = multipartFile.getOriginalFilename();
-        if (!fileName.isEmpty()) {
-            String fileType = fileName.substring(fileName.lastIndexOf("."), fileName.length());
-            if (".jpg".equalsIgnoreCase(fileType) || ".bmp".equalsIgnoreCase(fileType) || ".png".equalsIgnoreCase(fileType)) {
-                newLabel = "IMG_" + fileName;
-            } else if (".mp4".equalsIgnoreCase(fileType) || ".flv".equalsIgnoreCase(fileType)) {
-                newLabel = "VIDEO_" + fileName;
-            } else {
-                throw new RuntimeException("不支持的文件格式");
-            }
-            newContent = newLabel;
+    private BasicEntity insertZy(@RequestParam(name = "file") MultipartFile multipartFile,
+                                 @RequestParam(name = "des", required = false) String des) {
+        zyglService.insertZy(multipartFile,des);
+        return new BasicRes("添加资源成功");
+    }
 
-            try {
-                Path path = Paths.get(resourcePath, newLabel);
-                File file = path.toFile();
-                //该方法首先进行重命名，如果不成功则进行流拷贝，如果成功则可以省下一次读、写操作
-                multipartFile.transferTo(file);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
+    @RequestMapping(value = "/zy/update", method = RequestMethod.POST)
+    @ResponseBody
+    private BasicEntity updateZy(@Valid TZyxx zyxx) {
+        zyglService.updateZy(zyxx);
+        return new BasicRes("修改资源成功");
+    }
+
+    @RequestMapping(value = "/zy/delete", method = RequestMethod.POST)
+    @ResponseBody
+    private BasicEntity deleteZy(@Valid TZyxx zyxx) {
+        zyglService.deleteZy(zyxx);
+        return new BasicRes("删除资源成功");
+    }
+
+    @RequestMapping(value = "/zy/{label}", method = RequestMethod.GET)
+    @ResponseBody
+    private BasicEntity selectZy(@PathVariable("label") String label) {
+        return zyglService.selectZyByName(label);
+    }
+
+    //////////////////////////////////////// 分割线 ////////////////////////////////////////
+
+    @RequestMapping(value = "/zb", method = RequestMethod.GET)
+    @ResponseBody
+    private BasicEntity selectZbList(@Valid BasicTableReq tr) {
+        int zbCount = zyglService.selectZbCount();
+        List<TZbxx> zbList;
+        if (zbCount == 0) {
+            zbList = new ArrayList<>();
+        } else if (tr.getPage() == null || tr.getRows() == null) {
+            zbList = zyglService.selectZbList();
+        } else {
+            zbList = zyglService.selectZbPage(tr);
         }
-        logger.info("上传资源");
-
-        if (!newLink.isEmpty() && newLink.indexOf("http", 0) == -1)
-            newLink = "https://" + newLink;
-
-        if ("tp".equalsIgnoreCase(type))
-            newType = 0;
-        else if ("sp".equalsIgnoreCase(type))
-            newType = 1;
-        else if ("zb".equalsIgnoreCase(type))
-            newType = 2;
-        else
-            newType = 3;
-
-        TZyxx one = new TZyxx();
-        one.setLabel(newLabel);
-        one.setContent(newContent);
-        one.setDes(des);
-        one.setLink(newLink);
-        one.setType(newType);
-        zyglService.insert(one);
-        return new BasicRes("上传成功");
+        return new BasicTableRes<>(zbCount, zbList);
     }
 
-    @RequestMapping(value = "/update_item", method = RequestMethod.POST)
+    @RequestMapping(value = "/zb/add", method = RequestMethod.POST)
     @ResponseBody
-    private BasicRes updateItem(@Valid TZyxx item) {
-        if (!item.getLink().isEmpty() && item.getLink().indexOf("http", 0) == -1)
-            item.setLink("https://" + item.getLink());
-        zyglService.updateByPrimaryKeySelective(item);
-        return new BasicRes("修改成功");
+    private BasicEntity insertZb(@Valid TZbxx zbxx) {
+        zyglService.insertZb(zbxx);
+        return new BasicRes("添加直播信号成功");
     }
 
-    @RequestMapping(value = "/delete_item", method = RequestMethod.POST)
+    @RequestMapping(value = "/zb/update", method = RequestMethod.POST)
     @ResponseBody
-    private BasicRes deleteItem(@Valid TZyxx item) {
-        zyglService.deleteById(item.getId());
-        return new BasicRes("删除成功");
+    private BasicEntity updateZb(@Valid TZbxx zbxx) {
+        zyglService.updateZb(zbxx);
+        return new BasicRes("修改直播信号成功");
+    }
+
+    @RequestMapping(value = "/zb/delete", method = RequestMethod.POST)
+    @ResponseBody
+    private BasicEntity deleteZb(@Valid TZbxx zbxx) {
+        zyglService.deleteZb(zbxx);
+        return new BasicRes("删除直播信号成功");
+    }
+
+    @RequestMapping(value = "/zb/{label}", method = RequestMethod.GET)
+    @ResponseBody
+    private BasicEntity selectZb(@PathVariable("label") String label) {
+        return zyglService.selectZbByName(label);
+    }
+
+    @RequestMapping(value = "/zb/{label}/export", method = RequestMethod.GET)
+    public ResponseEntity<byte[]> download(HttpServletRequest request,
+                                           @PathVariable("label") String label) throws IOException {
+        final Base64.Encoder encoder = Base64.getEncoder();
+        final byte[] srcByte = label.getBytes("UTF-8");
+        final byte[] destByte = encoder.encode(srcByte);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "attchement;filename=" + label + ".conf");
+        HttpStatus statusCode = HttpStatus.OK;
+        ResponseEntity<byte[]> entity = new ResponseEntity<byte[]>(destByte, headers, statusCode);
+        return entity;
     }
 }

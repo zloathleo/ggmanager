@@ -10,7 +10,7 @@ import tk.mybatis.mapper.common.MySqlMapper;
 
 import java.util.List;
 
-public interface MbglMapper extends Mapper<TMbxx>, MySqlMapper<TMbxx> {
+public interface MbMapper extends Mapper<TMbxx>, MySqlMapper<TMbxx> {
 
     @Select("SELECT COUNT(1) FROM t_mb WHERE is_deleted = 0")
     int getVisibleCount();

@@ -2,99 +2,190 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>查询资源</title>
+    <meta charset="UTF-8">
+    <title>查询图片资源</title>
     <link type="text/css" rel="Stylesheet" href="../../Contents/Css/base.css"/>
     <link type="text/css" rel="Stylesheet" href="../../Contents/Css/platform.css"/>
-    <link type="text/css" rel="Stylesheet" href="../../Scripts/jQEasyUI/themes/easyui.css"/>
     <link type="text/css" rel="Stylesheet" href="../../Scripts/jQEasyUI/themes/icon.css"/>
+    <link rel="stylesheet" type="text/css" href="../../Scripts/jQEasyUI/themes/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../../Scripts/jQEasyUI/themes/demo.css">
+    <link rel="stylesheet" type="text/css" href="http://sachinchoolur.github.io/lightGallery/static/css/main.css">
+    <link rel="stylesheet" type="text/css" href="../../Scripts/lightGallery/dist/css/lightgallery.css"></link>
     <script type="text/javascript" src="../../Scripts/jquery.min.js"></script>
     <script type="text/javascript" src="../../Scripts/IllegalityCheck.js"></script>
     <script type="text/javascript" src="../../Scripts/jQEasyUI/jquery.easyui.min.js"></script>
     <script type="text/javascript" src="../../Scripts/jQEasyUI/easyui-lang-zh_CN.js"></script>
     <script type="text/javascript" src="../../Scripts/FunctionJS.js"></script>
+    <script type="text/javascript" src="../../Scripts/lightGallery/dist/js/lightgallery-all.min.js"></script>
+    <script type="text/javascript" src="../../Scripts/lightGallery/lib/jquery.mousewheel.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/picturefill/2.3.1/picturefill.min.js"></script>
+    <script src="http://sachinchoolur.github.io/lightGallery/static/js/demos.js"></script>
     <script type="text/javascript">
-        function EndEdit() {
-            $('#grid').datagrid('reload');
-        }
-
-        function Add() {
-            var paramString = $.param({
-                "cmd": "add",
-                "type": "tp"
-            });
-            var url = "open_operate?" + paramString;
-            easyuiDialog("图片 - 新增", url, 600, 280, paramString);
-        }
-
-        function Edit() {
-            var _row = $('#grid').datagrid('getSelected');
-            if (_row) {
-                var paramString = $.param({
-                    "cmd": "edit",
-                    "type": "tp",
-                    "itemId": _row.id
-                });
-                var url = "open_operate?" + paramString;
-                easyuiDialog("图片 - 修改", url, 600, 280, paramString);
-            }
-        }
-
-        function Delete() {
-            var _row = $('#grid').datagrid('getSelected');
-            if (_row) {
-                var paramString = $.param({
-                    "cmd": "delete",
-                    "type": "tp",
-                    "itemId": _row.id
-                });
-                var url = "open_operate?" + paramString;
-                easyuiDialog("图片 - 删除", url, 350, 280);
-            }
-        }
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-49767543-2', 'sachinchoolur.github.io');
+        ga('send', 'pageview');
     </script>
+    <style type="text/css">
+        .lg-backdrop.in {
+            opacity: 0.85;
+        }
+    </style>
+    <style type="text/css">
+        .demo-gallery > ul {
+            margin-bottom: 0;
+        }
+        .demo-gallery > ul > li {
+            float: left;
+            margin-bottom: 15px;
+            margin-right: 20px;
+            width: 200px;
+        }
+        .demo-gallery > ul > li a {
+            border: 3px solid #FFF;
+            border-radius: 3px;
+            display: block;
+            overflow: hidden;
+            position: relative;
+            float: left;
+        }
+        .demo-gallery > ul > li a > img {
+            -webkit-transition: -webkit-transform 0.15s ease 0s;
+            -moz-transition: -moz-transform 0.15s ease 0s;
+            -o-transition: -o-transform 0.15s ease 0s;
+            transition: transform 0.15s ease 0s;
+            -webkit-transform: scale3d(1, 1, 1);
+            transform: scale3d(1, 1, 1);
+            height: 100%;
+            width: 100%;
+        }
+        .demo-gallery > ul > li a:hover > img {
+            -webkit-transform: scale3d(1.1, 1.1, 1.1);
+            transform: scale3d(1.1, 1.1, 1.1);
+        }
+        .demo-gallery > ul > li a:hover .demo-gallery-poster > img {
+            opacity: 1;
+        }
+        .demo-gallery > ul > li a .demo-gallery-poster {
+            background-color: rgba(0, 0, 0, 0.1);
+            bottom: 0;
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+            -webkit-transition: background-color 0.15s ease 0s;
+            -o-transition: background-color 0.15s ease 0s;
+            transition: background-color 0.15s ease 0s;
+        }
+        .demo-gallery > ul > li a .demo-gallery-poster > img {
+            left: 50%;
+            margin-left: -10px;
+            margin-top: -10px;
+            opacity: 0;
+            position: absolute;
+            top: 50%;
+            -webkit-transition: opacity 0.3s ease 0s;
+            -o-transition: opacity 0.3s ease 0s;
+            transition: opacity 0.3s ease 0s;
+        }
+        .demo-gallery > ul > li a:hover .demo-gallery-poster {
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        .demo-gallery .justified-gallery > a > img {
+            -webkit-transition: -webkit-transform 0.15s ease 0s;
+            -moz-transition: -moz-transform 0.15s ease 0s;
+            -o-transition: -o-transform 0.15s ease 0s;
+            transition: transform 0.15s ease 0s;
+            -webkit-transform: scale3d(1, 1, 1);
+            transform: scale3d(1, 1, 1);
+            height: 100%;
+            width: 100%;
+        }
+        .demo-gallery .justified-gallery > a:hover > img {
+            -webkit-transform: scale3d(1.1, 1.1, 1.1);
+            transform: scale3d(1.1, 1.1, 1.1);
+        }
+        .demo-gallery .justified-gallery > a:hover .demo-gallery-poster > img {
+            opacity: 1;
+        }
+        .demo-gallery .justified-gallery > a .demo-gallery-poster {
+            background-color: rgba(0, 0, 0, 0.1);
+            bottom: 0;
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+            -webkit-transition: background-color 0.15s ease 0s;
+            -o-transition: background-color 0.15s ease 0s;
+            transition: background-color 0.15s ease 0s;
+        }
+        .demo-gallery .justified-gallery > a .demo-gallery-poster > img {
+            left: 50%;
+            margin-left: -10px;
+            margin-top: -10px;
+            opacity: 0;
+            position: absolute;
+            top: 50%;
+            -webkit-transition: opacity 0.3s ease 0s;
+            -o-transition: opacity 0.3s ease 0s;
+            transition: opacity 0.3s ease 0s;
+        }
+        .demo-gallery .justified-gallery > a:hover .demo-gallery-poster {
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        .demo-gallery .video .demo-gallery-poster img {
+            height: 48px;
+            margin-left: -24px;
+            margin-top: -24px;
+            opacity: 0.8;
+            width: 48px;
+        }
+        .demo-gallery.dark > ul > li a {
+            border: 3px solid #04070a;
+        }
+        .home .demo-gallery {
+            padding-bottom: 80px;
+        }
+    </style>
 </head>
-<body class="easyui-layout" fit="true">
-<div data-options="region:'center', border:false, iconCls:'icon-list'">
-    <div id="opButton">
-        <a href="javascript:;" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-10'"
-            onclick="Add()" title="新增">新增</a>
-        <a href="javascript:;" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-edit'"
-            onclick="Edit()" title="编辑">编辑</a>
-        <a href="javascript:;" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-no'"
-            onclick="Delete()" title="删除">删除</a>
-    </div>
-    <table id="grid" border="false" fit="true" class="easyui-datagrid" url="load_tp"
-            data-options="toolbar: '#opButton', singleSelect: true, nowrap: false, rownumbers: true, pagination: true, pageSize: 20">
-        <thead>
-        <tr class="gridnote">
-            <th data-options="field:'id',hidden:'true',width:50,align:'center',sortable: false">
-                资源ID
-            </th>
-            <th data-options="field:'label',width:200,align:'center',sortable: false">
-                资源名称
-            </th>
-            <th data-options="field:'des',width:200,align:'center',sortable: false">
-                资源描述
-            </th>
-            <th data-options="field:'link',width:250,align:'center',sortable: false,
-                formatter: function(v){ if (v == null) return ''; else return '<a href=' + v + ' target=_blank>' + v + '</a>'; }">
-                点击链接
-            </th>
-            <th data-options="field:'content',width:150, align:'center',sortable: false,
-                formatter: function(v){ return '<a href=' + '${resourceUrlPath}' + v + ' target=_blank><img style=width:40px;height:40px src=' + '${resourceUrlPath}' + v + '/></a>'; }">
-                图片预览
-            </th>
-        </tr>
-        </thead>
-    </table>
+<body class="home">
+<div class="demo-gallery dark mrb35">
+    <ul id="fixed-size" class="list-unstyled row">
+        <li class="col-xs-6 col-sm-4 col-md-3" data-src="../static/img/1.jpg" data-sub-html="<h4>Fading Light</h4><p>Classic view from Rigwood Jetty on Coniston Water an old archive shot similar to an old post but a little later on.</p>">
+            <a href="">
+                <img class="img-responsive" src="http://sachinchoolur.github.io/lightGallery/static/img/thumb-1.jpg">
+                <div class="demo-gallery-poster">
+                    <img src="http://sachinchoolur.github.io/lightGallery/static/img/zoom.png">
+                </div>
+            </a>
+        </li>
+        <li class="col-xs-6 col-sm-4 col-md-3" data-src="../static/img/2.jpg" data-sub-html="<h4>Bowness Bay</h4><p>A beautiful Sunrise this morning taken En-route to Keswick not one as planned but I'm extremely happy I was passing the right place at the right time....</p>">
+            <a href="">
+                <img class="img-responsive" src="http://sachinchoolur.github.io/lightGallery/static/img/thumb-2.jpg">
+                <div class="demo-gallery-poster">
+                    <img src="http://sachinchoolur.github.io/lightGallery/static/img/zoom.png">
+                </div>
+            </a>
+        </li>
+        <li class="col-xs-6 col-sm-4 col-md-3" data-src="../static/img/13.jpg" data-sub-html="<h4>Sunset Serenity</h4><p>A gorgeous Sunset tonight captured at Coniston Water....</p>">
+            <a href="">
+                <img class="img-responsive" src="http://sachinchoolur.github.io/lightGallery/static/img/thumb-13.jpg">
+                <div class="demo-gallery-poster">
+                    <img src="http://sachinchoolur.github.io/lightGallery/static/img/zoom.png">
+                </div>
+            </a>
+        </li>
+        <li class="col-xs-6 col-sm-4 col-md-3" data-src="../static/img/4.jpg" data-sub-html="<h4>Coniston Calmness</h4><p>Beautiful morning</p>">
+            <a href="">
+                <img class="img-responsive" src="http://sachinchoolur.github.io/lightGallery/static/img/thumb-4.jpg">
+                <div class="demo-gallery-poster">
+                    <img src="http://sachinchoolur.github.io/lightGallery/static/img/zoom.png">
+                </div>
+            </a>
+        </li>
+    </ul>
 </div>
-<div id="iframeDialog">
-</div>
-<div id="iframeOtherDialog">
-</div>
-<div style="display: none">
-    <iframe id="ifrExp" src=""></iframe>
-</div>
-
 </body>
 </html>

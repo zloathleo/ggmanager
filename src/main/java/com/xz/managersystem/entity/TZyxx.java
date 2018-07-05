@@ -8,13 +8,19 @@ public class TZyxx extends BasicEntity {
 
     private String label;
 
-    private String content;
+    private String url;
+
+    private String preview;
+
+    private Integer size;
+
+    private Integer height;
+
+    private Integer width;
 
     private String des;
 
-    private String link;
-
-    private Integer type;
+    private String type;
 
     private Date createTime;
 
@@ -36,6 +42,46 @@ public class TZyxx extends BasicEntity {
         this.label = label;
     }
 
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getPreview() {
+        return preview;
+    }
+
+    public void setPreview(String preview) {
+        this.preview = preview;
+    }
+
+    public Integer getSize() {
+        return size;
+    }
+
+    public void setSize(Integer size) {
+        this.size = size;
+    }
+
+    public Integer getHeight() {
+        return height;
+    }
+
+    public void setHeight(Integer height) {
+        this.height = height;
+    }
+
+    public Integer getWidth() {
+        return width;
+    }
+
+    public void setWidth(Integer width) {
+        this.width = width;
+    }
+
     public String getDes() {
         return des;
     }
@@ -44,27 +90,11 @@ public class TZyxx extends BasicEntity {
         this.des = des;
     }
 
-    public String getContent(){
-        return content;
-    }
-
-    public void setContent(String content){
-        this.content = content;
-    }
-
-    public String getLink() {
-        return link;
-    }
-
-    public void setLink(String link) {
-        this.link = link;
-    }
-
-    public Integer getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(Integer type) {
+    public void setType(String type) {
         this.type = type;
     }
 
@@ -83,5 +113,4 @@ public class TZyxx extends BasicEntity {
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
-
 }

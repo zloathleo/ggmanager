@@ -3,6 +3,7 @@ package com.xz.managersystem.service;
 import com.xz.managersystem.dao.RmsgMapper;
 import com.xz.managersystem.dao.TablePageParams;
 import com.xz.managersystem.entity.TRmsg;
+import com.xz.managersystem.entity.TRmsgInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,8 @@ public class RmsgService {
     public List<TRmsg> selectPage(TablePageParams params) {
         return mapper.selectPage(params);
     }
+
+    public TRmsg selectMyValid(String name) { return mapper.selectMyValid(name); }
 
     public int getAllCount() {
         return mapper.getAllCount();

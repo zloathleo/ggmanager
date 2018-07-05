@@ -6,6 +6,22 @@ package com.xz.managersystem.dto.req;
 public class BasicTableReq extends BasicReq {
     private Integer page;
     private Integer rows;
+    private String type;
+
+    public BasicTableReq(){
+    }
+
+    public BasicTableReq(Integer page, Integer rows) {
+        this.page = page;
+        this.rows = rows;
+        this.type = "";
+    }
+
+    public BasicTableReq(Integer page, Integer rows, String type) {
+        this.page = page;
+        this.rows = rows;
+        this.type = type;
+    }
 
     public Integer getPage() {
         return page;
@@ -23,11 +39,20 @@ public class BasicTableReq extends BasicReq {
         this.rows = rows;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     @Override
     public String toString() {
         return "BasicTableReq{" +
                 "page=" + page +
                 ", rows=" + rows +
+                ", type=" + type +
                 '}';
     }
 }

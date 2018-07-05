@@ -13,21 +13,23 @@ function Init(loadUrl, pageSize) {
     });
 }
 
-function Add(obj) {
+function Add(obj, type) {
     var paramString = $.param({
         "cmd": "add",
+        "type": type
     });
     var title = obj ? obj + " - 新增" : "新增";
     var url = "open_operate?" + paramString;
     easyuiDialog(title, url, 600, 505, paramString);
 }
 
-function Edit(obj) {
+function Edit(obj, type) {
     var row = $('#grid').datagrid('getSelected');
     if (row) {
         var paramString = $.param({
             "cmd": "edit",
-            "itemId": row.id
+            "itemId": row.id,
+            "type": type
         });
         var title = obj ? obj + " - 修改" : "修改";
         var url = "open_operate?" + paramString;
@@ -37,12 +39,13 @@ function Edit(obj) {
     }
 }
 
-function Delete(obj) {
+function Delete(obj, type) {
     var row = $('#grid').datagrid('getSelected');
     if (row) {
         var paramString = $.param({
             "cmd": "delete",
-            "itemId": row.id
+            "itemId": row.id,
+            "type": type
         });
         var title = obj ? obj + " - 删除" : "删除";
         var url = "open_operate?" + paramString;

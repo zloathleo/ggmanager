@@ -88,14 +88,17 @@
             <div name="csj-menu" class="csj-menu" rel="图片资源管理" src="Views/zygl/search_tp">
                 <img src="Contents/Images/pagination_next.gif">图片资源管理
             </div>
+            <div name="csj-menu" class="csj-menu" rel="音频资源管理" src="Views/zygl/search_yp">
+                <img src="Contents/Images/pagination_next.gif">音频资源管理
+            </div>
             <div name="csj-menu" class="csj-menu" rel="本地视频资源管理" src="Views/zygl/search_sp">
-                <img src="Contents/Images/pagination_next.gif">本地视频资源管理
+                <img src="Contents/Images/pagination_next.gif">视频资源管理
             </div>
-            <div name="csj-menu" class="csj-menu" rel="实时视频资源查询" src="Views/zygl/search_zb">
-                <img src="Contents/Images/pagination_next.gif">实时视频资源查询
+            <div name="csj-menu" class="csj-menu" rel="转播信号资源管理" src="Views/zygl/search_zb">
+                <img src="Contents/Images/pagination_next.gif">转播信号资源管理
             </div>
-            <div name="csj-menu" class="csj-menu" rel="文字资源查询" src="Views/zygl/search_wz">
-                <img src="Contents/Images/pagination_next.gif">文字资源查询
+            <div name="csj-menu" class="csj-menu" rel="文字资源管理" src="Views/zygl/search_wz">
+                <img src="Contents/Images/pagination_next.gif">文字资源管理
             </div>
         </div>
         <div title="广告机设备管理" data-options="iconCls:'icon-08'">

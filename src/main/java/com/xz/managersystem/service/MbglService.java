@@ -1,6 +1,6 @@
 package com.xz.managersystem.service;
 
-import com.xz.managersystem.dao.MbglMapper;
+import com.xz.managersystem.dao.MbMapper;
 import com.xz.managersystem.dao.TablePageParams;
 import com.xz.managersystem.entity.TMbxx;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ import java.util.List;
 public class MbglService {
 
     @Autowired
-    MbglMapper mapper;
+    MbMapper mapper;
 
     public int getVisibleCount() {
         return mapper.getVisibleCount();

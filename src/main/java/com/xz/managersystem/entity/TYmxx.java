@@ -8,21 +8,13 @@ public class TYmxx extends BasicEntity {
 
     private String label;
 
+    private String content;
+
     private String des;
-
-    private String videoUrls;
-
-    private String imgUrls;
-
-    private String textUrls;
-
-    private Integer mbId;
 
     private Date createTime;
 
     private Date updateTime;
-
-    private String mbLabel;
 
     public Integer getId() {
         return id;
@@ -40,44 +32,20 @@ public class TYmxx extends BasicEntity {
         this.label = label;
     }
 
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
     public String getDes() {
         return des;
     }
 
     public void setDes(String des) {
         this.des = des;
-    }
-
-    public String getVideoUrls() {
-        return videoUrls;
-    }
-
-    public void setVideoUrls(String videoUrls) {
-        this.videoUrls = videoUrls;
-    }
-
-    public String getImgUrls() {
-        return imgUrls;
-    }
-
-    public void setImgUrls(String imgUrls) {
-        this.imgUrls = imgUrls;
-    }
-
-    public String getTextUrls() {
-        return textUrls;
-    }
-
-    public void setTextUrls(String textUrls) {
-        this.textUrls = textUrls;
-    }
-
-    public Integer getMbId() {
-        return mbId;
-    }
-
-    public void setMbId(Integer mbId) {
-        this.mbId = mbId;
     }
 
     public Date getCreateTime() {
@@ -95,13 +63,4 @@ public class TYmxx extends BasicEntity {
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
-
-    public String getMbLabel() {
-        return mbLabel;
-    }
-
-    public void setMbLabel(String mbLabel) {
-        this.mbLabel = mbLabel;
-    }
-
 }

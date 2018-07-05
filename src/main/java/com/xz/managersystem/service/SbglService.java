@@ -1,53 +1,86 @@
 package com.xz.managersystem.service;
 
-import com.xz.managersystem.dao.SbglMapper;
-import com.xz.managersystem.dao.TablePageParams;
+import com.xz.managersystem.dto.req.BasicTableReq;
 import com.xz.managersystem.entity.TSbxx;
+import com.xz.managersystem.entity.TFzxx;
+import com.xz.managersystem.dao.SbMapper;
+import com.xz.managersystem.dao.FzMapper;
+import com.xz.managersystem.dao.TablePageParams;
+import com.xz.managersystem.entity.TYmxx;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityExistsException;
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Service
 public class SbglService {
 
     @Autowired
-    SbglMapper mapper;
+    SbMapper sbMapper;
 
-    public List<TSbxx> selectVisibleAll() {
-        return mapper.selectVisibleAll();
+    @Autowired
+    FzMapper fzMapper;
+
+    public int insertSb(TSbxx sbxx) {
+        if (sbxx.getLabel() == null || sbxx.getLabel().trim().isEmpty()) {
+            throw new RuntimeException("设备名称不能为空");
+        } else if (sbMapper.selectByName(sbxx.getLabel()) != null) {
+            throw new EntityExistsException("设备" + sbxx.getLabel() + "已经存在");
+        }
+        return sbMapper.insert(sbxx);
     }
 
-    public List<TSbxx> selectPage(TablePageParams params) {
-        return mapper.selectPage(params);
+    public int updateSb(TSbxx sbxx) {
+        if (sbxx.getLabel() == null || sbxx.getLabel().trim().isEmpty()) {
+            throw new RuntimeException("设备名称不能为空");
+        }
+
+        TSbxx sbExist = sbMapper.selectByName(sbxx.getLabel());
+        if (sbExist == null) {
+            throw new EntityNotFoundException("设备" + sbxx.getLabel() + "不存在");
+        }
+
+        if (sbxx.getDes() != null) {
+            sbExist.setDes(sbxx.getDes());
+        }
+        if (sbxx.getLocation() != null) {
+            sbExist.setLocation(sbxx.getLocation());
+        }
+        if (sbxx.getFzLabel() != null) {
+            sbExist.setFzLabel(sbxx.getFzLabel());
+        }
+        if (sbxx.getYmLabel() != null) {
+            sbExist.setYmLabel(sbxx.getYmLabel());
+        }
+        return sbMapper.updateByName(sbExist);
     }
 
-    public int getAllCount() {
-        return mapper.getAllCount();
+    public int deleteSb(TSbxx sbxx) {
+        if (sbxx.getLabel() == null || sbxx.getLabel().trim().isEmpty()) {
+            throw new RuntimeException("页面名称不能为空");
+        }
+        return sbMapper.deleteByName(sbxx.getLabel());
     }
 
-    public int getVisibleCount() {
-        return mapper.getVisibleCount();
+    public TSbxx selectSbByName(String label) {
+        return sbMapper.selectByName(label);
     }
 
-    public TSbxx findOne(Integer id) {
-        return mapper.findOne(id);
+    public int deleteSbByName(String label) {
+        return sbMapper.deleteByName(label);
     }
 
-    public TSbxx findOneByName(String label) {
-        return mapper.findOneByName(label);
+    public List<TSbxx> selectSbList() {
+        return sbMapper.selectVisibleAll();
     }
 
-    public int insert(TSbxx one) {
-        return mapper.insert(one);
+    public List<TSbxx> selectSbPage(BasicTableReq tr) {
+        return sbMapper.selectPage(new TablePageParams((tr.getPage() - 1) * tr.getRows(), tr.getRows()));
     }
 
-    public int updateByPrimaryKeySelective(TSbxx one) {
-        return mapper.updateByPrimaryKeySelective(one);
+    public int selectSbCount() {
+        return sbMapper.getVisibleCount();
     }
-
-    public int deleteById(Integer id) {
-        return mapper.deleteById(id);
-    }
-
 }

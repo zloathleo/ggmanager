@@ -10,7 +10,7 @@ import tk.mybatis.mapper.common.MySqlMapper;
 
 import java.util.List;
 
-public interface FzglMapper extends Mapper<TFzxx>, MySqlMapper<TFzxx> {
+public interface FzMapper extends Mapper<TFzxx>, MySqlMapper<TFzxx> {
 
     @Select("SELECT COUNT(1) FROM t_fz WHERE is_deleted = 0")
     int getVisibleCount();
@@ -80,5 +80,8 @@ public interface FzglMapper extends Mapper<TFzxx>, MySqlMapper<TFzxx> {
 
     @Delete("update t_fz t set t.is_deleted = 1 where t.id = #{id}")
     int deleteById(Integer id);
+
+    @Delete("update t_fz t set t.is_deleted = 1 where t.label = #{label}")
+    int deleteByName(String label);
 
 }

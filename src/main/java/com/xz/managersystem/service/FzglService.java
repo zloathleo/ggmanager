@@ -1,6 +1,6 @@
 package com.xz.managersystem.service;
 
-import com.xz.managersystem.dao.FzglMapper;
+import com.xz.managersystem.dao.FzMapper;
 import com.xz.managersystem.dao.TablePageParams;
 import com.xz.managersystem.entity.TFzxx;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,7 @@ import java.util.List;
 public class FzglService {
 
     @Autowired
-    FzglMapper mapper;
+    FzMapper mapper;
 
     public List<TFzxx> selectVisibleAll() {
         return mapper.selectVisibleAll();

@@ -1,6 +1,7 @@
 package com.xz.managersystem.dao;
 
 import com.xz.managersystem.entity.TRmsg;
+import com.xz.managersystem.entity.TRmsgInfo;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
@@ -53,6 +54,20 @@ public interface RmsgMapper extends Mapper<TRmsg>, MySqlMapper<TRmsg> {
             "  WHERE t.is_deleted = 0 " +
             "  ORDER BY t.create_time DESC LIMIT #{start}, #{rows}")
     List<TRmsg> selectPage(TablePageParams params);
+
+    @Select("SELECT \n" +
+            "  t.id,\n" +
+            "  t.label,\n" +
+            "  t.zy_id,\n" +
+            "  t.fz_id,\n" +
+            "  t.start_time,\n" +
+            "  t.end_time,\n" +
+            "  t.create_time,\n" +
+            "  t.update_time " +
+            "  FROM t_rmsg t, t_sb b " +
+            "  WHERE t.is_deleted = 0 AND t.fz_id = b.fz_id " +
+            "  AND b.label = #{name} AND t.end_time > now() LIMIT 1")
+    TRmsg selectMyValid(String name);
 
     @Select("SELECT \n" +
             "  t.id,\n" +

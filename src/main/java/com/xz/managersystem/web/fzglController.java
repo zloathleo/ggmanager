@@ -90,14 +90,10 @@ public class fzglController {
         List<TFzxx> fzList = fzglService.selectVisibleAll();
 
         if ("add".equalsIgnoreCase(cmd)) {
-            model.addAttribute("yms", ymglService.selectVisibleAll());
             return "/Views/fzgl/add";
         } else if ("edit".equalsIgnoreCase(cmd)) {
-            model.addAttribute("item", fzglService.findOne(itemId));
-            model.addAttribute("yms", ymglService.selectVisibleAll());
             return "/Views/fzgl/edit";
         } else {
-            model.addAttribute("item", fzglService.findOne(itemId));
             return "/Views/fzgl/delete";
         }
     }

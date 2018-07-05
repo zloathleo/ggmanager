@@ -93,20 +93,11 @@ public class RsmgController {
     private String openOperate(Model model,
                                @RequestParam(name = "cmd", required = false) String cmd,
                                @RequestParam(name = "itemId", required = false) Integer itemId) {
-        List<TZyxx> zyList = zyglService.selectVisibleAll();
-        List<TFzxx> fzList = fzglService.selectVisibleAll();
-
         if ("add".equalsIgnoreCase(cmd)) {
-            model.addAttribute("zys", zyList);
-            model.addAttribute("fzs", fzList);
             return "/Views/rmsg/add";
         } else if ("edit".equalsIgnoreCase(cmd)) {
-            model.addAttribute("zys", zyList);
-            model.addAttribute("fzs", fzList);
-            model.addAttribute("item", rmsgService.findOne(itemId));
             return "/Views/rmsg/edit";
         } else {
-            model.addAttribute("item", rmsgService.findOne(itemId));
             return "/Views/rmsg/delete";
         }
     }

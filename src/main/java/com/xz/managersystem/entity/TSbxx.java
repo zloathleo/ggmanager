@@ -12,17 +12,17 @@ public class TSbxx extends BasicEntity {
 
     private String location;
 
-    private Integer fzId;
+    private String fzLabel;
 
-    private Integer ymId;
+    private String ymLabel;
+
+    private String ymContent;
+
+    private Date ymUpdateTime;
 
     private Date createTime;
 
     private Date updateTime;
-
-    private String fzLabel;
-
-    private String ymLabel;
 
     public Integer getId() {
         return id;
@@ -56,20 +56,36 @@ public class TSbxx extends BasicEntity {
         this.location = location;
     }
 
-    public Integer getFzId() {
-        return fzId;
+    public String getFzLabel() {
+        return fzLabel;
     }
 
-    public void setFzId(Integer fzId) {
-        this.fzId = fzId;
+    public void setFzLabel(String fzLabel) {
+        this.fzLabel = fzLabel;
     }
 
-    public Integer getYmId() {
-        return ymId;
+    public String getYmLabel() {
+        return ymLabel;
     }
 
-    public void setYmId(Integer ymId) {
-        this.ymId = ymId;
+    public void setYmLabel(String ymLabel) {
+        this.ymLabel = ymLabel;
+    }
+
+    public String getYmContent() {
+        return ymContent;
+    }
+
+    public void setYmContent(String ymContent) {
+        this.ymContent = ymContent;
+    }
+
+    public Date getYmUpdateTime() {
+        return ymUpdateTime;
+    }
+
+    public void setYmUpdateTime(Date ymUpdateTime) {
+        this.ymUpdateTime = ymUpdateTime;
     }
 
     public Date getCreateTime() {
@@ -87,21 +103,4 @@ public class TSbxx extends BasicEntity {
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
-
-    public String getFzLabel() {
-        return fzLabel;
-    }
-
-    public void setFzLabel(String fzLabel) {
-        this.fzLabel = fzLabel;
-    }
-
-    public String getYmLabel() {
-        return ymLabel;
-    }
-
-    public void setYmLabel(String ymLabel) {
-        this.ymLabel = ymLabel;
-    }
-
 }
