@@ -22,9 +22,7 @@
         <mvc:argument-resolvers>
             <!-- 认证处理 -->
             <bean class="com.xz.managersystem.web.resolver.ControllerAuthorizationArgumentResolver"/>
-        </mvc:argument-resolvers>
-
-        <mvc:argument-resolvers>
+        </mvc:argument-resolvers> 
     </mvc:annotation-driven>
 
 
