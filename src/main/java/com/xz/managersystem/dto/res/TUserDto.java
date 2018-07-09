@@ -1,16 +1,16 @@
-package com.xz.managersystem.entity;
+package com.xz.managersystem.dto.res;
+
+import com.xz.managersystem.entity.BasicEntity;
 
 import java.util.Date;
 
-public class TUser extends BasicEntity {
+public class TUserDto extends BasicEntity {
 
     private Integer id;
 
     private String user;
 
-    private String pageLabel;
-
-    private Date createTime;
+    private String group;
 
     private Date updateTime;
 
@@ -30,20 +30,12 @@ public class TUser extends BasicEntity {
         this.user = user;
     }
 
-    public String getPageLabel() {
-        return pageLabel;
+    public String getGroup() {
+        return group;
     }
 
-    public void setPageLabel(String pageLabel) {
-        this.pageLabel = pageLabel;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
+    public void setGroup(String group) {
+        this.group = group;
     }
 
     public Date getUpdateTime() {

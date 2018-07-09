@@ -23,17 +23,17 @@ public class GolbalExceptionResolver implements HandlerExceptionResolver {
         logger.info(requestURI);
         ModelAndView mv = new ModelAndView();
         mv.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
-        if(requestURI.endsWith(".do")){
+//        if(requestURI.endsWith(".do")){
             MappingJackson2JsonView view = new MappingJackson2JsonView();
             mv.setView(view);
             mv.addObject("err", "-1");
             mv.addObject("message", ex.getMessage());
             return mv;
-        }else{
-            mv.addObject("err", "-1");
-            mv.addObject("message", ex.getMessage());
-            mv.setViewName("redirect:/Views/exception/exception");
-            return mv;
-        }
+//        }else{
+//            mv.addObject("err", "-1");
+//            mv.addObject("message", ex.getMessage());
+//            mv.setViewName("redirect:/Views/exception/exception");
+//            return mv;
+//        }
     }
 }
