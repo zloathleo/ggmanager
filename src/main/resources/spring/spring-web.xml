@@ -3,17 +3,13 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
-       xmlns:util="http://www.springframework.org/schema/util"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans
-	http://www.springframework.org/schema/beans/spring-beans.xsd
-	http://www.springframework.org/schema/context
-	http://www.springframework.org/schema/context/spring-context.xsd
-	http://www.springframework.org/schema/mvc
-	http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
-  http://www.springframework.org/schema/util
-        http://www.springframework.org/schema/util/spring-util-4.0.xsd">
-
-    <util:properties id="config" location="classpath:config.properties"/>
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
     <!-- 配置SpringMVC -->
     <!-- 1.开启SpringMVC注解模式 -->
@@ -21,7 +17,16 @@
         (1)自动注册DefaultAnootationHandlerMapping,AnotationMethodHandlerAdapter
         (2)提供一些列：数据绑定，数字和日期的format @NumberFormat, @DateTimeFormat, xml,json默认读写支持
     -->
-    <mvc:annotation-driven/>
+    <mvc:annotation-driven>
+        <!-- 请求参数处理 -->
+        <mvc:argument-resolvers>
+            <!-- 认证处理 -->
+            <bean class="com.xz.managersystem.web.resolver.ControllerAuthorizationArgumentResolver"/>
+        </mvc:argument-resolvers>
+
+        <mvc:argument-resolvers>
+    </mvc:annotation-driven>
+
 
     <!-- 2.静态资源默认servlet配置
         (1)加入对静态资源的处理：js,gif,png
