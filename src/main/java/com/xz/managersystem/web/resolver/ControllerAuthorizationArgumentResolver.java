@@ -27,7 +27,7 @@ public class ControllerAuthorizationArgumentResolver implements HandlerMethodArg
 
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
-    
+
         String accessToken = webRequest.getHeader("accessToken");
         if (StringUtils.isBlank(accessToken)) {
             // 参数不完整
