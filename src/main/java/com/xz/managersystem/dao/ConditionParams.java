@@ -1,24 +1,13 @@
 package com.xz.managersystem.dao;
 
-public class TablePageParams {
+public class ConditionParams {
 
     private Integer start;
     private Integer rows;
     private String type;
+    private String group;
 
-    public TablePageParams() {
-    }
-
-    public TablePageParams(Integer start, Integer rows) {
-        this.start = start;
-        this.rows = rows;
-        this.type = "";
-    }
-
-    public TablePageParams(Integer start, Integer rows, String type) {
-        this.start = start;
-        this.rows = rows;
-        this.type = type;
+    public ConditionParams() {
     }
 
     public Integer getStart() {
@@ -43,5 +32,13 @@ public class TablePageParams {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getGroup() {
+        return group;
+    }
+
+    public void setGroup(String group) {
+        this.group = group;
     }
 }

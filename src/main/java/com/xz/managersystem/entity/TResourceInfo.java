@@ -2,7 +2,7 @@ package com.xz.managersystem.entity;
 
 import java.util.Date;
 
-public class TGroupInfo extends BasicEntity {
+public class TResourceInfo extends BasicEntity {
 
     private Integer id;
 
@@ -10,15 +10,19 @@ public class TGroupInfo extends BasicEntity {
 
     private String name;
 
+    private String thumbnail;
+
+    private String des;
+
     private String type;
+
+    private Integer size;
 
     private Integer width;
 
     private Integer height;
 
-    private String user;
-
-    private String page;
+    private String group;
 
     private Date createTime;
 
@@ -48,12 +52,36 @@ public class TGroupInfo extends BasicEntity {
         this.name = name;
     }
 
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
+    }
+
+    public String getDes() {
+        return des;
+    }
+
+    public void setDes(String des) {
+        this.des = des;
+    }
+
     public String getType() {
         return type;
     }
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public Integer getSize() {
+        return size;
+    }
+
+    public void setSize(Integer size) {
+        this.size = size;
     }
 
     public Integer getWidth() {
@@ -72,20 +100,12 @@ public class TGroupInfo extends BasicEntity {
         this.height = height;
     }
 
-    public String getUser() {
-        return user;
+    public String getGroup() {
+        return group;
     }
 
-    public void setUser(String user) {
-        this.user = user;
-    }
-
-    public String getPage() {
-        return page;
-    }
-
-    public void setPage(String page) {
-        this.page = page;
+    public void setGroup(String group) {
+        this.group = group;
     }
 
     public Date getCreateTime() {

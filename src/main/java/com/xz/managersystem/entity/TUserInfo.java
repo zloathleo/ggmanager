@@ -6,7 +6,7 @@ public class TUserInfo extends BasicEntity {
 
     private Integer id;
 
-    private String user;
+    private String name;
 
     private String password;
 
@@ -26,12 +26,12 @@ public class TUserInfo extends BasicEntity {
         this.id = id;
     }
 
-    public String getUser() {
-        return user;
+    public String getName() {
+        return name;
     }
 
-    public void setUser(String user) {
-        this.user = user;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getPassword() {

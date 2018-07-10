@@ -8,9 +8,12 @@ public class TLoginRes extends BasicEntity {
 
     private String type;
 
-    public TLoginRes(String token, String type) {
+    private String group;
+
+    public TLoginRes(String token, String type, String group) {
         this.token = token;
         this.type = type;
+        this.group = group;
     }
 
     public String getToken() {
@@ -27,5 +30,13 @@ public class TLoginRes extends BasicEntity {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getGroup() {
+        return group;
+    }
+
+    public void setGroup(String group) {
+        this.group = group;
     }
 }

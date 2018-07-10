@@ -4,15 +4,17 @@ import com.xz.managersystem.entity.BasicEntity;
 
 import java.util.Date;
 
-public class TUserDto extends BasicEntity {
+public class TPageDto extends BasicEntity {
 
     private Integer id;
 
+    private String label;
+
     private String name;
 
-    private String type;
+    private String content;
 
-    private String group;
+    private Boolean active;
 
     private Date updateTime;
 
@@ -24,6 +26,14 @@ public class TUserDto extends BasicEntity {
         this.id = id;
     }
 
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
     public String getName() {
         return name;
     }
@@ -32,20 +42,20 @@ public class TUserDto extends BasicEntity {
         this.name = name;
     }
 
-    public String getType() {
-        return type;
+    public String getContent() {
+        return content;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setContent(String content) {
+        this.content = content;
     }
 
-    public String getGroup() {
-        return group;
+    public Boolean getActive() {
+        return active;
     }
 
-    public void setGroup(String group) {
-        this.group = group;
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 
     public Date getUpdateTime() {

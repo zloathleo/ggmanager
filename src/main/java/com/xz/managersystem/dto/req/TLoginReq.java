@@ -2,18 +2,22 @@ package com.xz.managersystem.dto.req;
 
 import com.xz.managersystem.entity.BasicEntity;
 
+import javax.validation.constraints.NotNull;
+
 public class TLoginReq extends BasicEntity {
 
-    private String user;
+    @NotNull(message = "用户名不能为空")
+    private String name;
 
+    @NotNull(message = "密码不能为空")
     private String password;
 
-    public String getUser() {
-        return user;
+    public String getName() {
+        return name;
     }
 
-    public void setUser(String user) {
-        this.user = user;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getPassword() {

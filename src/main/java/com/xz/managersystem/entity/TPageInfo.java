@@ -2,13 +2,17 @@ package com.xz.managersystem.entity;
 
 import java.util.Date;
 
-public class TZbxx extends BasicEntity {
+public class TPageInfo extends BasicEntity {
 
     private Integer id;
 
     private String label;
 
-    private String des;
+    private String name;
+
+    private String content;
+
+    private String group;
 
     private Date createTime;
 
@@ -30,12 +34,28 @@ public class TZbxx extends BasicEntity {
         this.label = label;
     }
 
-    public String getDes() {
-        return des;
+    public String getName() {
+        return name;
     }
 
-    public void setDes(String des) {
-        this.des = des;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String getGroup() {
+        return group;
+    }
+
+    public void setGroup(String group) {
+        this.group = group;
     }
 
     public Date getCreateTime() {

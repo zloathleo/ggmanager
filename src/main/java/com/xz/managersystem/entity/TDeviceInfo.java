@@ -2,15 +2,19 @@ package com.xz.managersystem.entity;
 
 import java.util.Date;
 
-public class TYmxx extends BasicEntity {
+public class TDeviceInfo extends BasicEntity {
 
     private Integer id;
 
     private String label;
 
-    private String content;
+    private String name;
 
-    private String des;
+    private String brand;
+
+    private String model;
+
+    private String group;
 
     private Date createTime;
 
@@ -32,20 +36,36 @@ public class TYmxx extends BasicEntity {
         this.label = label;
     }
 
-    public String getContent() {
-        return content;
+    public String getName() {
+        return name;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getDes() {
-        return des;
+    public String getBrand() {
+        return brand;
     }
 
-    public void setDes(String des) {
-        this.des = des;
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public String getGroup() {
+        return group;
+    }
+
+    public void setGroup(String group) {
+        this.group = group;
     }
 
     public Date getCreateTime() {

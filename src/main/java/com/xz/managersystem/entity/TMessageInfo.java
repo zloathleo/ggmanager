@@ -2,17 +2,21 @@ package com.xz.managersystem.entity;
 
 import java.util.Date;
 
-public class TMbxx extends BasicEntity {
+public class TMessageInfo extends BasicEntity {
 
     private Integer id;
 
     private String label;
 
-    private String des;
+    private String name;
 
-    private Integer type;
+    private String type;
 
-    private String demo;
+    private String group;
+
+    private Date startTime;
+
+    private Date endTime;
 
     private Date createTime;
 
@@ -34,28 +38,44 @@ public class TMbxx extends BasicEntity {
         this.label = label;
     }
 
-    public String getDes() {
-        return des;
+    public String getName() {
+        return name;
     }
 
-    public void setDes(String des) {
-        this.des = des;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public Integer getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(Integer type) {
+    public void setType(String type) {
         this.type = type;
     }
 
-    public String getDemo() {
-        return demo;
+    public String getGroup() {
+        return group;
     }
 
-    public void setDemo(String demo) {
-        this.demo = demo;
+    public void setGroup(String group) {
+        this.group = group;
+    }
+
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
     }
 
     public Date getCreateTime() {
@@ -73,5 +93,4 @@ public class TMbxx extends BasicEntity {
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
-
 }

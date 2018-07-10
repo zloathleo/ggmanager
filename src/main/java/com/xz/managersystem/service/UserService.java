@@ -1,11 +1,11 @@
 package com.xz.managersystem.service;
 
-import com.xz.managersystem.dao.TablePageParams;
+import com.xz.managersystem.dao.ConditionParams;
 import com.xz.managersystem.dao.UserMapper;
 import com.xz.managersystem.dao.GroupMapper;
-import com.xz.managersystem.dto.req.BasicTableReq;
+import com.xz.managersystem.dto.req.TChangePswdReq;
 import com.xz.managersystem.dto.req.TLoginReq;
-import com.xz.managersystem.dto.res.BasicTableRes;
+import com.xz.managersystem.dto.req.TUserListReq;
 import com.xz.managersystem.dto.res.TLoginRes;
 import com.xz.managersystem.dto.res.TUserDto;
 import com.xz.managersystem.entity.TUserInfo;
@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
@@ -33,91 +34,140 @@ public class UserService {
 
     private Logger logger =  LoggerFactory.getLogger(this.getClass());
 
-    private Map<String, TUserInfo> tokenMap = new HashMap<>();
+    private Map<String, String> tokenMap = new HashMap<>();
+    private Map<String, String> userMap = new HashMap<>();
 
-    public int getCount(String type) {
-        if (type == null || type.isEmpty() || "all".equalsIgnoreCase(type)) {
+    public int getCount(TUserListReq tr) {
+        if (tr.getFilterGroup() != null && tr.getFilterGroup()) {
+            return userMapper.getFilterCount();
+        } else if (StringUtils.isBlank(tr.getType()) || "all".equalsIgnoreCase(tr.getType())) {
             return userMapper.getCount();
         } else {
-            return userMapper.getTypeCount(type);
+            return userMapper.getTypeCount(tr.getType());
         }
     }
 
-    public TUserDto getUser(String user){
-        TUserInfo userInfo = userMapper.selectByName(user);
-        if (userInfo == null){
-            throw new EntityNotFoundException("用户" + user + "不存在");
+    public List<TUserInfo> getUserList(TUserListReq tr){
+        ConditionParams pageParams = new ConditionParams();
+        if (tr.getRows() != null && tr.getPage() != null) {
+            pageParams.setStart((tr.getPage() - 1) * tr.getRows());
+            pageParams.setRows(tr.getRows());
         }
-
-        TUserDto userDto = new TUserDto();
-        TGroupInfo groupInfo = groupMapper.selectByName(userInfo.getUser());
-        userDto.setId(userInfo.getId());
-        userDto.setUser(userInfo.getUser());
-        userDto.setUpdateTime(userInfo.getUpdateTime());
-        if (groupInfo != null){
-            userDto.setGroup(groupInfo.getLabel());
-        }
-        return userDto;
-    }
-
-    public List<TUserDto> getUserList(BasicTableReq tr){
-        List<TUserInfo> userInfoList;
-        TablePageParams pageParams = new TablePageParams();
-        pageParams.setStart((tr.getPage() - 1) * tr.getRows());
-        pageParams.setRows(tr.getRows());
         pageParams.setType(tr.getType());
-        if (tr.getType() == null || "all".equalsIgnoreCase(tr.getType())) {
-            userInfoList = userMapper.selectPage(pageParams);
-        } else {
-            userInfoList = userMapper.selectTypePage(pageParams);
-        }
 
-        List<TUserDto> userDtoList = userInfoList.stream().map(userInfo -> {
-            TGroupInfo groupInfo = groupMapper.selectByName(userInfo.getUser());
-            TUserDto userDto = new TUserDto();
-            userDto.setId(userInfo.getId());
-            userDto.setUser(userInfo.getUser());
-            if (groupInfo != null){
-                userDto.setGroup(groupInfo.getLabel());
+        if (tr.getFilterGroup() != null && tr.getFilterGroup()) {
+            if (tr.getRows() != null && tr.getPage() != null) {
+                return userMapper.selectFilterPage(pageParams);
+            } else {
+                return userMapper.selectFilterList();
             }
-            return userDto;
-        }).collect(Collectors.toList());
-        return userDtoList;
+        } else if (tr.getRows() != null && tr.getPage() != null) {
+            if (tr.getType() == null || "all".equalsIgnoreCase(tr.getType())) {
+                return userMapper.selectPage(pageParams);
+            } else {
+                return userMapper.selectTypePage(pageParams);
+            }
+        } else {
+            if (tr.getType() == null || "all".equalsIgnoreCase(tr.getType())) {
+                return userMapper.selectList();
+            } else {
+                return userMapper.selectTypeList(tr.getType());
+            }
+        }
     }
 
-    public int addUser(TUserDto userDto) {
-        TUserInfo userInfo = userMapper.selectByName(userDto.getUser());
+    public TUserInfo getUser(String name){
+        if (StringUtils.isBlank(name)) {
+            throw new RuntimeException("无效的用户名");
+        }
+
+        TUserInfo userInfo = userMapper.selectByName(name);
+        if (userInfo == null){
+            throw new EntityNotFoundException("用户" + name + "不存在");
+        }
+        return userInfo;
+    }
+
+    public void addUser(TUserDto userDto) {
+        TUserInfo userInfo = userMapper.selectByName(userDto.getName());
         if (userInfo != null) {
-            throw new EntityExistsException("用户" + userDto.getUser() + "已存在");
+            throw new EntityExistsException("用户" + userDto.getName() + "已存在");
         }
 
         TUserInfo userNew = new TUserInfo();
-        userNew.setUser(userDto.getUser());
-        userNew.setPassword(MD5(userDto.getUser()));
-        userNew.setGroup(userDto.getGroup());
-        return userMapper.insert(userNew);
-    }
-
-    public int updateUser(TUserDto userDto) {
-        return 1;
-    }
-
-    public int deleteUser(String user) {
-        TUserInfo userInfo = userMapper.selectByName(user);
-        if (userInfo == null) {
-            throw new EntityNotFoundException("用户" + user + "不存在");
+        userNew.setName(userDto.getName());
+        userNew.setPassword(MD5(userDto.getName()));
+        userNew.setType(userDto.getType() == null ? "operator" : userDto.getType());
+        userNew.setGroup(userDto.getGroup() == null ? "" : userDto.getGroup());
+        if (userMapper.insert(userNew) <= 0) {
+            throw new RuntimeException("添加用户失败");
         }
-        return userMapper.deleteByName(user);
+    }
+
+    public void updateUser(TUserInfo userInfo) {
+        TUserInfo userBase = getUser(userInfo.getName());
+        if (userInfo.getPassword() != null)
+            userBase.setPassword(userInfo.getPassword());
+        if (userInfo.getGroup() != null)
+            userBase.setGroup(userInfo.getGroup());
+        if (userMapper.updateByName(userBase) <= 0) {
+            throw new RuntimeException("更新用户" + userBase.getName() + "失败");
+        }
+    }
+
+    public void deleteUser(String name) {
+        TUserInfo userInfo = getUser(name);
+        if (userMapper.deleteByName(name) <= 0) {
+            throw new RuntimeException("删除用户" + name + "失败");
+        }
     }
 
     public TLoginRes login(TLoginReq loginReq) {
-        TUserInfo userInfo = userMapper.selectByName(loginReq.getUser());
-        if (userInfo == null || userInfo.getPassword() != loginReq.getPassword()) {
+        TUserInfo userInfo = userMapper.selectByName(loginReq.getName());
+        if (userInfo == null || !userInfo.getPassword().equalsIgnoreCase(loginReq.getPassword())) {
             throw new RuntimeException("用户名或密码错误");
         }
-        String md5 = MD5(loginReq.getUser() + new Date().getTime());
-        tokenMap.put(md5, userInfo);
-        return new TLoginRes(md5, userInfo.getType());
+
+        String token = MD5(loginReq.getName() + new Date().getTime());
+        tokenMap.put(token, userInfo.getName());
+        userMap.put(userInfo.getName(), token);
+        return new TLoginRes(token, userInfo.getType(), userInfo.getGroup());
+    }
+
+    public void logout(String name) {
+        String token = userMap.get(name);
+        userMap.remove(name);
+        if (token != null)
+            tokenMap.remove(token);
+    }
+
+    public TUserInfo getUserByToken(String token) {
+        String user = tokenMap.get(token);
+        return userMapper.selectByName(user);
+    }
+
+    public void resetPassword(String name) {
+        TUserInfo userInfo = new TUserInfo();
+        userInfo.setName(name);
+        userInfo.setPassword(MD5(name));
+        updateUser(userInfo);
+    }
+
+    public void changePassword(String name, TChangePswdReq changePswdReq){
+        TUserInfo userInfo = getUser(name);
+        if (userInfo.getPassword().equalsIgnoreCase(changePswdReq.getOldPassword())) {
+            throw new RuntimeException("密码错误");
+        }
+
+        userInfo.setPassword(changePswdReq.getNewPassword());
+        updateUser(userInfo);
+    }
+
+    public void assignGroup(String name, String group) {
+        TUserInfo userInfo = new TUserInfo();
+        userInfo.setName(name);
+        userInfo.setGroup(group);
+        updateUser(userInfo);
     }
 
     private String MD5(String source) {
@@ -136,7 +186,7 @@ public class UserService {
                     buf.append("0");
                 buf.append(Integer.toHexString(i));
             }
-            return buf.toString();
+            return buf.toString().toUpperCase();
         } catch (NoSuchAlgorithmException e) {
             return "";
         }
