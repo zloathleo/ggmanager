@@ -26,15 +26,27 @@ public class MessageService {
     @Autowired
     MessageMapper msgMapper;
 
-    public int getCount(String group) {
-        return msgMapper.getCount(group);
+    public int getCount(ConditionParams params) {
+        if (params.getFilter() != null && params.getFilter()) {
+            return msgMapper.getFilterCount(params.getGroup());
+        } else {
+            return msgMapper.getCount(params.getGroup());
+        }
     }
 
     public List<TMessageInfo> getMessageList(ConditionParams params) {
-        if (params.getStart() == null || params.getRows() == null) {
-            return msgMapper.selectList(params.getGroup());
+        if (params.getFilter() != null && params.getFilter()) {
+            if (params.getStart() == null || params.getRows() == null) {
+                return msgMapper.selectFilterList(params.getGroup());
+            } else {
+                return msgMapper.selectFilterPage(params);
+            }
         } else {
-            return msgMapper.selectPage(params);
+            if (params.getStart() == null || params.getRows() == null) {
+                return msgMapper.selectList(params.getGroup());
+            } else {
+                return msgMapper.selectPage(params);
+            }
         }
     }
 
@@ -51,33 +63,22 @@ public class MessageService {
     }
 
     public void addMessage(MultipartFile multipartFile, TMessageInfo msgInfo) {
-        String label = UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
-        msgInfo.setLabel(label.substring(0, 8));
-
-        if (StringUtils.isNotBlank(msgInfo.getName())) {
-            msgInfo.setType("text");
-        } else if (multipartFile == null) {
-            throw new RuntimeException("消息内容不能为空");
-        } else {
-            String fileName = multipartFile.getOriginalFilename();
-            String fileType =fileName.substring(fileName.lastIndexOf('.'));
-            if (!".mp3".equalsIgnoreCase(fileType)) {
-                throw new RuntimeException("不支持的音频格式");
-            }
+        msgInfo.setLabel(UtilTools.getUUID(8));
+        if (StringUtils.isBlank(msgInfo.getType())) {
+                throw new RuntimeException("不支持的消息类型");
+            } else if ("audio".equalsIgnoreCase(msgInfo.getType())) {
+                String fileName = multipartFile.getOriginalFilename();
+                String fileSuffix = UtilTools.getFileSuffix(fileName);
+                if (!"mp3".equalsIgnoreCase(fileSuffix)) {
+                    throw new RuntimeException("不支持的音频格式");
+                }
 
             String destPath = resourcePath + msgInfo.getGroup() + "\\";
             String name = "AUDIO_" + new Date().getTime() + ".mp3";
-            try {
-                Path path = Paths.get(destPath, name);
-                File file = path.toFile();
-                //该方法首先进行重命名，如果不成功则进行流拷贝，如果成功则可以省下一次读、写操作
-                multipartFile.transferTo(file);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-
-            msgInfo.setType("audio");
+            UtilTools.transferFile(multipartFile, destPath + name);
             msgInfo.setName(name);
+        } else if (!"text".equalsIgnoreCase(msgInfo.getType())) {
+            throw new RuntimeException("不支持的消息类型");
         }
 
         if (msgMapper.insert(msgInfo) <= 0) {

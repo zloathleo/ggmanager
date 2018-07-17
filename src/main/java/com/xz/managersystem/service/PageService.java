@@ -3,6 +3,7 @@ package com.xz.managersystem.service;
 import com.xz.managersystem.dao.ConditionParams;
 import com.xz.managersystem.dao.PageMapper;
 import com.xz.managersystem.dto.req.BasicTableReq;
+import com.xz.managersystem.entity.TGroupInfo;
 import com.xz.managersystem.entity.TPageInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,14 +26,11 @@ public class PageService {
         return pageMapper.getCount(group);
     }
 
-    public List<TPageInfo> getPageList(String group, BasicTableReq tr) {
-        if (tr.getPage() == null || tr.getRows() == null) {
-            return pageMapper.selectList(group);
+    public List<TPageInfo> getPageList(ConditionParams params) {
+        if (params.getStart() == null || params.getRows() == null) {
+            return pageMapper.selectList(params.getGroup());
         } else {
-            ConditionParams pageParams = new ConditionParams();
-            pageParams.setStart((tr.getPage() - 1) * tr.getRows());
-            pageParams.setRows(tr.getRows());
-            return pageMapper.selectPage(group, pageParams);
+            return pageMapper.selectPage(params);
         }
     }
 
@@ -49,8 +47,7 @@ public class PageService {
     }
 
     public void addPage(TPageInfo pageInfo) {
-        String label = UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
-        pageInfo.setLabel(label.substring(0, 8));
+        pageInfo.setLabel(UtilTools.getUUID(8));
         if (pageInfo.getName() == null)
             pageInfo.setName("");
         if (pageInfo.getContent() == null)
@@ -76,6 +73,11 @@ public class PageService {
         if (pageMapper.deleteByLabel(label) <= 0) {
             throw new RuntimeException("删除页面" + label + "失败");
         }
+
+        TGroupInfo groupInfo = groupService.getGroup(pageInfo.getGroup());
+        if (StringUtils.isNotBlank(groupInfo.getPage()) &&
+                groupInfo.getPage().equalsIgnoreCase(label))
+            groupService.publishPage(pageInfo.getGroup(), "");
     }
 
     public void publishPage(String label) {

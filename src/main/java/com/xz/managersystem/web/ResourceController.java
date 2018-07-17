@@ -8,6 +8,7 @@ import com.xz.managersystem.entity.BasicEntity;
 import com.xz.managersystem.entity.TResourceInfo;
 import com.xz.managersystem.entity.TUserInfo;
 import com.xz.managersystem.service.ResourceService;
+import com.xz.managersystem.service.UtilTools;
 import com.xz.managersystem.web.resolver.Authorization;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,14 +36,7 @@ public class ResourceController {
     @ResponseBody
     private BasicEntity getResourceList(@Authorization TUserInfo userInfo,
                                         @Valid BasicTableReq tr) {
-        ConditionParams params = new ConditionParams();
-        if (tr.getRows() != null && tr.getPage() != null) {
-            params.setStart((tr.getPage() - 1) * tr.getRows());
-            params.setRows(tr.getRows());
-        }
-        params.setType(tr.getType());
-        params.setGroup(userInfo.getGroup());
-
+        ConditionParams params = UtilTools.convertFromTabelReq(tr, userInfo.getGroup());
         int resCount = resService.getCount(params);
         List<TResourceInfo> resList = resService.getResourceList(params);
         return new BasicTableRes<>(resCount, resList);

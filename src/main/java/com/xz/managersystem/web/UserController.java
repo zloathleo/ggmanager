@@ -1,6 +1,7 @@
 package com.xz.managersystem.web;
 
-import com.xz.managersystem.dto.req.TUserListReq;
+import com.xz.managersystem.dao.ConditionParams;
+import com.xz.managersystem.dto.req.BasicTableReq;
 import com.xz.managersystem.dto.res.BasicRes;
 import com.xz.managersystem.dto.res.BasicTableRes;
 import com.xz.managersystem.dto.res.TUserDto;
@@ -9,6 +10,7 @@ import com.xz.managersystem.entity.TGroupInfo;
 import com.xz.managersystem.entity.TUserInfo;
 import com.xz.managersystem.service.GroupService;
 import com.xz.managersystem.service.UserService;
+import com.xz.managersystem.service.UtilTools;
 import com.xz.managersystem.web.resolver.Authorization;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,9 +40,10 @@ public class UserController {
     @RequestMapping(value = "", method = RequestMethod.GET)
     @ResponseBody
     private BasicEntity getUserList(@Authorization TUserInfo userInfo,
-                                    @Valid TUserListReq tr) {
-        int userCount = userService.getCount(tr);
-        List<TUserInfo> userInfoList = userService.getUserList(tr);
+                                    @Valid BasicTableReq tr) {
+        ConditionParams params = UtilTools.convertFromTabelReq(tr, null);
+        int userCount = userService.getCount(params);
+        List<TUserInfo> userInfoList = userService.getUserList(params);
         List<TUserDto> userDtoList = userInfoList.stream().map(userItem -> {
             TGroupInfo groupInfo = groupService.getGroup2(userItem.getGroup());
             TUserDto userDto = new TUserDto();
@@ -73,8 +76,23 @@ public class UserController {
     @ResponseBody
     private BasicRes addUser(@Authorization TUserInfo userInfo,
                              @Valid TUserDto userDto){
-        userService.addUser(userDto);
+        TUserInfo userNew = new TUserInfo();
+        userNew.setName(userDto.getName());
+        userNew.setType(userDto.getType());
+        userNew.setGroup(userDto.getGroup());
+        userService.addUser(userNew);
         return new BasicRes("添加用户成功");
+    }
+
+    @RequestMapping(value = "/{name}/update", method = RequestMethod.POST)
+    @ResponseBody
+    private BasicRes updateUser(@Authorization TUserInfo userInfo,
+                                @Valid TUserDto userDto){
+        TUserInfo userNew = new TUserInfo();
+        userNew.setName(userDto.getName());
+        userNew.setGroup(userDto.getGroup());
+        userService.updateUser(userNew);
+        return new BasicRes("修改用户成功");
     }
 
     @RequestMapping(value = "/{user}/reset", method = RequestMethod.POST)

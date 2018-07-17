@@ -1,5 +1,6 @@
 package com.xz.managersystem.web;
 
+import com.xz.managersystem.dao.ConditionParams;
 import com.xz.managersystem.dto.req.BasicTableReq;
 import com.xz.managersystem.dto.res.BasicRes;
 import com.xz.managersystem.dto.res.BasicTableRes;
@@ -7,6 +8,7 @@ import com.xz.managersystem.entity.BasicEntity;
 import com.xz.managersystem.entity.TGroupInfo;
 import com.xz.managersystem.entity.TUserInfo;
 import com.xz.managersystem.service.GroupService;
+import com.xz.managersystem.service.UtilTools;
 import com.xz.managersystem.web.resolver.Authorization;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,8 +35,9 @@ public class GroupController {
     @ResponseBody
     private BasicEntity getGroupList(@Authorization TUserInfo userInfo,
                                      @Valid BasicTableReq tr) {
+        ConditionParams params = UtilTools.convertFromTabelReq(tr, null);
         int groupCount = groupService.getCount();
-        List<TGroupInfo> groupList = groupService.getGroupList(tr);
+        List<TGroupInfo> groupList = groupService.getGroupList(params);
         return new BasicTableRes<>(groupCount, groupList);
     }
 

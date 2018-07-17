@@ -7,30 +7,33 @@ import javax.validation.constraints.NotNull;
 public class TChangePswdReq extends BasicEntity {
 
     @NotNull(message = "原密码不能为空")
-    private String oldPassword;
+    private String oldpassword;
 
     @NotNull(message = "新密码不能为空")
-    private String newPassword;
+    private String newpassword;
 
-    public TChangePswdReq(@NotNull(message = "原密码不能为空") String oldPassword,
-                          @NotNull(message = "新密码不能为空") String newPassword) {
-        this.oldPassword = oldPassword;
-        this.newPassword = newPassword;
+    public TChangePswdReq() {
     }
 
-    public String getOldPassword() {
-        return oldPassword;
+    public TChangePswdReq(@NotNull(message = "原密码不能为空") String oldpassword,
+                          @NotNull(message = "新密码不能为空") String newpassword) {
+        this.oldpassword = oldpassword;
+        this.newpassword = newpassword;
     }
 
-    public void setOldPassword(String oldPassword) {
-        this.oldPassword = oldPassword;
+    public String getOldpassword() {
+        return oldpassword;
     }
 
-    public String getNewPassword() {
-        return newPassword;
+    public void setOldpassword(String oldpassword) {
+        this.oldpassword = oldpassword;
     }
 
-    public void setNewPassword(String newPassword) {
-        this.newPassword = newPassword;
+    public String getNewpassword() {
+        return newpassword;
+    }
+
+    public void setNewpassword(String newpassword) {
+        this.newpassword = newpassword;
     }
 }

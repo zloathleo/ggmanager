@@ -4,7 +4,9 @@ import java.lang.annotation.Annotation;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.xz.managersystem.entity.TGroupInfo;
 import com.xz.managersystem.entity.TUserInfo;
+import com.xz.managersystem.service.GroupService;
 import com.xz.managersystem.service.UserService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,9 @@ public class ControllerAuthorizationArgumentResolver implements HandlerMethodArg
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private GroupService groupService;
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
@@ -43,17 +48,21 @@ public class ControllerAuthorizationArgumentResolver implements HandlerMethodArg
 
         TUserInfo userInfo = userService.getUserByToken(accessToken);
         if (userInfo == null) {
-             // Token不存在 非法登录
             throw new RuntimeException("无效的AccessToken");
         }
 
-        Set<String> urlSet = new HashSet<>();
-        urlSet.add("/users/");
-        urlSet.add("/groups/");
+        TGroupInfo groupInfo = groupService.findGroup(userInfo.getGroup());
+        if ("operator".equalsIgnoreCase(userInfo.getType()) && groupInfo == null) {
+            throw new RuntimeException("用户无有效关联组");
+        }
+
         HttpServletRequest httpRequest = webRequest.getNativeRequest(HttpServletRequest.class);
         String url = httpRequest.getRequestURI();
-        if ((url.contains("/users/") || url.contains("/groups/")) &&
-                !"admin".equalsIgnoreCase(userInfo.getType())) {
+        if (!"admin".equalsIgnoreCase(userInfo.getType()) &&
+                (url.contains("/users/") || url.contains("/groups/"))) {
+            throw new RuntimeException("未授权的操作");
+        } else if ("admin".equalsIgnoreCase(userInfo.getType()) &&
+                (url.contains("/pages/") || url.contains("/resources/") || url.contains("/devices/"))) {
             throw new RuntimeException("未授权的操作");
         }
         return userInfo;

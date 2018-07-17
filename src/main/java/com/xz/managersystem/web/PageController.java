@@ -1,5 +1,6 @@
 package com.xz.managersystem.web;
 
+import com.xz.managersystem.dao.ConditionParams;
 import com.xz.managersystem.dto.req.BasicTableReq;
 import com.xz.managersystem.dto.res.BasicRes;
 import com.xz.managersystem.dto.res.BasicTableRes;
@@ -7,6 +8,7 @@ import com.xz.managersystem.dto.res.TPageDto;
 import com.xz.managersystem.entity.*;
 import com.xz.managersystem.service.GroupService;
 import com.xz.managersystem.service.PageService;
+import com.xz.managersystem.service.UtilTools;
 import com.xz.managersystem.web.resolver.Authorization;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,9 +40,11 @@ public class PageController {
     @ResponseBody
     private BasicEntity getPageList(@Authorization TUserInfo userInfo,
                                     @Valid BasicTableReq tr) {
-        TGroupInfo groupInfo = groupService.getGroup(userInfo.getGroup());
+        TGroupInfo groupInfo = groupService.findGroup(userInfo.getGroup());
+        ConditionParams params = UtilTools.convertFromTabelReq(tr, userInfo.getGroup());
+
         int pageCount = pageService.getCount(userInfo.getGroup());
-        List<TPageInfo> pageInfoList = pageService.getPageList(userInfo.getGroup(), tr);
+        List<TPageInfo> pageInfoList = pageService.getPageList(params);
         List<TPageDto> pageDtoList = pageInfoList.stream().map(pageInfo -> {
             TPageDto pageDto = new TPageDto();
             pageDto.setId(pageInfo.getId());
@@ -48,6 +52,7 @@ public class PageController {
             pageDto.setName(pageInfo.getName());
             pageDto.setContent(pageInfo.getContent());
             pageDto.setActive(groupInfo.getPage().equalsIgnoreCase(pageInfo.getLabel()));
+            pageDto.setGroup(pageInfo.getGroup());
             pageDto.setUpdateTime(pageInfo.getUpdateTime());
             return pageDto;
         }).collect(Collectors.toList());
@@ -64,7 +69,9 @@ public class PageController {
         pageDto.setId(pageInfo.getId());
         pageDto.setLabel(pageInfo.getLabel());
         pageDto.setName(pageInfo.getName());
+        pageDto.setContent(pageInfo.getContent());
         pageDto.setActive(groupInfo.getPage().equalsIgnoreCase(label));
+        pageDto.setGroup(pageInfo.getGroup());
         pageDto.setUpdateTime(pageInfo.getUpdateTime());
         return pageDto;
     }
@@ -78,7 +85,7 @@ public class PageController {
         pageInfo.setContent(pageDto.getContent());
         pageInfo.setGroup(userInfo.getGroup());
         pageService.addPage(pageInfo);
-        return new BasicRes("添加页面成功");
+        return pageService.getPage(pageInfo.getLabel());
     }
 
     @RequestMapping(value = "/{label}/update", method = RequestMethod.POST)
@@ -90,7 +97,7 @@ public class PageController {
         pageInfo.setName(pageDto.getName());
         pageInfo.setContent(pageDto.getContent());
         pageService.updatePage(pageInfo);
-        return new BasicRes("修改页面成功");
+        return pageService.getPage(pageInfo.getLabel());
     }
 
     @RequestMapping(value = "/{label}/delete", method = RequestMethod.POST)

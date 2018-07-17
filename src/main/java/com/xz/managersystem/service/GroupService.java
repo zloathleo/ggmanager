@@ -30,14 +30,11 @@ public class GroupService {
         return groupMapper.getCount();
     }
 
-    public List<TGroupInfo> getGroupList(BasicTableReq tr) {
-        if (tr.getPage() == null || tr.getRows() == null) {
+    public List<TGroupInfo> getGroupList(ConditionParams params) {
+        if (params.getStart() == null || params.getRows() == null) {
             return groupMapper.selectList();
         } else {
-            ConditionParams pageParams = new ConditionParams();
-            pageParams.setStart((tr.getPage() - 1) * tr.getRows());
-            pageParams.setRows(tr.getRows());
-            return groupMapper.selectPage(pageParams);
+            return groupMapper.selectPage(params);
         }
     }
 
@@ -58,8 +55,7 @@ public class GroupService {
     }
 
     public void addGroup(TGroupInfo groupInfo) {
-        String label = UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
-        groupInfo.setLabel(label.substring(0, 8));
+        groupInfo.setLabel(UtilTools.getUUID(8));
 
         if (StringUtils.isNotBlank(groupInfo.getUser())) {
             TUserInfo userInfo = userService.getUser(groupInfo.getUser());
@@ -93,19 +89,26 @@ public class GroupService {
 
     public void updateGroup(TGroupInfo groupInfo) {
         TGroupInfo groupBase = getGroup(groupInfo.getLabel());
-        if (StringUtils.isNotBlank(groupInfo.getUser()))
+        if (groupInfo.getUser() != null)
         {
-            TUserInfo userInfo = userService.getUser(groupInfo.getUser());
-            if ("admin".equalsIgnoreCase(userInfo.getType())) {
-                throw new RuntimeException("未能为admin用户分配组");
-            } else if (StringUtils.isNotBlank(userInfo.getGroup()) &&
-                    !userInfo.getGroup().equalsIgnoreCase(groupInfo.getLabel())) {
-                throw new RuntimeException("用户" + groupInfo.getUser() + "已有分组");
+            if (StringUtils.isNotBlank(groupInfo.getUser())) {
+                TUserInfo userInfo = userService.getUser(groupInfo.getUser());
+                if ("admin".equalsIgnoreCase(userInfo.getType())) {
+                    throw new RuntimeException("不能为admin用户分配组");
+                } else if (StringUtils.isNotBlank(userInfo.getGroup()) &&
+                        !userInfo.getGroup().equalsIgnoreCase(groupInfo.getLabel())) {
+                    throw new RuntimeException("用户" + groupInfo.getUser() + "已有分组");
+                }
             }
 
             if (!groupBase.getUser().equalsIgnoreCase(groupInfo.getUser())) {
-                userService.assignGroup(groupBase.getUser(), "");
-                userService.assignGroup(groupInfo.getUser(), groupInfo.getLabel());
+                if (StringUtils.isNotBlank(groupBase.getUser())) {
+                    userService.assignGroup(groupBase.getUser(), "");
+                }
+                if (StringUtils.isNotBlank(groupInfo.getUser())) {
+                    userService.assignGroup(groupInfo.getUser(), groupInfo.getLabel());
+                }
+                groupBase.setUser(groupInfo.getUser());
             }
         }
 
@@ -119,8 +122,6 @@ public class GroupService {
             groupBase.setType(groupInfo.getType());
         if (groupInfo.getPage() != null)
             groupBase.setPage(groupInfo.getPage());
-        if (groupInfo.getUser() != null)
-            groupBase.setUser(groupInfo.getUser());
         if (groupMapper.updateByLabel(groupBase) <= 0) {
             throw new RuntimeException("更新分组" + groupBase.getLabel() + "失败");
         }
@@ -137,5 +138,26 @@ public class GroupService {
         TGroupInfo groupInfo = getGroup(label);
         groupInfo.setPage(page);
         updateGroup(groupInfo);
+    }
+
+    public void assignUser(String label, String name) {
+        TGroupInfo groupInfo = getGroup(label);
+        if (StringUtils.isNotBlank(groupInfo.getUser()) &&
+                StringUtils.isNotBlank(name) &&
+                !name.equalsIgnoreCase(groupInfo.getUser())) {
+            throw new RuntimeException("分组" + label + "已有维护用户");
+        }
+
+        groupInfo.setUser(name);
+        if (groupMapper.updateByLabel(groupInfo) <= 0) {
+            throw new RuntimeException("更新分组" + groupInfo.getLabel() + "失败");
+        }
+    }
+
+    public TGroupInfo findGroup(String label) {
+        if (StringUtils.isBlank(label))
+            return null;
+        else
+            return groupMapper.selectByLabel(label);
     }
 }

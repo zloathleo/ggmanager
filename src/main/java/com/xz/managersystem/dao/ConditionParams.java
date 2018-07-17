@@ -6,6 +6,7 @@ public class ConditionParams {
     private Integer rows;
     private String type;
     private String group;
+    private Boolean filter;
 
     public ConditionParams() {
     }
@@ -40,5 +41,13 @@ public class ConditionParams {
 
     public void setGroup(String group) {
         this.group = group;
+    }
+
+    public Boolean getFilter() {
+        return filter;
+    }
+
+    public void setFilter(Boolean filter) {
+        this.filter = filter;
     }
 }

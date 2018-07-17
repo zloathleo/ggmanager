@@ -4,7 +4,7 @@ import com.xz.managersystem.entity.BasicEntity;
 
 import java.util.Date;
 
-public class TPageDto extends BasicEntity {
+public class TMessageDto extends BasicEntity {
 
     private Integer id;
 
@@ -12,11 +12,13 @@ public class TPageDto extends BasicEntity {
 
     private String name;
 
-    private String content;
+    private String type;
 
-    private Boolean active;
+    private Integer status;
 
-    private String group;
+    private Date startTime;
+
+    private Date endTime;
 
     private Date updateTime;
 
@@ -44,28 +46,36 @@ public class TPageDto extends BasicEntity {
         this.name = name;
     }
 
-    public String getContent() {
-        return content;
+    public String getType() {
+        return type;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    public Boolean getActive() {
-        return active;
+    public Integer getStatus() {
+        return status;
     }
 
-    public void setActive(Boolean active) {
-        this.active = active;
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
-    public String getGroup() {
-        return group;
+    public Date getStartTime() {
+        return startTime;
     }
 
-    public void setGroup(String group) {
-        this.group = group;
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
     }
 
     public Date getUpdateTime() {

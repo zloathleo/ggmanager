@@ -2,7 +2,9 @@ package com.xz.managersystem.service;
 
 import com.xz.managersystem.dao.ConditionParams;
 import com.xz.managersystem.dao.ResourceMapper;
+import com.xz.managersystem.entity.TImgSize;
 import com.xz.managersystem.entity.TResourceInfo;
+import freemarker.cache.URLTemplateLoader;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,7 +37,7 @@ public class ResourceService {
     ResourceMapper resMapper;
 
     public int getCount(ConditionParams params) {
-        if (StringUtils.isBlank(params.getType()) || "all".equalsIgnoreCase(params.getType())) {
+        if (StringUtils.isBlank(params.getType())) {
             return resMapper.getCount(params.getGroup());
         }else{
             return resMapper.getTypeCount(params);
@@ -43,10 +45,18 @@ public class ResourceService {
     }
 
     public List<TResourceInfo> getResourceList(ConditionParams params) {
-        if (params.getStart() == null || params.getRows() == null) {
-            return resMapper.selectList(params.getGroup());
+        if (StringUtils.isBlank(params.getType())) {
+            if (params.getStart() == null || params.getRows() == null) {
+                return resMapper.selectList(params.getGroup());
+            } else {
+                return resMapper.selectPage(params);
+            }
         } else {
-            return resMapper.selectPage(params);
+            if (params.getStart() == null || params.getRows() == null) {
+                return resMapper.selectTypeList(params);
+            } else {
+                return resMapper.selectTypePage(params);
+            }
         }
     }
 
@@ -63,49 +73,33 @@ public class ResourceService {
     }
 
     public void addResource(MultipartFile multipartFile, TResourceInfo resInfo) {
-        String fileType;
         String fileName = multipartFile.getOriginalFilename();
-        int pos = fileName.lastIndexOf('.');
-        String fileSuffix = pos == -1 ? "" : fileName.substring(pos);
-        if (".jpg".equalsIgnoreCase(fileSuffix) ||
-                ".png".equalsIgnoreCase(fileSuffix) ||
-                ".bmp".equalsIgnoreCase(fileSuffix)) {
-            fileType = "img";
-        } else if (".mp4".equalsIgnoreCase(fileSuffix) ||
-                ".flv".equalsIgnoreCase(fileSuffix)) {
-            fileType = "video";
-        } else if (".mp3".equalsIgnoreCase(fileSuffix)) {
-            fileType = "audio";
-        } else {
+        String fileSuffix = UtilTools.getFileSuffix(fileName);
+        String fileType = UtilTools.getFileType(fileName);
+        if (!"img".equalsIgnoreCase(fileType) && !"video".equalsIgnoreCase(fileType)) {
             throw new RuntimeException("不支持的文件格式");
         }
 
         String destPath = resourcePath + resInfo.getGroup() + "\\";
         String label = fileType.toUpperCase() + "_" + new Date().getTime();
-        String name = label + fileSuffix;
+        String name = label + "." + fileSuffix;
         String thumbnail = "";
-        try {
-            Path path = Paths.get(destPath, name);
-            File file = path.toFile();
-            //该方法首先进行重命名，如果不成功则进行流拷贝，如果成功则可以省下一次读、写操作
-            multipartFile.transferTo(file);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        UtilTools.transferFile(multipartFile, destPath + name);
 
         if ("img".equalsIgnoreCase(fileType)) {
-            thumbnailImage(destPath + name, 300, 300, "Thumbnail_");
+            thumbnailImage(destPath + name, 200, 150);
             thumbnail = "Thumbnail_" + name;
         } else if ("video".equalsIgnoreCase(fileType)) {
             thumbnail = "Thumbnail_" + label + ".jpg";
             String srcFile = destPath + name;
-            String destFile = destPath + thumbnail;
-            thumbnailVideo(ffmpegPath, srcFile, destFile, 300, 300);
+            thumbnailVideo(ffmpegPath, srcFile, 200, 150);
         }
 
         resInfo.setLabel(label);
         resInfo.setName(name);
         resInfo.setThumbnail(thumbnail);
+        if (resInfo.getDes() == null)
+            resInfo.setDes("");
         resInfo.setType(fileType);
         if (resMapper.insert(resInfo) <= 0) {
             throw new RuntimeException("添加资源失败");
@@ -128,104 +122,92 @@ public class ResourceService {
         }
     }
 
-    private void thumbnailImage(String imagePath, int w, int h, String prevfix) {
-        try {
-            // ImageIO 支持的图片类型 : [BMP, bmp, jpg, JPG, wbmp, jpeg, png, PNG, JPEG, WBMP, GIF, gif]
-            String suffix = imagePath.substring(imagePath.lastIndexOf(".") + 1);
-            File imgFile = new File(imagePath);
-            Image img = ImageIO.read(imgFile);
-
-            // 根据原图与要求的缩略图比例，找到最合适的缩略图比例
-            int width = img.getWidth(null);
-            int height = img.getHeight(null);
-            double wScale = (width * 1.0) / w;
-            double hScale = (height * 1.0) / h;
-            if (wScale > hScale) {
-                h = Integer.parseInt(new java.text.DecimalFormat("0").format((height * 1.0) / wScale));
-            } else {
-                w = Integer.parseInt(new java.text.DecimalFormat("0").format(width * 1.0 / hScale));
-            }
-
-            BufferedImage bi = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
-            Graphics g = bi.getGraphics();
-            g.drawImage(img, 0, 0, w, h, Color.LIGHT_GRAY, null);
-            g.dispose();
-            String p = imgFile.getPath();
-            // 将图片保存在原目录并加上前缀
-            ImageIO.write(bi, suffix, new File(p.substring(0, p.lastIndexOf(File.separator)) + File.separator + prevfix + imgFile.getName()));
-        } catch (IOException e) {
-            return;
-        }
+    private void thumbnailImage(String imagePath, int w, int h) {
+        TImgSize imgSize = UtilTools.getImgSize(imagePath);
+        UtilTools.getThumbnailSize(imgSize, w, h);
+        Rectangle rect = UtilTools.getCutRect(imgSize, w, h);
+        String thumbnailPath = UtilTools.getImgThumbnail(imagePath, imgSize, "temp_");
+        String cutPath = UtilTools.getCutImg(thumbnailPath, rect);
+        File tempFile =  new File(thumbnailPath);
+        if (tempFile.exists())
+            tempFile.delete();
     }
 
-    private void thumbnailVideo(String ffmpegPath, String upFilePath, String mediaPicPath, int w, int h) {
-        try {
-            StringBuffer sb = new StringBuffer();
-            List<String> commend = new ArrayList<String>();
-            commend.add(ffmpegPath);
-            commend.add("-i");
-            commend.add(upFilePath);
-
-            ProcessBuilder builder = new ProcessBuilder();
-            builder.command(commend);
-            builder.redirectErrorStream(true);
-            Process p = builder.start();
-
-
-            BufferedReader buf = new BufferedReader(new InputStreamReader(p.getInputStream()));
-            String line;
-            while ((line = buf.readLine()) != null) {
-                sb.append(line);
-            }
-            p.waitFor();
-            String strOutput = sb.toString();
-            int pos1 = strOutput.indexOf("kb/s", strOutput.indexOf("Video:"));
-            int pos2 = strOutput.lastIndexOf("x", pos1);
-            int pos3 = strOutput.lastIndexOf(",", pos2);
-            int pos4 = strOutput.indexOf(",", pos2);
-            if (pos4 == -1 || pos4 - pos2 > 5)
-                pos4 = strOutput.indexOf(" ", pos2);
-            int width = Integer.parseInt(strOutput.substring(pos3 + 1, pos2).trim());
-            int height = Integer.parseInt(strOutput.substring(pos2 + 1, pos4).trim());
-            double wScale = (width * 1.0) / w;
-            double hScale = (height * 1.0) / h;
-            if (wScale > hScale) {
-                h = Integer.parseInt(new java.text.DecimalFormat("0").format((height * 1.0) / wScale));
-            } else {
-                w = Integer.parseInt(new java.text.DecimalFormat("0").format((width * 1.0) / hScale));
-            }
-        } catch (Exception e) {
-            return;
-        }
-
-        List<String> cutpic = new ArrayList<String>();
-        cutpic.add(ffmpegPath);
-        cutpic.add("-i");
-        cutpic.add(upFilePath); // 同上（指定的文件即可以是转换为flv格式之前的文件，也可以是转换的flv文件）
-        cutpic.add("-y");
-        cutpic.add("-f");
-        cutpic.add("image2");
-        cutpic.add("-ss"); // 添加参数＂-ss＂，该参数指定截取的起始时间
-        cutpic.add("5"); // 添加起始时间为第17秒
-        cutpic.add("-t"); // 添加参数＂-t＂，该参数指定持续时间
-        cutpic.add("0.001"); // 添加持续时间为1毫秒
-        cutpic.add("-s"); // 添加参数＂-s＂，该参数指定截取的图片大小
-        cutpic.add(String.valueOf(w) + "*" + String.valueOf(h)); // 添加截取的图片大小
-        cutpic.add(mediaPicPath); // 添加截取的图片的保存路径
-
-        boolean mark = true;
-        ProcessBuilder builder = new ProcessBuilder();
-        try {
-
-            builder.command(cutpic);
-            builder.redirectErrorStream(true);
-            // 如果此属性为 true，则任何由通过此对象的 start() 方法启动的后续子进程生成的错误输出都将与标准输出合并，
-            //因此两者均可使用 Process.getInputStream() 方法读取。这使得关联错误消息和相应的输出变得更容易
-            builder.start();
-        } catch (Exception e) {
-            mark = false;
-            System.out.println(e);
-            e.printStackTrace();
-        }
+    private void thumbnailVideo(String ffmpegPath, String videoPath, int w, int h) {
+        TImgSize imgSize = UtilTools.getVideoSize(videoPath, ffmpegPath);
+        UtilTools.getThumbnailSize(imgSize, w, h);
+        Rectangle rect = UtilTools.getCutRect(imgSize, w, h);
+        String thumbnailPath = UtilTools.getVideoThumbnail(videoPath,ffmpegPath,imgSize,"temp_");
+        String cutPath = UtilTools.getCutImg(thumbnailPath, rect);
+        File tempFile =  new File(thumbnailPath);
+        if (tempFile.exists())
+            tempFile.delete();
+//        try {
+//            StringBuffer sb = new StringBuffer();
+//            List<String> commend = new ArrayList<String>();
+//            commend.add(ffmpegPath);
+//            commend.add("-i");
+//            commend.add(upFilePath);
+//
+//            ProcessBuilder builder = new ProcessBuilder();
+//            builder.command(commend);
+//            builder.redirectErrorStream(true);
+//            Process p = builder.start();
+//
+//            BufferedReader buf = new BufferedReader(new InputStreamReader(p.getInputStream()));
+//            String line;
+//            while ((line = buf.readLine()) != null) {
+//                sb.append(line);
+//            }
+//            p.waitFor();
+//            String strOutput = sb.toString();
+//            int pos1 = strOutput.indexOf("kb/s", strOutput.indexOf("Video:"));
+//            int pos2 = strOutput.lastIndexOf("x", pos1);
+//            int pos3 = strOutput.lastIndexOf(",", pos2);
+//            int pos4 = strOutput.indexOf(",", pos2);
+//            if (pos4 == -1 || pos4 - pos2 > 5)
+//                pos4 = strOutput.indexOf(" ", pos2);
+//            int width = Integer.parseInt(strOutput.substring(pos3 + 1, pos2).trim());
+//            int height = Integer.parseInt(strOutput.substring(pos2 + 1, pos4).trim());
+//            double wScale = (width * 1.0) / w;
+//            double hScale = (height * 1.0) / h;
+//            if (wScale > hScale) {
+//                h = Integer.parseInt(new java.text.DecimalFormat("0").format((height * 1.0) / wScale));
+//            } else {
+//                w = Integer.parseInt(new java.text.DecimalFormat("0").format((width * 1.0) / hScale));
+//            }
+//        } catch (Exception e) {
+//            return;
+//        }
+//
+//        List<String> cutpic = new ArrayList<String>();
+//        cutpic.add(ffmpegPath);
+//        cutpic.add("-i");
+//        cutpic.add(upFilePath); // 同上（指定的文件即可以是转换为flv格式之前的文件，也可以是转换的flv文件）
+//        cutpic.add("-y");
+//        cutpic.add("-f");
+//        cutpic.add("image2");
+//        cutpic.add("-ss"); // 添加参数＂-ss＂，该参数指定截取的起始时间
+//        cutpic.add("5"); // 添加起始时间为第17秒
+//        cutpic.add("-t"); // 添加参数＂-t＂，该参数指定持续时间
+//        cutpic.add("0.001"); // 添加持续时间为1毫秒
+//        cutpic.add("-s"); // 添加参数＂-s＂，该参数指定截取的图片大小
+//        cutpic.add(String.valueOf(w) + "*" + String.valueOf(h)); // 添加截取的图片大小
+//        cutpic.add(mediaPicPath); // 添加截取的图片的保存路径
+//
+//        boolean mark = true;
+//        ProcessBuilder builder = new ProcessBuilder();
+//        try {
+//
+//            builder.command(cutpic);
+//            builder.redirectErrorStream(true);
+//            // 如果此属性为 true，则任何由通过此对象的 start() 方法启动的后续子进程生成的错误输出都将与标准输出合并，
+//            //因此两者均可使用 Process.getInputStream() 方法读取。这使得关联错误消息和相应的输出变得更容易
+//            builder.start();
+//        } catch (Exception e) {
+//            mark = false;
+//            System.out.println(e);
+//            e.printStackTrace();
+//        }
     }
 }

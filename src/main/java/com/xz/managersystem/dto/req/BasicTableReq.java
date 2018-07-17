@@ -7,21 +7,7 @@ public class BasicTableReq extends BasicReq {
     private Integer page;
     private Integer rows;
     private String type;
-
-    public BasicTableReq(){
-    }
-
-    public BasicTableReq(Integer page, Integer rows) {
-        this.page = page;
-        this.rows = rows;
-        this.type = "";
-    }
-
-    public BasicTableReq(Integer page, Integer rows, String type) {
-        this.page = page;
-        this.rows = rows;
-        this.type = type;
-    }
+    private Boolean filtergroup;
 
     public Integer getPage() {
         return page;
@@ -45,6 +31,14 @@ public class BasicTableReq extends BasicReq {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public Boolean getFiltergroup() {
+        return filtergroup;
+    }
+
+    public void setFiltergroup(Boolean filtergroup) {
+        this.filtergroup = filtergroup;
     }
 
     @Override

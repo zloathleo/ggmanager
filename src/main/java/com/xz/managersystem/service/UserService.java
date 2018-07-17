@@ -2,14 +2,10 @@ package com.xz.managersystem.service;
 
 import com.xz.managersystem.dao.ConditionParams;
 import com.xz.managersystem.dao.UserMapper;
-import com.xz.managersystem.dao.GroupMapper;
 import com.xz.managersystem.dto.req.TChangePswdReq;
 import com.xz.managersystem.dto.req.TLoginReq;
-import com.xz.managersystem.dto.req.TUserListReq;
 import com.xz.managersystem.dto.res.TLoginRes;
-import com.xz.managersystem.dto.res.TUserDto;
 import com.xz.managersystem.entity.TUserInfo;
-import com.xz.managersystem.entity.TGroupInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +17,6 @@ import javax.persistence.EntityNotFoundException;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
 import java.security.MessageDigest;
-import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -30,48 +25,41 @@ public class UserService {
     UserMapper userMapper;
 
     @Autowired
-    GroupMapper groupMapper;
+    GroupService groupService;
 
     private Logger logger =  LoggerFactory.getLogger(this.getClass());
 
     private Map<String, String> tokenMap = new HashMap<>();
     private Map<String, String> userMap = new HashMap<>();
 
-    public int getCount(TUserListReq tr) {
-        if (tr.getFilterGroup() != null && tr.getFilterGroup()) {
+    public int getCount(ConditionParams params) {
+        if (params.getFilter() != null && params.getFilter()) {
             return userMapper.getFilterCount();
-        } else if (StringUtils.isBlank(tr.getType()) || "all".equalsIgnoreCase(tr.getType())) {
+        } else if (StringUtils.isBlank(params.getType())) {
             return userMapper.getCount();
         } else {
-            return userMapper.getTypeCount(tr.getType());
+            return userMapper.getTypeCount(params.getType());
         }
     }
 
-    public List<TUserInfo> getUserList(TUserListReq tr){
-        ConditionParams pageParams = new ConditionParams();
-        if (tr.getRows() != null && tr.getPage() != null) {
-            pageParams.setStart((tr.getPage() - 1) * tr.getRows());
-            pageParams.setRows(tr.getRows());
-        }
-        pageParams.setType(tr.getType());
-
-        if (tr.getFilterGroup() != null && tr.getFilterGroup()) {
-            if (tr.getRows() != null && tr.getPage() != null) {
-                return userMapper.selectFilterPage(pageParams);
+    public List<TUserInfo> getUserList(ConditionParams params){
+        if (params.getFilter() != null && params.getFilter()) {
+            if (params.getRows() != null && params.getStart() != null) {
+                return userMapper.selectFilterPage(params);
             } else {
                 return userMapper.selectFilterList();
             }
-        } else if (tr.getRows() != null && tr.getPage() != null) {
-            if (tr.getType() == null || "all".equalsIgnoreCase(tr.getType())) {
-                return userMapper.selectPage(pageParams);
+        } else if (params.getRows() != null && params.getStart() != null) {
+            if (StringUtils.isBlank(params.getType())) {
+                return userMapper.selectPage(params);
             } else {
-                return userMapper.selectTypePage(pageParams);
+                return userMapper.selectTypePage(params);
             }
         } else {
-            if (tr.getType() == null || "all".equalsIgnoreCase(tr.getType())) {
+            if (StringUtils.isBlank(params.getType())) {
                 return userMapper.selectList();
             } else {
-                return userMapper.selectTypeList(tr.getType());
+                return userMapper.selectTypeList(params.getType());
             }
         }
     }
@@ -88,38 +76,76 @@ public class UserService {
         return userInfo;
     }
 
-    public void addUser(TUserDto userDto) {
-        TUserInfo userInfo = userMapper.selectByName(userDto.getName());
-        if (userInfo != null) {
-            throw new EntityExistsException("用户" + userDto.getName() + "已存在");
+    public void addUser(TUserInfo userInfo) {
+        TUserInfo userExist = userMapper.selectByName(userInfo.getName());
+        if (userExist != null) {
+            throw new EntityExistsException("用户" + userInfo.getName() + "已存在");
         }
 
-        TUserInfo userNew = new TUserInfo();
-        userNew.setName(userDto.getName());
-        userNew.setPassword(MD5(userDto.getName()));
-        userNew.setType(userDto.getType() == null ? "operator" : userDto.getType());
-        userNew.setGroup(userDto.getGroup() == null ? "" : userDto.getGroup());
-        if (userMapper.insert(userNew) <= 0) {
+        userInfo.setPassword(MD5(userInfo.getName()));
+        if (StringUtils.isBlank(userInfo.getType())) {
+            userInfo.setType("operator");
+        }
+        if (userInfo.getGroup() == null) {
+            userInfo.setGroup("");
+        }
+        if ("admin".equalsIgnoreCase(userInfo.getType()) && StringUtils.isNotBlank(userInfo.getGroup())) {
+            throw new RuntimeException("不能为管理用户分配组");
+        }
+
+        if (StringUtils.isNotBlank(userInfo.getGroup())) {
+            groupService.assignUser(userInfo.getGroup(), userInfo.getName());
+        }
+        if (userMapper.insert(userInfo) <= 0) {
             throw new RuntimeException("添加用户失败");
         }
     }
 
     public void updateUser(TUserInfo userInfo) {
         TUserInfo userBase = getUser(userInfo.getName());
-        if (userInfo.getPassword() != null)
+        Boolean relogin = false;
+        if (userInfo.getGroup() != null) {
+            if ("admin".equalsIgnoreCase(userBase.getType()) && StringUtils.isNotBlank(userInfo.getGroup())) {
+                throw new RuntimeException("不能为管理用户分配组");
+            }
+
+            if (!userBase.getGroup().equalsIgnoreCase(userInfo.getGroup())) {
+                if (StringUtils.isNotBlank(userBase.getGroup())) {
+                    groupService.assignUser(userBase.getGroup(), "");
+                }
+                if (StringUtils.isNotBlank(userInfo.getGroup())) {
+                    groupService.assignUser(userInfo.getGroup(), userInfo.getName());
+                }
+                userBase.setGroup(userInfo.getGroup());
+            }
+        }
+
+        if (userInfo.getPassword() != null) {
+            relogin = !userBase.getPassword().equalsIgnoreCase(userInfo.getPassword());
             userBase.setPassword(userInfo.getPassword());
-        if (userInfo.getGroup() != null)
-            userBase.setGroup(userInfo.getGroup());
+        }
+
         if (userMapper.updateByName(userBase) <= 0) {
             throw new RuntimeException("更新用户" + userBase.getName() + "失败");
+        }
+
+        if (relogin) {
+            removeToken(userInfo.getName());
         }
     }
 
     public void deleteUser(String name) {
+        if ("admin".equalsIgnoreCase(name)) {
+            throw new RuntimeException("用户admin不能被删除");
+        }
         TUserInfo userInfo = getUser(name);
+        if (StringUtils.isNotBlank(userInfo.getGroup())) {
+            groupService.assignUser(userInfo.getGroup(), "");
+        }
         if (userMapper.deleteByName(name) <= 0) {
             throw new RuntimeException("删除用户" + name + "失败");
         }
+        removeToken(name);
     }
 
     public TLoginRes login(TLoginReq loginReq) {
@@ -128,17 +154,27 @@ public class UserService {
             throw new RuntimeException("用户名或密码错误");
         }
 
-        String token = MD5(loginReq.getName() + new Date().getTime());
-        tokenMap.put(token, userInfo.getName());
-        userMap.put(userInfo.getName(), token);
+        if ("operator".equalsIgnoreCase(userInfo.getType()) && StringUtils.isBlank(userInfo.getGroup())) {
+            throw new RuntimeException("用户未分配组");
+        }
+
+//        removeToken(userInfo.getName());
+//        String token = MD5(loginReq.getName() + new Date().getTime());
+//        tokenMap.put(token, userInfo.getName());
+//        userMap.put(userInfo.getName(), token);
+        String token;
+        if (userMap.containsKey(userInfo.getName())) {
+            token = userMap.get(userInfo.getName());
+        } else {
+            token = MD5(loginReq.getName() + new Date().getTime());
+            tokenMap.put(token, userInfo.getName());
+            userMap.put(userInfo.getName(), token);
+        }
         return new TLoginRes(token, userInfo.getType(), userInfo.getGroup());
     }
 
     public void logout(String name) {
-        String token = userMap.get(name);
-        userMap.remove(name);
-        if (token != null)
-            tokenMap.remove(token);
+        removeToken(name);
     }
 
     public TUserInfo getUserByToken(String token) {
@@ -155,19 +191,37 @@ public class UserService {
 
     public void changePassword(String name, TChangePswdReq changePswdReq){
         TUserInfo userInfo = getUser(name);
-        if (userInfo.getPassword().equalsIgnoreCase(changePswdReq.getOldPassword())) {
+        if (!userInfo.getPassword().equalsIgnoreCase(changePswdReq.getOldpassword())) {
             throw new RuntimeException("密码错误");
         }
 
-        userInfo.setPassword(changePswdReq.getNewPassword());
+        userInfo.setPassword(changePswdReq.getNewpassword());
         updateUser(userInfo);
     }
 
     public void assignGroup(String name, String group) {
-        TUserInfo userInfo = new TUserInfo();
-        userInfo.setName(name);
+        TUserInfo userInfo = getUser(name);
+        if (StringUtils.isNotBlank(userInfo.getGroup()) &&
+                StringUtils.isNotBlank(group) &&
+                !group.equalsIgnoreCase(userInfo.getGroup())) {
+            throw new RuntimeException("用户" + name + "已有分组");
+        }
+
         userInfo.setGroup(group);
-        updateUser(userInfo);
+        if (userMapper.updateByName(userInfo) <= 0) {
+            throw new RuntimeException("更新用户" + userInfo.getName() + "失败");
+        }
+    }
+
+    public TUserInfo findUser(String name) {
+        return userMapper.selectByName(name);
+    }
+
+    private void removeToken(String name){
+        String token = userMap.get(name);
+        userMap.remove(name);
+        if (token != null)
+            tokenMap.remove(token);
     }
 
     private String MD5(String source) {

@@ -20,7 +20,7 @@ public interface PageMapper extends Mapper<TPageInfo>, MySqlMapper<TPageInfo> {
 
     @Select("SELECT * from t_page WHERE is_deleted = 0 AND `group` = #{group} " +
             "ORDER BY create_time DESC LIMIT #{start}, #{rows}")
-    List<TPageInfo> selectPage(String group, ConditionParams params);
+    List<TPageInfo> selectPage(ConditionParams params);
 
     @Select("SELECT * from t_page WHERE is_deleted = 0 AND id = #{id} LIMIT 1")
     TPageInfo selectById(Integer id);

@@ -15,12 +15,24 @@ public interface MessageMapper extends Mapper<TMessageInfo>, MySqlMapper<TMessag
     @Select("SELECT COUNT(1) FROM t_message WHERE is_deleted = 0 AND `group` = #{group}")
     int getCount(String group);
 
+    @Select("SELECT COUNT(1) FROM t_message WHERE is_deleted = 0 AND `group` = #{group} " +
+            "AND NOW() BETWEEN start_time AND end_time")
+    int getFilterCount(String group);
+
     @Select("SELECT * from t_message WHERE is_deleted = 0 AND `group` = #{group} ORDER BY create_time DESC")
     List<TMessageInfo> selectList(String group);
 
     @Select("SELECT * from t_message WHERE is_deleted = 0 AND `group` = #{group} " +
+            "AND NOW() BETWEEN start_time AND end_time ORDER BY create_time DESC")
+    List<TMessageInfo> selectFilterList(String group);
+
+    @Select("SELECT * from t_message WHERE is_deleted = 0 AND `group` = #{group} " +
             "ORDER BY create_time DESC LIMIT #{start}, #{rows}")
     List<TMessageInfo> selectPage(ConditionParams params);
+
+    @Select("SELECT * from t_message WHERE is_deleted = 0 AND `group` = #{group} " +
+            "AND NOW() BETWEEN start_time AND end_time ORDER BY create_time DESC LIMIT #{start}, #{rows}")
+    List<TMessageInfo> selectFilterPage(ConditionParams params);
 
     @Select("SELECT * from t_message WHERE is_deleted = 0 AND id = #{id} LIMIT 1")
     TMessageInfo selectById(Integer id);

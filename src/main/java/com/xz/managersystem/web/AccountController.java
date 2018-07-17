@@ -7,7 +7,9 @@ import com.xz.managersystem.dto.res.BasicRes;
 import com.xz.managersystem.dto.res.BasicTableRes;
 import com.xz.managersystem.dto.res.TUserDto;
 import com.xz.managersystem.entity.BasicEntity;
+import com.xz.managersystem.entity.TGroupInfo;
 import com.xz.managersystem.entity.TUserInfo;
+import com.xz.managersystem.service.GroupService;
 import com.xz.managersystem.service.UserService;
 import com.xz.managersystem.web.resolver.Authorization;
 import org.slf4j.Logger;
@@ -17,7 +19,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.acl.Group;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/account")
@@ -27,6 +32,9 @@ public class AccountController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    GroupService groupService;
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
@@ -47,5 +55,14 @@ public class AccountController {
                                 @Valid TChangePswdReq changePswdReq) {
         userService.changePassword(userInfo.getName(), changePswdReq);
         return new BasicRes("修改密码成功");
+    }
+
+    @RequestMapping(value = "/info", method = RequestMethod.GET)
+    @ResponseBody
+    private Map<String, Object> getInfo(@Authorization TUserInfo userInfo) {
+        Map<String, Object> mapInfo = new HashMap<>();
+        TGroupInfo groupInfo = groupService.findGroup(userInfo.getGroup());
+        mapInfo.put("group", groupInfo);
+        return mapInfo;
     }
 }

@@ -7,6 +7,7 @@ import com.xz.managersystem.dto.res.BasicTableRes;
 import com.xz.managersystem.dto.res.TPageDto;
 import com.xz.managersystem.entity.*;
 import com.xz.managersystem.service.DeviceService;
+import com.xz.managersystem.service.UtilTools;
 import com.xz.managersystem.web.resolver.Authorization;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,13 +38,7 @@ public class DeviceController {
     @ResponseBody
     private BasicEntity getDeviceList(@Authorization TUserInfo userInfo,
                                       @Valid BasicTableReq tr) {
-        ConditionParams params = new ConditionParams();
-        if (tr.getRows() != null && tr.getPage() != null) {
-            params.setStart((tr.getPage() - 1) * tr.getRows());
-            params.setRows(tr.getRows());
-        }
-        params.setGroup(userInfo.getGroup());
-
+        ConditionParams params = UtilTools.convertFromTabelReq(tr, userInfo.getGroup());
         int devCount = devService.getCount(userInfo.getGroup());
         List<TDeviceInfo> devList = devService.getDeviceList(params);
         return new BasicTableRes<>(devCount, devList);

@@ -42,8 +42,7 @@ public class DeviceService {
     }
 
     public void addDevice(TDeviceInfo devInfo) {
-        String label = UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
-        devInfo.setLabel(label.substring(0, 8));
+        devInfo.setLabel(UtilTools.getUUID(8));
         if (devInfo.getName() == null)
             devInfo.setName("");
         if (devInfo.getBrand() == null)
