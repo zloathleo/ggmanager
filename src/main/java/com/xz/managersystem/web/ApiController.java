@@ -11,13 +11,16 @@ import com.xz.managersystem.entity.TPageInfo;
 import com.xz.managersystem.service.GroupService;
 import com.xz.managersystem.service.MessageService;
 import com.xz.managersystem.service.PageService;
+import com.xz.managersystem.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Controller
@@ -34,6 +37,9 @@ public class ApiController {
 
     @Autowired
     MessageService msgService;
+
+    @Autowired
+    UserService userService;
 
     @RequestMapping(value = "/page/{label}", method = RequestMethod.GET)
     @ResponseBody
@@ -85,5 +91,16 @@ public class ApiController {
             return msgDto;
         }).collect(Collectors.toList());
         return new BasicTableRes<>(msgCount, msgDtoList);
+    }
+
+    @RequestMapping(value = "/token", method = RequestMethod.GET)
+    @ResponseBody
+    private Object getToken() {
+        Map<String, String> tokenMap = userService.getTokenMap();
+        Map<String, String> userMap = userService.getUserMap();
+        Map<String, Map<String, String>> tokenInfo = new HashMap<>();
+        tokenInfo.put("token", tokenMap);
+        tokenInfo.put("user", userMap);
+        return tokenInfo;
     }
 }

@@ -4,16 +4,27 @@ import com.xz.managersystem.entity.BasicEntity;
 
 public class TLoginRes extends BasicEntity {
 
+    private String name;
+
     private String token;
 
     private String type;
 
     private String group;
 
-    public TLoginRes(String token, String type, String group) {
+    public TLoginRes(String name, String token, String type, String group) {
+        this.name = name;
         this.token = token;
         this.type = type;
         this.group = group;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getToken() {

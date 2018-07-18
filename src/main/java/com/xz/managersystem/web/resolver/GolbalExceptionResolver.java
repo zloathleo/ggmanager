@@ -26,7 +26,11 @@ public class GolbalExceptionResolver implements HandlerExceptionResolver {
 //        if(requestURI.endsWith(".do")){
             MappingJackson2JsonView view = new MappingJackson2JsonView();
             mv.setView(view);
-            mv.addObject("err", "-1");
+            if (ex.getMessage().contains("ccessToken")) {
+                mv.addObject("err", "-5");
+            } else {
+                mv.addObject("err", "-1");
+            }
             mv.addObject("message", ex.getMessage());
             return mv;
 //        }else{

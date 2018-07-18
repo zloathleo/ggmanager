@@ -120,9 +120,9 @@ public class UserService {
             }
         }
 
-        if (userInfo.getPassword() != null) {
-            relogin = !userBase.getPassword().equalsIgnoreCase(userInfo.getPassword());
+        if (userInfo.getPassword() != null && !userBase.getPassword().equalsIgnoreCase(userInfo.getPassword())) {
             userBase.setPassword(userInfo.getPassword());
+            relogin = true;
         }
 
         if (userMapper.updateByName(userBase) <= 0) {
@@ -170,7 +170,7 @@ public class UserService {
             tokenMap.put(token, userInfo.getName());
             userMap.put(userInfo.getName(), token);
         }
-        return new TLoginRes(token, userInfo.getType(), userInfo.getGroup());
+        return new TLoginRes(userInfo.getName(), token, userInfo.getType(), userInfo.getGroup());
     }
 
     public void logout(String name) {
@@ -215,6 +215,14 @@ public class UserService {
 
     public TUserInfo findUser(String name) {
         return userMapper.selectByName(name);
+    }
+
+    public Map<String, String> getTokenMap() {
+        return tokenMap;
+    }
+
+    public Map<String, String> getUserMap() {
+        return userMap;
     }
 
     private void removeToken(String name){
