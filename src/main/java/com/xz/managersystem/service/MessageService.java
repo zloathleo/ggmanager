@@ -88,6 +88,8 @@ public class MessageService {
 
     public void updateMessage(TMessageInfo msgInfo) {
         TMessageInfo msgBase = getMessage(msgInfo.getLabel());
+        if (msgInfo.getName() != null)
+            msgBase.setName(msgInfo.getName());
         if (msgInfo.getStartTime() != null)
             msgBase.setStartTime(msgInfo.getStartTime());
         if (msgInfo.getEndTime() != null)

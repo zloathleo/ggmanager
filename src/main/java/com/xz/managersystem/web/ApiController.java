@@ -1,6 +1,7 @@
 package com.xz.managersystem.web;
 
 import com.xz.managersystem.dao.ConditionParams;
+import com.xz.managersystem.dto.res.BasicRes;
 import com.xz.managersystem.dto.res.BasicTableRes;
 import com.xz.managersystem.dto.res.TMessageDto;
 import com.xz.managersystem.dto.res.TPageDto;
@@ -18,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -76,21 +78,42 @@ public class ApiController {
         ConditionParams params = new ConditionParams();
         params.setGroup(label);
         params.setFilter(true);
-        int msgCount = msgService.getCount(params);
         List<TMessageInfo> msgInfoList = msgService.getMessageList(params);
-        List<TMessageDto> msgDtoList = msgInfoList.stream().map(msgInfo -> {
-            TMessageDto msgDto = new TMessageDto();
-            msgDto.setId(msgInfo.getId());
-            msgDto.setLabel(msgInfo.getLabel());
-            msgDto.setName(msgInfo.getName());
-            msgDto.setType(msgInfo.getType());
-            msgDto.setStatus(1);
-            msgDto.setStartTime(msgInfo.getStartTime());
-            msgDto.setEndTime(msgInfo.getEndTime());
-            msgDto.setUpdateTime(msgInfo.getUpdateTime());
-            return msgDto;
-        }).collect(Collectors.toList());
-        return new BasicTableRes<>(msgCount, msgDtoList);
+        List<TMessageDto> msgDtoList = new ArrayList<>();
+        Boolean hasTextMsg = false;
+        Boolean hasAudioMsg = false;
+        for (int i = 0; i < msgInfoList.size(); ++i) {
+            if (("text".equalsIgnoreCase(msgInfoList.get(i).getType()) && !hasTextMsg) ||
+                    ("audio".equalsIgnoreCase(msgInfoList.get(i).getType()) && !hasAudioMsg)) {
+                TMessageDto msgDto = new TMessageDto();
+                msgDto.setId(msgInfoList.get(i).getId());
+                msgDto.setLabel(msgInfoList.get(i).getLabel());
+                msgDto.setName(msgInfoList.get(i).getName());
+                msgDto.setType(msgInfoList.get(i).getType());
+                msgDto.setStatus(1);
+                msgDto.setStartTime(msgInfoList.get(i).getStartTime());
+                msgDto.setEndTime(msgInfoList.get(i).getEndTime());
+                msgDto.setUpdateTime(msgInfoList.get(i).getUpdateTime());
+                msgDtoList.add(msgDto);
+
+                if ("text".equalsIgnoreCase(msgInfoList.get(i).getType())) {
+                    hasTextMsg = true;
+                } else if ("audio".equalsIgnoreCase(msgInfoList.get(i).getType())) {
+                    hasAudioMsg = true;
+                }
+            }
+        }
+
+        return new BasicTableRes<>(msgDtoList.size(), msgDtoList);
+    }
+
+    @RequestMapping(value = "/live/update", method = RequestMethod.GET)
+    @ResponseBody
+    private BasicEntity getToken(@RequestParam(name = "group", required = true) String group) {
+        TGroupInfo groupInfo = groupService.getGroup(group);
+        TPageInfo pageInfo = pageService.getPage(groupInfo.getPage());
+        pageService.updatePage(pageInfo);
+        return new BasicRes("更新页面成功");
     }
 
     @RequestMapping(value = "/token", method = RequestMethod.GET)

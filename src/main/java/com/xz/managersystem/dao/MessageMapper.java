@@ -48,7 +48,7 @@ public interface MessageMapper extends Mapper<TMessageInfo>, MySqlMapper<TMessag
             "update_time = NOW() WHERE id = #{id}")
     int updateById(TMessageInfo msgInfo);
 
-    @Update("UPDATE t_message SET start_time = #{startTime}, end_time = #{endTime}, " +
+    @Update("UPDATE t_message SET name = #{name}, start_time = #{startTime}, end_time = #{endTime}, " +
             "update_time = NOW() WHERE label = #{label}")
     int updateByLabel(TMessageInfo msgInfo);
 

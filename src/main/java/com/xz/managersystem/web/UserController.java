@@ -42,6 +42,7 @@ public class UserController {
     private BasicEntity getUserList(@Authorization TUserInfo userInfo,
                                     @Valid BasicTableReq tr) {
         ConditionParams params = UtilTools.convertFromTabelReq(tr, null);
+        params.setType("operator");
         int userCount = userService.getCount(params);
         List<TUserInfo> userInfoList = userService.getUserList(params);
         List<TUserDto> userDtoList = userInfoList.stream().map(userItem -> {

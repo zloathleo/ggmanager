@@ -92,6 +92,7 @@ public class MessageController {
                                       @Valid TMessageReq msgReq) {
         TMessageInfo msgInfo = new TMessageInfo();
         msgInfo.setLabel(msgReq.getLabel());
+        msgInfo.setName(msgReq.getName());
         SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
             if (StringUtils.isNotBlank(msgReq.getStartTime()))

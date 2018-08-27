@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.io.IOException;
 import java.util.Base64;
 
+import static org.springframework.http.MediaType.APPLICATION_OCTET_STREAM;
+
 /**
  * 页面
  */
@@ -45,6 +47,7 @@ public class LiveController {
         final byte[] destByte = encoder.encode(srcByte);
 
         HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(APPLICATION_OCTET_STREAM);
         headers.add("Content-Disposition", "attchement;filename=" + userInfo.getGroup() + ".conf");
         HttpStatus statusCode = HttpStatus.OK;
         ResponseEntity<byte[]> entity = new ResponseEntity<byte[]>(destByte, headers, statusCode);
