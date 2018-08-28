@@ -27,12 +27,28 @@ public interface ResourceMapper extends Mapper<TResourceInfo>, MySqlMapper<TReso
     List<TResourceInfo> selectTypeList(ConditionParams params);
 
     @Select("SELECT * from t_resource WHERE is_deleted = 0 AND `group` = #{group} " +
+            "AND type <> 'qr' ORDER BY create_time DESC")
+    List<TResourceInfo> selectMediaList(String group);
+
+    @Select("SELECT * from t_resource WHERE is_deleted = 0 AND `group` = #{group} " +
+            "AND (type = 'qr' OR type = 'img') ORDER BY create_time DESC")
+    List<TResourceInfo> selectPicList(String group);
+
+    @Select("SELECT * from t_resource WHERE is_deleted = 0 AND `group` = #{group} " +
             "ORDER BY create_time DESC LIMIT #{start}, #{rows}")
     List<TResourceInfo> selectPage(ConditionParams params);
 
     @Select("SELECT * from t_resource WHERE is_deleted = 0 AND `group` = #{group} " +
             "AND type = #{type} ORDER BY create_time DESC LIMIT #{start}, #{rows}")
     List<TResourceInfo> selectTypePage(ConditionParams params);
+
+    @Select("SELECT * from t_resource WHERE is_deleted = 0 AND `group` = #{group} " +
+            "AND type <> 'qr' ORDER BY create_time DESC LIMIT #{start}, #{rows}")
+    List<TResourceInfo> selectMediaPage(ConditionParams params);
+
+    @Select("SELECT * from t_resource WHERE is_deleted = 0 AND `group` = #{group} " +
+            "AND (type = 'qr' OR type = 'img') ORDER BY create_time DESC LIMIT #{start}, #{rows}")
+    List<TResourceInfo> selectPicPage(ConditionParams params);
 
     @Select("SELECT * from t_resource WHERE is_deleted = 0 AND id = #{id} LIMIT 1")
     TResourceInfo selectById(Integer id);

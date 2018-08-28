@@ -51,6 +51,18 @@ public class ResourceService {
             } else {
                 return resMapper.selectPage(params);
             }
+        } else if ("media".equalsIgnoreCase(params.getType())) {
+            if (params.getStart() == null || params.getRows() == null) {
+                return resMapper.selectMediaList(params.getGroup());
+            } else {
+                return resMapper.selectMediaPage(params);
+            }
+        } else if ("pic".equalsIgnoreCase(params.getType())) {
+            if (params.getStart() == null || params.getRows() == null) {
+                return resMapper.selectPicList(params.getGroup());
+            } else {
+                return resMapper.selectPicPage(params);
+            }
         } else {
             if (params.getStart() == null || params.getRows() == null) {
                 return resMapper.selectTypeList(params);
@@ -100,7 +112,8 @@ public class ResourceService {
         resInfo.setThumbnail(thumbnail);
         if (resInfo.getDes() == null)
             resInfo.setDes("");
-        resInfo.setType(fileType);
+        if (!"qr".equalsIgnoreCase(resInfo.getType()))
+            resInfo.setType(fileType);
         if (resMapper.insert(resInfo) <= 0) {
             throw new RuntimeException("添加资源失败");
         }
