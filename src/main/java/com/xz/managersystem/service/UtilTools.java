@@ -4,6 +4,8 @@ import com.xz.managersystem.dao.ConditionParams;
 import com.xz.managersystem.dto.req.BasicTableReq;
 import com.xz.managersystem.entity.TImgSize;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
@@ -21,6 +23,8 @@ import java.util.List;
 import java.util.UUID;
 
 public class UtilTools {
+
+    private static Logger logger = LoggerFactory.getLogger(UtilTools.class);
     public static String getFileSuffix(String filePath) {
         int pos = filePath.lastIndexOf('.');
         return pos == -1 ? "" : filePath.substring(pos + 1);
@@ -48,6 +52,7 @@ public class UtilTools {
             File file = path.toFile();
             multipartFile.transferTo(file);
         } catch (Exception e) {
+            logger.error("transferFile 转移文件 exception",e);
             throw new RuntimeException(e);
         }
     }
@@ -83,6 +88,7 @@ public class UtilTools {
             imgSize.setHeight(img.getHeight(null));
             return imgSize;
         } catch (IOException e) {
+            logger.error("TImgSize获取视频异常 exception",e);
             return null;
         }
     }
@@ -119,6 +125,7 @@ public class UtilTools {
             imgSize.setHeight(Integer.parseInt(strOutput.substring(pos2 + 1, pos4).trim()));
             return imgSize;
         } catch (Exception e) {
+            logger.error("getVideoSize获取视频异常 exception",e);
             return null;
         }
     }
@@ -164,6 +171,7 @@ public class UtilTools {
             ImageIO.write(bi, suffix, new File(destPath));
             return destPath;
         } catch (IOException e) {
+            logger.error("getImgThumbnail 获取缩略图 exception",e);
             return "";
         }
     }
@@ -199,8 +207,8 @@ public class UtilTools {
             Process p = builder.start();
             p.waitFor();
         } catch (Exception e) {
-            System.out.println(e);
             e.printStackTrace();
+            logger.error("getVideoThumbnail 获取视频缩略图 exception",e);
         }
         return imgPath;
     }
@@ -227,14 +235,17 @@ public class UtilTools {
             return cutPath;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+            logger.error("getCutImg 获取getCutImg exception",e);
         } catch (IOException e) {
             e.printStackTrace();
+            logger.error("getCutImg 获取getCutImg exception",e);
         } finally {
             try {
                 imageStream.close();
                 inputStream.close();
             } catch (IOException e) {
                 e.printStackTrace();
+                logger.error("getCutImg 获取getCutImg exception",e);
             }
         }
         return "";
