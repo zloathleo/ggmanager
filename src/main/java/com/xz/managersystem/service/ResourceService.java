@@ -123,6 +123,8 @@ public class ResourceService {
         TResourceInfo resBase = getResource(resInfo.getLabel());
         if (resInfo.getDes() != null)
             resBase.setDes(resInfo.getDes());
+        if (resInfo.getUrl() != null)
+            resBase.setUrl(resInfo.getUrl());
         if (resMapper.updateByLabel(resBase) <= 0) {
             throw new RuntimeException("更新资源" + resBase.getLabel() + "失败");
         }

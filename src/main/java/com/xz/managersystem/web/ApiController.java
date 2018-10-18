@@ -1,18 +1,10 @@
 package com.xz.managersystem.web;
 
 import com.xz.managersystem.dao.ConditionParams;
-import com.xz.managersystem.dto.res.BasicRes;
-import com.xz.managersystem.dto.res.BasicTableRes;
-import com.xz.managersystem.dto.res.TMessageDto;
-import com.xz.managersystem.dto.res.TPageDto;
-import com.xz.managersystem.entity.BasicEntity;
-import com.xz.managersystem.entity.TGroupInfo;
-import com.xz.managersystem.entity.TMessageInfo;
-import com.xz.managersystem.entity.TPageInfo;
-import com.xz.managersystem.service.GroupService;
-import com.xz.managersystem.service.MessageService;
-import com.xz.managersystem.service.PageService;
-import com.xz.managersystem.service.UserService;
+import com.xz.managersystem.dto.res.*;
+import com.xz.managersystem.entity.*;
+import com.xz.managersystem.service.*;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +35,9 @@ public class ApiController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    ResourceService resService;
+
     @RequestMapping(value = "/page/{label}", method = RequestMethod.GET)
     @ResponseBody
     private TPageDto getPageByPage(@PathVariable("label") String label) {
@@ -70,6 +65,24 @@ public class ApiController {
         pageDto.setGroup(pageInfo.getGroup());
         pageDto.setUpdateTime(pageInfo.getUpdateTime());
         return pageDto;
+    }
+
+    @RequestMapping(value = "/url", method = RequestMethod.GET)
+    @ResponseBody
+    private BasicEntity getUrlByLabel(@RequestParam(name = "name") String name) {
+        List<TUrlDto> urlDtoList = new ArrayList<>();
+        String [] nameList = name.split(",");
+        for (int i = 0; i < nameList.length; ++i)
+        {
+            TUrlDto urlDto = new TUrlDto();
+            int pos = nameList[i].lastIndexOf('.');
+            String label = pos == -1 ? nameList[i] : nameList[i].substring(0, pos);
+            TResourceInfo resInfo = resService.getResource(label);
+            urlDto.setName(nameList[i]);
+            urlDto.setUrl(resInfo.getUrl());
+            urlDtoList.add(urlDto);
+        }
+        return new BasicTableRes<>(urlDtoList.size(), urlDtoList);
     }
 
     @RequestMapping(value = "/group/{label}/messages", method = RequestMethod.GET)

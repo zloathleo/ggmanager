@@ -56,14 +56,14 @@ public interface ResourceMapper extends Mapper<TResourceInfo>, MySqlMapper<TReso
     @Select("SELECT * FROM t_resource WHERE is_deleted = 0 AND label = #{label} LIMIT 1")
     TResourceInfo selectByLabel(String label);
 
-    @Insert("INSERT INTO t_resource(label, name, thumbnail, type, des, size, width, height, `group`) " +
-            "VALUES(#{label}, #{name}, #{thumbnail}, #{type}, #{des}, #{size}, #{width}, #{height}, #{group})")
+    @Insert("INSERT INTO t_resource(label, name, thumbnail, type, des, url, size, width, height, `group`) " +
+            "VALUES(#{label}, #{name}, #{thumbnail}, #{type}, #{des}, #{url}, #{size}, #{width}, #{height}, #{group})")
     int insert(TResourceInfo resInfo);
 
-    @Update("UPDATE t_resource SET des = #{des}, update_time = NOW() WHERE id = #{id}")
+    @Update("UPDATE t_resource SET des = #{des}, url = #{url}, update_time = NOW() WHERE id = #{id}")
     int updateById(TResourceInfo resInfo);
 
-    @Update("UPDATE t_resource SET des = #{des}, update_time = NOW() WHERE label = #{label}")
+    @Update("UPDATE t_resource SET des = #{des}, url = #{url}, update_time = NOW() WHERE label = #{label}")
     int updateByLabel(TResourceInfo resInfo);
 
     @Delete("UPDATE t_resource SET is_deleted = 1 WHERE id = #{id}")
