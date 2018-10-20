@@ -105,6 +105,9 @@ public class ResourceService {
             thumbnail = "Thumbnail_" + label + ".jpg";
             String srcFile = destPath + name;
             thumbnailVideo(ffmpegPath, srcFile, 200, 150);
+            if (!UtilTools.convertVideo2MP4(srcFile, ffmpegPath)) {
+                throw new RuntimeException("添加资源失败");
+            }
         }
 
         resInfo.setLabel(label);

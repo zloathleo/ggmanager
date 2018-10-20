@@ -213,6 +213,60 @@ public class UtilTools {
         return imgPath;
     }
 
+    public static Boolean convertVideo2MP4(String videoPath, String ffmpegPath) {
+        try {
+            StringBuffer sb = new StringBuffer();
+            List<String> command = new ArrayList<String>();
+            command.add(ffmpegPath);
+            command.add("-i");
+            command.add(videoPath);
+
+            ProcessBuilder builder = new ProcessBuilder();
+            builder.command(command);
+            builder.redirectErrorStream(true);
+            Process p = builder.start();
+
+            BufferedReader buf = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            String line;
+            while ((line = buf.readLine()) != null) {
+                sb.append(line);
+            }
+            p.waitFor();
+            String strOutput = sb.toString();
+            int pos1 = strOutput.indexOf("h264");
+            if (pos1 == -1)
+            {
+                String fileName = videoPath.substring(videoPath.lastIndexOf("\\") + 1);
+                String fileTempName = "tmp_" + fileName;
+                String videoTempPath = videoPath.replace(fileName, fileTempName);
+
+                List<String> command1 = new ArrayList<String>();
+                command1.add(ffmpegPath);
+                command1.add("-loglevel");
+                command1.add("quiet");
+                command1.add("-i");
+                command1.add(videoPath);
+                command1.add("-vcodec");
+                command1.add("h264");
+                command1.add(videoTempPath);
+
+                ProcessBuilder builder1 = new ProcessBuilder();
+                builder1.command(command1);
+                Process p1 = builder1.start();
+                p1.waitFor();
+
+                File videoFile = new File(videoPath);
+                File videoTempFile = new File(videoTempPath);
+                videoFile.delete();
+                videoTempFile.renameTo(videoFile);
+            }
+        } catch (Exception e) {
+            logger.error("转换视频格式失败:", e);
+            return false;
+        }
+        return true;
+    }
+
     public static String getCutImg(String imgPath, Rectangle rect) {
         FileInputStream inputStream = null;
         ImageInputStream imageStream = null;
