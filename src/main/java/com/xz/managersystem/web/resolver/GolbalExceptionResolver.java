@@ -19,8 +19,11 @@ public class GolbalExceptionResolver implements HandlerExceptionResolver {
 
         ex.printStackTrace();
 
+
         String requestURI = request.getRequestURI();
         logger.info(requestURI);
+        logger.error("业务异常[ur=" +requestURI+ "]",ex);
+
         ModelAndView mv = new ModelAndView();
         mv.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
 //        if(requestURI.endsWith(".do")){
