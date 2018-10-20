@@ -72,6 +72,6 @@ public class ResourceController {
     private BasicRes deleteResource(@Authorization TUserInfo userInfo,
                                  @PathVariable("label") String label) {
         resService.deleteResource(label);
-        return new BasicRes("删除分组成功");
+        return new BasicRes("删除资源成功");
     }
 }
