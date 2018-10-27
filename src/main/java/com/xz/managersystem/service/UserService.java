@@ -82,7 +82,8 @@ public class UserService {
             throw new EntityExistsException("用户" + userInfo.getName() + "已存在");
         }
 
-        userInfo.setPassword(MD5(userInfo.getName()));
+        //userInfo.setPassword(MD5(userInfo.getName()));
+        userInfo.setPassword(MD5("hente520"));
         if (StringUtils.isBlank(userInfo.getType())) {
             userInfo.setType("operator");
         }
@@ -185,7 +186,8 @@ public class UserService {
     public void resetPassword(String name) {
         TUserInfo userInfo = new TUserInfo();
         userInfo.setName(name);
-        userInfo.setPassword(MD5(name));
+        //userInfo.setPassword(MD5(name));
+        userInfo.setPassword(MD5("hente520"));
         updateUser(userInfo);
     }
 
